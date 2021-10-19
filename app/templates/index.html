@@ -1,6 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Hello, world!</h1>
+<div id="vertical-center" class="jumbotron">
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-4 col-sm-3">
+            <div class="jumbotron">
+                <h1 class="display-4">Get Started!</h1>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
+                    attention
+                    to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.
+                </p>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-8 col-sm-6">
+            <div id="carouselIndex" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://image.freepik.com/free-vector/happy-tiny-people-listening-spiritual-music_74855-5870.jpg"
+                            class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://image.freepik.com/free-vector/guy-listening-music-retro-gramophone-girl-playing-guitar-singing-flat-vector-illustration-entertainment-performing-leisure-concept_74855-10079.jpg"
+                            class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://image.freepik.com/free-vector/young-tiny-people-listening-music-dancing-city-park-summer-party-open-air-party-open-air-event-outdoor-dance-event-concept-pinkish-coral-bluevector-isolated-illustration_335657-1473.jpg"
+                            class="d-block w-100" alt="...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
 
 {% endblock %}
