@@ -1,69 +1,74 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div id="vertical-center" class="jumbotron">
-<div class="container">
-
-    <div class="row">
-
-        <div class="col-lg-6 col-md-6 p-3">
-            <div class="jumbotron">
-                <h1 class="display-4">Get Started!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-                    attention
-                    to featured content or information.</p>
-                <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.
-                </p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 p-3">
-            <div id="carouselIndex" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://image.freepik.com/free-photo/jocund-woman-listening-favorite-song_197531-16485.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/long-haired-woman-bright-blouse-white-pink-headphones-listening-music-isolated-wall_197531-14247.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/cute-european-man-smiles-listens-something-headphones_8353-10108.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/surprised-european-woman-listens-great-song-headphones-shocked-with-too-loud-volume-picks-song-playlist-decided-what-listen-wears-stylish-clothes_273609-43543.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/pleased-little-girl-with-hair-bun-wears-striped-jumper-giggles-positively-listens-audio-track-headset-has-upbeat-mood-smiles-toothily-enjoys-favorite-song-isolated-yellow-wall_273609-42318.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/portrait-attractive-young-woman-dressed_171337-6070.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/horizontal-shot-good-looking-afro-american-woman-feels-very-happy-holds-modern-smartphone-hand-wears-stereo-headphones-points-aside-blank-space-blue-background-leisure-concept_273609-45236.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/move-your-body-glad-bearded-man-dances-wireless-headphones-enjoys-favorite-song-sings-happily-dressed-casually-isolated-beige-studio-wall-uses-best-music-app_273609-53900.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://image.freepik.com/free-photo/half-length-shot-positive-guy-smiles-screen-smartphone-has-online-conversation-chat-forgets-about-all-problems_273609-27722.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3">Vertically centered hero sign-up form</h1>
+        <p class="col-lg-10 fs-4">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-light">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+          <hr class="my-4">
+          <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
+
+  <div class="container">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-{% endblock %}
+    {% endblock %}
