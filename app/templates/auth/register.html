@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+  <div class="row align-items-center g-lg-5 py-5">
+    <div class="col-md-10 mx-auto col-lg-5">
+      <!-- https://stackoverflow.com/questions/49943610/can-i-check-password-confirmation-in-bootstrap-4-with-default-validation-options -->
+      <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="" oninput='confpassword.setCustomValidity(confpassword.value != password.value ? "Passwords do not match." : "")'>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="username" id="username" placeholder="jbloggs">
+          <label for="username">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Joe Bloggs">
+          <label for="fullname">Full Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com">
+          <label for="email">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="password" id="password" placeholder="Password" name="password">
+          <label for="password">Password</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="password2" placeholder="Confirm Password" name="confpassword">
+          <label for="password2">Confirm Password</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-select" aria-label="Default select example" name="gender" id="gender">
+            <option selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+            <option value="N/A">Rather Not Say</option>
+          </select>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" name="birthday" id="birthday" placeholder="birthday">
+          <label for="birthday">Date of Birth</label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -10,3 +10,19 @@ html, body {
   display: flex;
   align-items: center;
 }
+
+/* https://stackoverflow.com/questions/37391541/how-to-make-nav-fixed-top-push-down-content-like-non-fixed-navbar */
+nav.navbar-fixed-top {
+  position:fixed;
+  top:0;
+}
+
+body::before {
+  display:block;
+  content: '';
+  height:60px; /* or whatever */
+}
+
+.alert {
+  width:75%;    
+}
