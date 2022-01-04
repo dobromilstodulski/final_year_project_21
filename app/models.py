@@ -1,7 +1,8 @@
 from peewee import *
 import datetime
 from flask_login import UserMixin, AnonymousUserMixin, login_user
-from flask_bcrypt import generate_password_hash
+#from flask_bcrypt import generate_password_hash
+from werkzeug.security import generate_password_hash
 
 database = SqliteDatabase('database.db')
 
@@ -90,7 +91,7 @@ class User(UserMixin, BaseModel):
                     birthday=birthday,
                     description=description)
         except IntegrityError:
-            raise ValueError("User already exists")    
+            raise ValueError("User already exists")   
     
 class Relationship(BaseModel):
     from_user = ForeignKeyField(User, backref='relationships')

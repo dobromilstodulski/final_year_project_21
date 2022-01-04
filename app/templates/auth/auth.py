@@ -3,17 +3,18 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, database
 import app.models
 from app import login_manager, db, bcrypt
-#from flask_bcrypt import generate_password_hash
+#from flask_bcrypt import generate_password_hash, check_password_hash
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
-
 @login_manager.user_loader
-def load_user(user_id):  # reload user object from the user ID stored in the session
-    # since the user_id is just the primary key of our user table, use it in the query for the user
-    return User.query.get(int(user_id))
+def load_user(id):
+	try:
+		return User.get(User.id == id)
+	except app.models.DoesNotExist:
+		return None
 
 @auth.before_request
 def before_request():
@@ -46,25 +47,26 @@ def register():
         if username == '' or fullname == '' or email == '' or password == '' or gender == '' or birthday == '':
             flash('Please fill out all the values!', 'warning')
             
-        if User.select().where(User.email == email):
+        elif User.select().where(User.email == email):
             flash('Email already in use!', 'danger')
             return redirect(url_for('auth.register'))
         
-        if User.select().where(User.username == username):
+        elif User.select().where(User.username == username):
             flash('Username already in use!', 'danger')
             return redirect(url_for('auth.register'))
-            
-        User.create_user(
-            username=username,
-            fullname=fullname,
-            email=email,
-            password=password,
-            gender=gender,
-            birthday=birthday,
-            description=''
-        )
-        flash('Successfully Registered!', 'success')
-        return redirect(url_for('auth.login'))
+        
+        else:
+            User.create_user(
+                username=username,
+                fullname=fullname,
+                email=email,
+                password=password,
+                gender=gender,
+                birthday=birthday,
+                description=''
+            )
+            flash('Successfully Registered!', 'success')
+            return redirect(url_for('auth.login'))
     return render_template('auth/register.html')
 
 '''
@@ -104,9 +106,30 @@ def register():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('auth/login.html', form=LoginForm())
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        if email == '' or password == '':
+            flash('Please fill out all the values!', 'warning')
+            
+        else:
+            try:
+                user = User.get(User.email == email)
+            except app.models.DoesNotExist:
+                flash('Your email does not match!', 'danger')
+            if check_password_hash(user.password, password):
+                login_user(user)
+                flash('You have successfully logged in!', 'success')
+                return redirect(url_for('profile.welcome'))
+            else:
+                flash('Your password does not match!', 'danger')
+    return render_template('auth/login.html')
 
 
 @auth.route('/logout')
 def logout():
-    return 'Logout'
+    logout_user()
+    flash('Successfully logged out!', 'success')
+    return redirect(url_for('views.index'))
+
