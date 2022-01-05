@@ -133,3 +133,7 @@ def logout():
     flash('Successfully logged out!', 'success')
     return redirect(url_for('views.index'))
 
+@auth.route('/test')
+def test():
+    return render_template('auth/test.html', form=LoginForm())
+
