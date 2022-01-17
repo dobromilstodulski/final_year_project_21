@@ -117,13 +117,13 @@ def login():
             try:
                 user = User.get(User.email == email)
             except app.models.DoesNotExist:
-                flash('Your email does not match!', 'danger')
+                flash('Your email does not match!', 'error')
             if check_password_hash(user.password, password):
                 login_user(user)
                 flash('You have successfully logged in!', 'success')
                 return redirect(url_for('profile.welcome'))
             else:
-                flash('Your password does not match!', 'danger')
+                flash('Your password does not match!', 'error')
     return render_template('auth/login.html')
 
 
