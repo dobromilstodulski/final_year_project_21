@@ -107,7 +107,7 @@ class Relationship(BaseModel):
         )
         
 class Post(BaseModel):
-    user = ForeignKeyField(User, backref='posts')
+    user = ForeignKeyField(model=User, related_name='posts')
     content = TextField()
     media = BlobField(null=True)
     isMedia = BooleanField(default=0)
@@ -141,9 +141,9 @@ class Message(BaseModel):
     pub_date = DateTimeField()
     
 class Comment(BaseModel):
-    user_id = ForeignKeyField(User, related_name='user_likes', null=True)
-    post_id = ForeignKeyField(Post, related_name='post_likes', null=True)
-    song_id = ForeignKeyField(Song, related_name='song_likes', null=True)
+    user_id = ForeignKeyField(model=User, related_name='user_likes', null=True)
+    post_id = ForeignKeyField(model=Post, related_name='post_likes', null=True)
+    song_id = ForeignKeyField(model=Song, related_name='song_likes', null=True)
     comment = TextField()
     timestamp = DateTimeField(default=datetime.datetime.now)
     

@@ -48,11 +48,11 @@ def register():
             flash('Please fill out all the values!', 'warning')
             
         elif User.select().where(User.email == email):
-            flash('Email already in use!', 'danger')
+            flash('Email already in use!', 'error')
             return redirect(url_for('auth.register'))
         
         elif User.select().where(User.username == username):
-            flash('Username already in use!', 'danger')
+            flash('Username already in use!', 'error')
             return redirect(url_for('auth.register'))
         
         else:
@@ -131,6 +131,7 @@ def login():
 def logout():
     logout_user()
     flash('Successfully logged out!', 'success')
+    flash('You can always access the login page to gain access back to the site!', 'info')
     return redirect(url_for('views.index'))
 
 @auth.route('/test')

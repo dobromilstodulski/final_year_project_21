@@ -9,7 +9,6 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 bootstrap =  Bootstrap()
-#database = SqliteDatabase("database.db")
 
 
 def create_app():
