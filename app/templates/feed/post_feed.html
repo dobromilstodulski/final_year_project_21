@@ -168,17 +168,24 @@
                 </div>
                 <div class="card-footer">
                   <span class="float-start">
-                    <i class="bi bi-hand-thumbs-up-fill"></i> 17 likes
+                    <i class="bi bi-hand-thumbs-up"></i> {{ p.numLikes }} Likes
                   </span>
                   <span class="float-end">
-                    <i class="bi bi-chat-left-text-fill"></i> 3 comments
+                    <i class="bi bi-chat-left-text"></i> {{ p.numComments }} Comments
                   </span>
                 </div>
                 <div class="card-footer">
+                  {% if current_user.hasUserLiked(p.id) %}
                   <span class="float-start">
-                    <a href="/" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-hand-thumbs-up"></i>
+                    <a href="/" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-hand-thumbs-up-fill"></i>
+                      Unlike</a>
+                  </span>
+                  {% else %}
+                  <span class="float-start">
+                    <a href="/like/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill" data-id="{{p.id}}"><i class="bi bi-hand-thumbs-up"></i>
                       Like</a>
                   </span>
+                  {% endif %}
                   <span class="float-end">
                     <a href="/post/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-chat-left-text"></i>
                       Comment</a>

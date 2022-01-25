@@ -1,6 +1,6 @@
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Post, database, Comment
+from app.models import User, Post, database, Comment, Like
 import app.models
 from app import login_manager
 from timeago import format
@@ -94,6 +94,26 @@ def view_post(post_id):
     if posts.count() == 0:
         abort(0)
     return render_template('feed/post.html', stream=posts, format=format, comments=comments)
+
+@post.route('/like/<int:post_id>')
+@login_required
+def like_post(post_id):
+    posts = Post.select().where(Post.id == post_id)
+    post = posts[0]
+    numberOfLikes = post.numLikes
+
+    Like.create(
+        user_id=g.user._get_current_object(),
+        post_id=post
+    )
+
+    Post.update(
+        numLikes=numberOfLikes + 1
+    ).where(
+        Post.id == post.id
+    ).execute()
+
+    return redirect(request.referrer)
     
 
 '''
