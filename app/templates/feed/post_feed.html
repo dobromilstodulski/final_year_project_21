@@ -102,7 +102,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="/new_post">
+              <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data" action="/new_post4">
                 <div class="mb-3">
                   <label for="content" class="form-label">Post Content</label>
                   <textarea class="form-control" id="content" name="content" placeholder="What's popping?"
@@ -110,7 +110,8 @@
                 </div>
                 <div class="mb-3">
                   <label for="media" class="form-label">Upload Photo or Video</label>
-                  <input class="form-control" type="file" id="media" name="content" multiple>
+                  <!--<input class="form-control" type="file" id="media" name="media">-->
+                  <input type="file" name="media">
                 </div>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Create Post</button>
               </form>
@@ -141,16 +142,20 @@
                     </a>
                     <button class="btn btn-outline-success btn-sm rounded-pill"><i class="bi bi-at"></i>{{
                       p.user.username }}</button>
+                    {% if p.user != current_user %}
                     {% if not p.user in current_user.following() %}
 
-                    <a href="/" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-person-plus"></i>
+                    <a href="{{ url_for('profile.follow', username=p.user.username) }}"
+                      class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-person-plus"></i>
                       Follow</a>
 
                     {% else %}
 
-                    <a href="/" class="btn btn-outline-danger btn-sm rounded-pill"><i class="bi bi-person-dash"></i>
+                    <a href="{{ url_for('profile.unfollow', username=p.user.username) }}"
+                      class="btn btn-outline-danger btn-sm rounded-pill"><i class="bi bi-person-dash"></i>
                       Unfollow</a>
 
+                    {% endif %}
                     {% endif %}
                     </p>
                   </span>
@@ -159,7 +164,7 @@
                       }}</time></span>
                 </div>
                 {% if p.isMedia == 1 %}
-                <img src="..." class="card-img-top" alt="...">
+                <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{ p.media }}" class="card-img-top" alt="...">
                 {% endif %}
                 <div class="card-body">
                   <a href="/post/{{p.id}}" style="text-decoration: none; color:black;">
@@ -177,17 +182,20 @@
                 <div class="card-footer">
                   {% if current_user.hasUserLiked(p.id) %}
                   <span class="float-start">
-                    <a href="/" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-hand-thumbs-up-fill"></i>
+                    <a href="/unlike/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i
+                        class="bi bi-hand-thumbs-up-fill"></i>
                       Unlike</a>
                   </span>
                   {% else %}
                   <span class="float-start">
-                    <a href="/like/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill" data-id="{{p.id}}"><i class="bi bi-hand-thumbs-up"></i>
+                    <a href="/like/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill" data-id="{{p.id}}"><i
+                        class="bi bi-hand-thumbs-up"></i>
                       Like</a>
                   </span>
                   {% endif %}
                   <span class="float-end">
-                    <a href="/post/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-chat-left-text"></i>
+                    <a href="/post/{{p.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i
+                        class="bi bi-chat-left-text"></i>
                       Comment</a>
                   </span>
                 </div>

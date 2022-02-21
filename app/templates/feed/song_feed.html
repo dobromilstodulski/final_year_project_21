@@ -167,6 +167,98 @@
                 </div>
             </div>
 
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                        {% for song in songs %}
+
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="float-start">
+                                        <h1><i class="bi bi-person-circle"></i></h1>
+                                    </span>
+                                    <span id="profileInfo" class="float-start">
+                                        <a class="profileLinkClass" href="" style="text-decoration: none; color:black;">
+                                            <p> {{ p.user.fullname }}<br>
+                                        </a>
+                                        <button class="btn btn-outline-success btn-sm rounded-pill"><i
+                                                class="bi bi-at"></i>{{
+                                            song.user.username }}</button>
+                                        {% if song.user != current_user %}
+                                        {% if not song.user in current_user.following() %}
+
+                                        <a href="{{ url_for('profile.follow', username=song.user.username) }}"
+                                            class="btn btn-outline-primary btn-sm rounded-pill"><i
+                                                class="bi bi-person-plus"></i>
+                                            Follow</a>
+
+                                        {% else %}
+
+                                        <a href="{{ url_for('profile.unfollow', username=song.user.username) }}"
+                                            class="btn btn-outline-danger btn-sm rounded-pill"><i
+                                                class="bi bi-person-dash"></i>
+                                            Unfollow</a>
+
+                                        {% endif %}
+                                        {% endif %}
+                                        </p>
+                                    </span>
+                                    <span class="time float-end" id="postTime"> <time
+                                            data-time="{{ format(song.date_uploaded) }}" class="distime"
+                                            datetime="{{ format(song.date_uploaded) }}"><i class="bi bi-clock"></i> {{
+                                            format(song.date_uploaded)
+                                            }}</time></span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ song.title }}</h5>
+                                    <span class="card-text">{{ song.artist }}</span> <p> featuring - {{ song.featuring }} </p>
+                                    <a href="/song/{{song.id}}" style="text-decoration: none; color:black;">
+                                        <img src="{{ song.artwork }}" alt="{{ song.artwork }}">
+                                    </a>
+                                    <audio>
+                                        <source src="{{ song.audio }}" type="audio/mpeg">
+                                    </audio>
+                                </div>
+                                <div class="card-footer">
+                                    <span class="float-start">
+                                        <i class="bi bi-hand-thumbs-up"></i> {{ song.numFavourites }} Likes
+                                    </span>
+                                    <span class="float-end">
+                                        <i class="bi bi-chat-left-text"></i> {{ song.numComments }} Comments
+                                    </span>
+                                </div>
+                                <div class="card-footer">
+                                    {% if current_user.hasUserLiked(song.id) %}
+                                    <span class="float-start">
+                                        <a href="/unlike/{{song.id}}"
+                                            class="btn btn-outline-primary btn-sm rounded-pill"><i
+                                                class="bi bi-hand-thumbs-up-fill"></i>
+                                            Unlike</a>
+                                    </span>
+                                    {% else %}
+                                    <span class="float-start">
+                                        <a href="/like/{{song.id}}" class="btn btn-outline-primary btn-sm rounded-pill"
+                                            data-id="{{p.id}}"><i class="bi bi-hand-thumbs-up"></i>
+                                            Like</a>
+                                    </span>
+                                    {% endif %}
+                                    <span class="float-end">
+                                        <a href="/post/{{song.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i
+                                                class="bi bi-chat-left-text"></i>
+                                            Comment</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

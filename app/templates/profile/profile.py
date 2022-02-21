@@ -1,7 +1,9 @@
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash
+from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, database
+from app.models import User, Relationship, database, Comment, Like
+import app.models
 from app import login_manager
+from timeago import format
 
 profile = Blueprint('profile', __name__)
 
@@ -27,6 +29,46 @@ def after_request(response):
 @profile.route('/my')
 def myprofile():
     return 'profile goes here'
+
+
+@profile.route('/follow/<username>')
+@login_required
+def follow(username):
+    try:
+        to_user = User.get(User.username ** username)
+    except app.models.DoesNotExist:
+        abort(404)
+    else:
+        try:
+            Relationship.create(
+                from_user=g.user._get_current_object(),
+                to_user=to_user
+            )
+        except app.models.IntegrityError:
+            pass
+        else:
+            flash("You're now following @{}!".format(to_user.username), "success")
+    return redirect(request.referrer)
+
+
+@profile.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    try:
+        to_user = User.get(User.username ** username)
+    except app.models.DoesNotExist:
+        abort(404)
+    else:
+        try:
+            Relationship.get(
+                from_user=g.user._get_current_object(),
+                to_user=to_user
+            ).delete_instance()
+        except app.models.IntegrityError:
+            pass
+        else:
+            flash("You've unfollowed @{}!".format(to_user.username), "success")
+    return redirect(request.referrer)
 
 
 @profile.route('/welcome')

@@ -63,7 +63,8 @@ def register():
                 password=password,
                 gender=gender,
                 birthday=birthday,
-                description=''
+                description='',
+                profile_picture=''
             )
             flash('Successfully Registered!', 'success')
             return redirect(url_for('auth.login'))
@@ -118,6 +119,7 @@ def login():
                 user = User.get(User.email == email)
             except app.models.DoesNotExist:
                 flash('Your email does not match!', 'error')
+                return redirect(url_for('auth.login'))
             if check_password_hash(user.password, password):
                 login_user(user)
                 flash('You have successfully logged in!', 'success')
