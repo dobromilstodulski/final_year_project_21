@@ -22,27 +22,15 @@ s3 = boto3.client(
 
 s3_resource = boto3.resource("s3")
 
-
-def upload_file(file):
-    #filename = secure_filename(file.filename)
-    #with open(file, 'rb') as data:
-    s3.upload_fileobj(
-        file,
-        os.getenv("AWS_BUCKET_NAME"),
-        file.filename,
-        ExtraArgs={
-            "ContentType": file.content_type
-        }
-    )
     
-def send_to_s3(file, bucket_name):
+def upload_file(file):
     """
     Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
     """
     try:
         s3.upload_fileobj(
             file,
-            bucket_name,
+            os.getenv("AWS_BUCKET_NAME"),
             file.filename,
             ExtraArgs={
                 "ContentType": file.content_type    #Set appropriate content type as per the file
@@ -52,52 +40,3 @@ def send_to_s3(file, bucket_name):
         print("Something Happened: ", e)
         return e
     return "{}{}".format(os.getenv("AWS_DOMAIN"), file.filename)
-        
-def upload_file_to_s3(file, acl="public-read"):
-    try:
-        s3.upload_fileobj(
-            file,
-            os.getenv("AWS_BUCKET_NAME"),
-            file.filename,
-            ExtraArgs={
-                "ACL": acl,
-                "ContentType": file.content_type
-            }
-        )
-
-    except Exception as e:
-        # This is a catch all exception, edit this part to fit your needs.
-        print("Something Happened: ", e)
-        return e
-    
-
-    # after upload file to s3 bucket, return filename of the uploaded file
-    return file.filename
-        
-def upload_file_object(file):
-    bucket = s3_resource.Bucket(os.getenv("AWS_BUCKET_NAME"))
-    obj = bucket.Object(file.filename)
-    with open(file, 'rb') as data:
-        obj.upload_fileobj(data)
-        
-        
-
-def upload_object(file):
-        filename = secure_filename(file.filename)
-        s3.put_object(
-            Body=file,
-            Bucket=os.getenv("AWS_BUCKET_NAME"),
-            Key=file.filename,
-            ContentType=file.content_type
-        )
-        
-def upload_file2(file, acl="public-read"):
-        s3.upload_file(
-            file,
-            os.getenv("AWS_BUCKET_NAME"),
-            file.filename,
-            ExtraArgs={
-                "ACL": acl,
-                "ContentType": file.content_type
-            }
-        )

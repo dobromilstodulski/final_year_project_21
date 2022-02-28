@@ -104,7 +104,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="">
+                            <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data" action="/new_song">
                                 <div class="row g-3">
                                     <div class="col">
                                         <div class="form-floating mb-3">
@@ -148,11 +148,11 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="media" class="form-label">Upload Artwork</label>
+                                    <label for="artwork" class="form-label">Upload Artwork</label>
                                     <input class="form-control" type="file" id="artwork" name="artwork">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="media" class="form-label">Upload Audio</label>
+                                    <label for="audio" class="form-label">Upload Audio</label>
                                     <input class="form-control" type="file" id="audio" name="audio">
                                 </div>
                                 <button class="w-100 btn btn-lg btn-primary" type="submit">Upload Music</button>
@@ -181,7 +181,7 @@
                                     </span>
                                     <span id="profileInfo" class="float-start">
                                         <a class="profileLinkClass" href="" style="text-decoration: none; color:black;">
-                                            <p> {{ p.user.fullname }}<br>
+                                            <p> {{ song.user.fullname }}<br>
                                         </a>
                                         <button class="btn btn-outline-success btn-sm rounded-pill"><i
                                                 class="bi bi-at"></i>{{
@@ -215,10 +215,10 @@
                                     <h5 class="card-title">{{ song.title }}</h5>
                                     <span class="card-text">{{ song.artist }}</span> <p> featuring - {{ song.featuring }} </p>
                                     <a href="/song/{{song.id}}" style="text-decoration: none; color:black;">
-                                        <img src="{{ song.artwork }}" alt="{{ song.artwork }}">
+                                        <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{ song.artwork }}" alt="{{ song.artwork }}" height="350" width="350">
                                     </a>
-                                    <audio>
-                                        <source src="{{ song.audio }}" type="audio/mpeg">
+                                    <audio controls>
+                                        <source src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{ song.source }}" type="audio/mpeg">
                                     </audio>
                                 </div>
                                 <div class="card-footer">
@@ -232,20 +232,20 @@
                                 <div class="card-footer">
                                     {% if current_user.hasUserLiked(song.id) %}
                                     <span class="float-start">
-                                        <a href="/unlike/{{song.id}}"
+                                        <a href="/favorite/{{song.id}}"
                                             class="btn btn-outline-primary btn-sm rounded-pill"><i
                                                 class="bi bi-hand-thumbs-up-fill"></i>
                                             Unlike</a>
                                     </span>
                                     {% else %}
                                     <span class="float-start">
-                                        <a href="/like/{{song.id}}" class="btn btn-outline-primary btn-sm rounded-pill"
-                                            data-id="{{p.id}}"><i class="bi bi-hand-thumbs-up"></i>
+                                        <a href="/favorite/{{song.id}}" class="btn btn-outline-primary btn-sm rounded-pill"
+                                            data-id="{{song.id}}"><i class="bi bi-hand-thumbs-up"></i>
                                             Like</a>
                                     </span>
                                     {% endif %}
                                     <span class="float-end">
-                                        <a href="/post/{{song.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i
+                                        <a href="/song/{{song.id}}" class="btn btn-outline-primary btn-sm rounded-pill"><i
                                                 class="bi bi-chat-left-text"></i>
                                             Comment</a>
                                     </span>

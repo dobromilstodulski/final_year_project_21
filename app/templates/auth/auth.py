@@ -5,7 +5,6 @@ import app.models
 from app import login_manager, db, bcrypt
 #from flask_bcrypt import generate_password_hash, check_password_hash
 from werkzeug.security import generate_password_hash, check_password_hash
-from .forms import LoginForm, RegisterForm
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 

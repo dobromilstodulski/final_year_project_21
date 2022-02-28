@@ -9,3 +9,4 @@ peewee
 flask-login
 flask-bcrypt
 timeago
+boto3
