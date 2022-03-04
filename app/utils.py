@@ -40,3 +40,12 @@ def upload_file(file):
         print("Something Happened: ", e)
         return e
     return "{}{}".format(os.getenv("AWS_DOMAIN"), file.filename)
+
+
+def delete_file(file):
+    try:
+        s3.delete_object(Bucket=os.getenv("AWS_BUCKET_NAME"), Key=file)
+    except Exception as e:
+        print("Something Happened: ", e)
+        return e
+    return "file deleted."

@@ -157,6 +157,26 @@
 
                     {% endif %}
                     {% endif %}
+                    
+                    {% if p.user == current_user %}
+                    {% if p.isMedia == 1 %}
+                    <button data-bs-toggle="modal" data-bs-target="#editMediaPostModal{{ p.id }}" 
+                      class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-pencil"></i>
+                      Edit</button>
+
+                    <button data-bs-toggle="modal" data-bs-target="#deleteMediaPostModal{{ p.id }}" 
+                      class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-bin"></i>
+                      Delete</button>
+
+                    {% else %}
+
+                    <button data-bs-toggle="modal" data-bs-target="#editPostModal{{ p.id }}" 
+                      class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-pencil"></i>
+                      Edit</button>
+
+                    {% endif %}
+                    {% endif %}
+
                     </p>
                   </span>
                   <span class="time float-end" id="postTime"> <time data-time="{{ format(p.pub_date) }}" class="distime"
@@ -202,11 +222,92 @@
               </div>
             </div>
 
+
+
+            <div class="modal fade" id="editPostModal{{ p.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data" action="/edit_post/media=null/{{p.id}}">
+                      <div class="mb-3">
+                        <label for="content" class="form-label">Post Content</label>
+                        <textarea class="form-control" id="content" name="content"
+                          rows="3">{{ p.content }}</textarea>
+                      </div>
+                      <button class="w-100 btn btn-lg btn-primary" type="submit">Update Post</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="modal fade" id="editMediaPostModal{{ p.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data" action="/edit_post/media=true/{{p.id}}">
+                      <div class="mb-3">
+                        <label for="content" class="form-label">Post Content</label>
+                        <textarea class="form-control" id="content" name="content"
+                          rows="3">{{ p.content }}</textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="media" class="form-label">Upload Photo or Video</label>
+                        <!--<input class="form-control" type="file" id="media" name="media">-->
+                        <input type="file" name="media">
+                      </div>
+                      <button class="w-100 btn btn-lg btn-primary" type="submit">Update Post</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="deleteMediaPostModal{{ p.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure?</p>
+                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data" action="/delete_post/media=true/{{ p.id }}">
+                      <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Post</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {% endfor %}
 
           </div>
         </div>
       </div>
+
 
     </div>
   </div>
