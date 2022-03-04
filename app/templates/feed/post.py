@@ -117,7 +117,7 @@ def delete_post_media_null(post_id):
     
     
 @post.route('/delete_post/media=true/<int:post_id>', methods=('GET', 'POST'))
-def delete_post_media_null(post_id):
+def delete_post_media_true(post_id):
     if request.method == 'POST':
         delete_file(Post.get(Post.id == post_id).media)
         Post.delete().where(Post.id == post_id).execute()
