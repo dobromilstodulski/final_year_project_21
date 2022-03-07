@@ -150,9 +150,14 @@ class Song(BaseModel):
 
 
 class Message(BaseModel):
-    user = ForeignKeyField(User, backref='messages')
-    content = TextField()
-    pub_date = DateTimeField()
+    sender_id = ForeignKeyField(User, backref='sent_messages')
+    recipient_id = ForeignKeyField(User, backref='received_messages')
+    body = TextField()
+    timestamp = DateTimeField(default=datetime.datetime.now)
+    
+    class Meta:
+        database = database
+        order_by = ('-timestamp',)
 
 
 class Comment(BaseModel):

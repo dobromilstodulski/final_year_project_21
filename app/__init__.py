@@ -4,11 +4,13 @@ from flask_bcrypt import Bcrypt
 from peewee import *
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 bootstrap =  Bootstrap()
+socketio = SocketIO()
 
 
 def create_app():
@@ -19,6 +21,7 @@ def create_app():
     db.init_app(app)    
     bcrypt.init_app(app)
     bootstrap.init_app(app)
+    socketio.init_app(app)
 
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
@@ -29,12 +32,14 @@ def create_app():
         from app.templates.feed.feed import feed
         from app.templates.feed.song import song
         from app.templates.feed.post import post
+        from app.templates.chat.chat import chatroom
         
         app.register_blueprint(auth)
         app.register_blueprint(profile)
         app.register_blueprint(feed)
         app.register_blueprint(song)
         app.register_blueprint(post)
+        app.register_blueprint(chatroom)
             
         from app.views import views
         app.register_blueprint(views)
