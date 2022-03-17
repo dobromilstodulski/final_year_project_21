@@ -10,4 +10,4 @@ flask-login
 flask-bcrypt
 timeago
 boto3
-flas_socketio
+flask_socketio
