@@ -2,33 +2,31 @@
 
 {% block content %}
 
-<div class="container-fluid">
-    <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-black min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-black text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">Menu</span>
-                </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    {% for room in rooms %}
-                    <li>
-                        <p> {{room}} </p>
-                    </li>
-                    {% endfor %}
-                </ul>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-md-10 mx-auto col-lg-5">
+
+            <div class="card" style="width: 30rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Chat Room</h5>
+                    <ul id="messages" class="list-group list-group-flush">
+                        {% for message in messages %}
+                        <li> {{message}} </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
+
+            <div class="mb-3">
+                <label for="myMessage" class="form-label">Send Message</label>
+                <input type="text" class="form-control" id="myMessage" name="myMessage"
+                    placeholder="Input your message">
+            </div>
+
+            <button type="button" id="sendmessage" class="btn btn-primary">Send</button>
+
         </div>
     </div>
-    <div class="col py-3">
-
-    <h1>Flask-SocketIO-Chat: {{ room }}</h1>
-    <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-    <input id="text" size="80" placeholder="Enter your message here"><br><br>
-    <a href="#" onclick="leave_room();">Leave this room</a>  
-
-    </div>
 </div>
-</div>
-
 
 {% endblock %}

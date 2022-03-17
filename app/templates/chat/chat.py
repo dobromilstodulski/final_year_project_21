@@ -3,6 +3,7 @@ import time
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from app import socketio
+from app.models import Chat, database
 from flask_socketio import emit, join_room, leave_room, send
 
 chatroom = Blueprint('chatroom', __name__)
@@ -14,7 +15,13 @@ ROOMS = ["Deep House", "Slap House", "Pop", "Rock", "Hip Hop", "Techno", "House"
 @chatroom.route("/chat", methods=['GET', 'POST'])
 @login_required
 def chat():
-    return render_template("chat/chat.html", username=current_user.username)
+    chats = Chat
+    return render_template("chat/chat.html", username=current_user.username, chats=chats)
+
+@chatroom.route("/chat2", methods=['GET', 'POST'])
+@login_required
+def chat2():
+    return render_template("chat/chat2.html")
 
 
 @socketio.on('incoming-msg')
@@ -75,6 +82,7 @@ def left(message):
     room = session.get('room')
     leave_room(room)
     emit('status', {'msg': session.get('name') + ' has left the room.'}, room=room)
+    
     
 @socketio.on('message')
 def handleMessage(msg):

@@ -154,7 +154,17 @@ class Message(BaseModel):
     recipient_id = ForeignKeyField(User, backref='received_messages')
     body = TextField()
     timestamp = DateTimeField(default=datetime.datetime.now)
-    
+
+    class Meta:
+        database = database
+        order_by = ('-timestamp',)
+
+
+class Chat(BaseModel):
+    user_id = ForeignKeyField(User, backref='chats')
+    body = TextField()
+    timestamp = DateTimeField(default=datetime.datetime.now)
+
     class Meta:
         database = database
         order_by = ('-timestamp',)
@@ -196,6 +206,6 @@ class Group(BaseModel):
 
 def initialize():
     database.connect()
-    database.create_tables([User, Post, Song, Message, Comment,
+    database.create_tables([User, Post, Song, Message, Comment, Chat,
                            Like, Favourite, Location, Group, Relationship], safe=True)
     database.close()
