@@ -5,11 +5,10 @@ WTForms
 gunicorn
 python-dotenv
 peewee
-flask-login
+git+https://github.com/maxcountryman/flask-login.git
 werkzeug
 timeago
 boto3
 flask_socketio
 pusher
 flask-moment
-greenlet
