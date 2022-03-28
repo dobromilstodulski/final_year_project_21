@@ -2,17 +2,13 @@ import pusher
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
 from peewee import *
 from flask_login import LoginManager
-from flask_bootstrap import Bootstrap
 from flask_socketio import SocketIO
 from flask_moment import Moment
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-bcrypt = Bcrypt()
-bootstrap = Bootstrap()
 socketio = SocketIO()
 moment = Moment()
 
@@ -31,8 +27,6 @@ def create_app():
     app.config.from_object('config.TestConfig')
 
     db.init_app(app)
-    bcrypt.init_app(app)
-    bootstrap.init_app(app)
     socketio.init_app(app)
     moment.init_app(app)
 
