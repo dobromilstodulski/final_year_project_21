@@ -33,7 +33,7 @@ class User(UserMixin, BaseModel):
         order_by = ('-join_date',)
 
     def get_posts(self):
-        return Post.select().where(Post.user == self).order_by(Post.timestamp.desc())
+        return Post.select().where(Post.user == self).order_by(Post.pub_date.desc())
 
     def get_songs(self):
         return Song.select().where(Song.user == self).order_by(Song.timestamp.desc())
@@ -168,6 +168,16 @@ class Chat(BaseModel):
     class Meta:
         database = database
         order_by = ('-timestamp',)
+        
+
+class Msg(BaseModel):
+    username = ForeignKeyField(User, backref='chats')
+    message = TextField()
+    timestamp = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = database
+        order_by = ('-timestamp',)
 
 
 class Comment(BaseModel):
@@ -206,6 +216,6 @@ class Group(BaseModel):
 
 def initialize():
     database.connect()
-    database.create_tables([User, Post, Song, Message, Comment, Chat,
+    database.create_tables([User, Post, Song, Message, Comment, Chat, Msg,
                            Like, Favourite, Location, Group, Relationship], safe=True)
     database.close()

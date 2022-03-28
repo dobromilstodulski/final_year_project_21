@@ -2,7 +2,163 @@
 
 {% block content %}
 
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-md-10 mx-auto col-lg-5 py-5">
 
+            {% if user.profile_picture == "" %}
+
+            <center>
+                <img src="../../static/images/deafult_profile_picture.png" class="img-thumbnail" height="100"
+                    width="100" alt="Default Profile Picture">
+            </center>
+
+            {% else %}
+
+            <center>
+                <img src="{{user.profile_picture}}" class="img-thumbnail" alt="{{user.username}}">
+            </center>
+
+            {% endif %}
+
+            <br />
+
+            <center>
+                {{user.fullname}} | @{{user.username}}
+            </center>
+
+            <br />
+
+            <center>
+                {{user.description}} | Joined @{{ moment(user.join_date).format('LL') }}
+            </center>
+
+            <br />
+
+            {% if following_count == 0 %}
+
+            <center>
+                Followers : {{followers_count}}
+            </center>
+
+            {% elif followers_count == 0 %}
+
+            <center>
+                Following : {{following_count}}
+            </center>
+
+            {% else %}
+
+            <center>
+                Following : {{following_count}} | Followers : {{followers_count}}
+            </center>
+
+            {% endif %}
+
+            <br />
+
+            <nav>
+                <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-details-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-details" type="button" role="tab" aria-controls="nav-details"
+                        aria-selected="true">Details</button>
+                    <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
+                        type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+                    <button class="nav-link" id="nav-uploads-tab" data-bs-toggle="tab" data-bs-target="#nav-uploads"
+                        type="button" role="tab" aria-controls="nav-uploads" aria-selected="false">Uploads</button>
+                    <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments"
+                        type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-details" role="tabpanel"
+                    aria-labelledby="nav-details-tab">
+
+                    <br />
+
+                    <p>Email : {{user.email}}</p>
+                    <p>Gender : {{user.gender}}</p>
+                    <p>Birthday : {{user.birthday}}</p>
+
+                </div>
+                <div class="tab-pane fade" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+
+                    <br />
+
+                    <div class="row">
+
+                        {% for post in posts %}
+
+                        <div class="d-flex text-muted pt-3">
+                            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#007bff" data-darkreader-inline-fill=""
+                                    style="--darkreader-inline-fill:#33a2ff;"></rect><text x="50%" y="50%"
+                                    fill="#007bff" dy=".3em" data-darkreader-inline-fill=""
+                                    style="--darkreader-inline-fill:#33a2ff;">32x32</text>
+                            </svg>
+
+                            <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                <strong class="d-block text-gray-dark">
+                                    {{post.user.fullname}} | @{{post.user.username}} | 
+                                        <button type="button" class="btn btn-secondary-outline btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </button> |
+                                        <button type="button" class="btn btn-secondary-outline btn-sm">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                </strong>
+                                <i class="d-block text-gray-dark"><i class="bi bi-clock"></i> {{moment(post.pub_date).fromNow()}}</i>
+                                {{post.content}}
+                                <strong class="d-block text-gray-dark">
+
+                                    {% if post.numLikes == 0 %}
+
+                                    <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                        <i class="bi bi-hand-thumbs-up"></i> Like
+                                    </button> |
+
+                                    {% else %}
+
+                                    <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                        <i class="bi bi-hand-thumbs-up"></i> Likes
+                                    </button> |
+
+                                    {% endif %}
+
+                                    {% if post.numComments == 0 %}
+
+                                    <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                        <i class="bi bi-chat"></i> Comment
+                                    </button>
+
+                                    {% else %}
+
+                                    <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                        <i class="bi bi-chat"></i> Comments
+                                    </button>
+
+                                    {% endif %}
+
+                                </strong>
+                            </p>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">...</div>
+                <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">...
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
-

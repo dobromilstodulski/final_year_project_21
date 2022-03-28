@@ -49,7 +49,8 @@ def post_feed():
 def new_post():
     if request.method == 'POST':
         content = request.form.get('content')
-        if "media" not in request.files:
+        file = request.files["media"]
+        if not file:
             if content == '':
                 flash('Please fill out all the values!', 'warning')
             else:
@@ -57,8 +58,7 @@ def new_post():
                             content=content)
                 flash("Post Created!", "success")
                 return redirect(url_for('post.post_feed'))
-        file = request.files["media"]
-        if "media" in request.files:
+        if file:
             if file.filename == "" and content == '':
                 flash('Please fill out all the values!', 'warning')
             else:
@@ -85,16 +85,16 @@ def edit_post_media_null(post_id):
         else:
             Post.update(content=content).where(Post.id == post_id).execute()
             flash("Post Updated!", "success")
-            return redirect(request.referrer)  
+            return redirect(request.referrer)
 
-        
+
 @post.route('/edit_post/media=true/<int:post_id>', methods=('GET', 'POST'))
 def edit_post_media_true(post_id):
     if request.method == 'POST':
         content = request.form.get('content')
         file = request.files["media"]
         if file.filename == "" and content == '':
-                flash('Please fill out all the values!', 'warning')
+            flash('Please fill out all the values!', 'warning')
         else:
             if file and allowed_file(file.filename):
                 unique_filename = make_unique(file.filename)
@@ -107,15 +107,16 @@ def edit_post_media_true(post_id):
                 return redirect(request.referrer)
             else:
                 return "error"
-    
+
+
 @post.route('/delete_post/media=null/<int:post_id>', methods=('GET', 'POST'))
 def delete_post_media_null(post_id):
     if request.method == 'POST':
         Post.delete().where(Post.id == post_id).execute()
         flash("Post Deleted!", "success")
         return redirect(request.referrer)
-    
-    
+
+
 @post.route('/delete_post/media=true/<int:post_id>', methods=('GET', 'POST'))
 def delete_post_media_true(post_id):
     if request.method == 'POST':

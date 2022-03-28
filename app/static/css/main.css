@@ -1,6 +1,52 @@
+@font-face {
+  font-family: 'Horizon'; 
+  src: url('../fonts/Horizon/Horizon.otf') 
+}
+
+@font-face {
+  font-family: 'Lovelo'; 
+  src: url('../fonts/Lovelo/Lovelo/Commercial/OTF/Lovelo-Black.otf') 
+}
+
+@font-face {
+  font-family: 'Null'; 
+  src: url('../fonts/Null/Null/Commercial/OTF/Null-Normal.otf') 
+}
+
+@font-face {
+  font-family: 'Quicksand'; 
+  src: url('../fonts/Quicksand/static/Quicksand-Medium.ttf') 
+}
+
+@font-face {
+  font-family: 'Track'; 
+  src: url('../fonts/Track/Track/Commercial/OTF/Track-Regular.otf') 
+}
+
+@font-face {
+  font-family: 'Horizon-Regular'; 
+  src: url('../fonts/horizon-regular/Horizon-PersonalUse.otf') 
+}
+
+@font-face {
+  font-family: 'Batangas'; 
+  src: url('../fonts/batangas/Batangas.otf')
+}
+
+@font-face {
+  font-family: 'Bungee'; 
+  src: url('../fonts/Bungee/Bungee-Regular.ttf') 
+}
+
+@font-face {
+  font-family: 'Intro'; 
+  src: url('../fonts/intro/Intro.otf') 
+}
+
 html, body {
   height: 100%;
   background-color: #F5F5F5;
+  font-family: Intro;
 }
 
 #vertical-center {
@@ -77,3 +123,10 @@ img:hover {
   height: 10vw;
   object-fit: cover;
 }
+
+/* https://stackoverflow.com/questions/67952873/customizing-bootstrap-5-button-colors-and-properties-in-it */
+
+.btn-secondary-outline {
+  color: gray !important;
+  font-weight: bold;    
+} 

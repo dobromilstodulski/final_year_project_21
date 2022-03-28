@@ -1,6 +1,6 @@
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Relationship, database, Comment, Like
+from app.models import User, Relationship, Post, database, Comment, Like
 import app.models
 from app import login_manager
 from timeago import format
@@ -28,7 +28,13 @@ def after_request(response):
 
 @profile.route('/my')
 def myprofile():
-    return 'profile goes here'
+    user = current_user
+    posts = User.get_posts(user)
+    following_count = User.select().join(Relationship, on=Relationship.to_user).where(
+        Relationship.from_user == user).count()
+    followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
+        Relationship.to_user == user).count()
+    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts)
 
 
 @profile.route('/follow/<username>')

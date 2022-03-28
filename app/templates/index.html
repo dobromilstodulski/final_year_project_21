@@ -5,9 +5,55 @@
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
   <div class="row align-items-center g-lg-5 py-5">
     <div class="col-lg-7 text-center text-lg-start">
-      <h1 class="display-4 fw-bold lh-1 mb-3">Welcome to the World of KMPSR!</h1>
-      <p class="col-lg-10 fs-4">Where artists meet other artists, where listeners meet the artists, where collaboration
-        happens.</p>
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="https://media.istockphoto.com/photos/enjoying-his-favorite-music-picture-id1129342275?k=20&m=1129342275&s=612x612&w=0&h=2d-V1X_qHlx5BPJMPM3jvgt_j4EVFNQxwa_Z14D5WOY="
+              class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Welcome to the World of KMPSR!</h5>
+              <p>Where artists meet other artists.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://media.istockphoto.com/photos/fashion-pretty-woman-with-headphones-listening-to-music-over-neon-picture-id1128914829?k=20&m=1128914829&s=170667a&w=0&h=T9j9EMoLgBq1gyYWqe8wMFmtnbYFYOO6khWrlT85kSI="
+              class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Welcome to the World of KMPSR!</h5>
+              <p>Where listeners meet the artists.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://st4.depositphotos.com/3917667/i/600/depositphotos_246694462-stock-photo-fashion-pretty-woman-with-headphones.jpg"
+              class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Welcome to the World of KMPSR!</h5>
+              <p>Where collaboration happens.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
     <div class="col-md-10 mx-auto col-lg-5">
       <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="">
@@ -38,36 +84,36 @@
       </div>
       <div class="modal-body">
         <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="">
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="registerUsername" placeholder="jbloggs">
-          <label for="registerUsername">Username</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="registerFullname" placeholder="Joe Bloggs">
-          <label for="registerFullname">Full Name</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="registerEmail" placeholder="name@example.com">
-          <label for="registerEmail">Email address</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="password" class="form-control" id="registerPassword" placeholder="Password">
-          <label for="registerPassword">Password</label>
-        </div>
-        <div class="form-floating mb-3">
-          <select class="form-select" aria-label="Default select example" id="registerGender">
-            <option selected>Select Gender</option>
-            <option value="1">Male</option>
-            <option value="2">Female</option>
-            <option value="3">Other</option>
-            <option value="4">Rather Not Say</option>
-          </select>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="registerBirthday" placeholder="birthday">
-          <label for="registerBirthday">Date of Birth</label>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="registerUsername" placeholder="jbloggs">
+            <label for="registerUsername">Username</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="registerFullname" placeholder="Joe Bloggs">
+            <label for="registerFullname">Full Name</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="registerEmail" placeholder="name@example.com">
+            <label for="registerEmail">Email address</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="registerPassword" placeholder="Password">
+            <label for="registerPassword">Password</label>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select" aria-label="Default select example" id="registerGender">
+              <option selected>Select Gender</option>
+              <option value="1">Male</option>
+              <option value="2">Female</option>
+              <option value="3">Other</option>
+              <option value="4">Rather Not Say</option>
+            </select>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="registerBirthday" placeholder="birthday">
+            <label for="registerBirthday">Date of Birth</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
         </form>
       </div>
       <div class="modal-footer">

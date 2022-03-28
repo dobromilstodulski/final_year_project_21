@@ -11,3 +11,4 @@ flask-bcrypt
 timeago
 boto3
 flask_socketio
+pusher
