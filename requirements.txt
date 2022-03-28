@@ -12,3 +12,4 @@ timeago
 boto3
 flask_socketio
 pusher
+flask-moment
