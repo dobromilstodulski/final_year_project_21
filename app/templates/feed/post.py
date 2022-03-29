@@ -40,7 +40,7 @@ def new_post():
                     unique_filename = make_unique(file.filename)
                     file.filename = secure_filename(unique_filename)
                     upload_file(file)
-                    Post.create(user=g.user._get_current_object(),
+                    Post.create(user=current_user.id,
                                 content=content,
                                 media=file.filename,
                                 isMedia=1)
@@ -113,7 +113,7 @@ def view_post(post_id):
 
         else:
             Comment.create(
-                user_id=g.user._get_current_object(),
+                user_id=current_user.id,
                 post_id=post_id,
                 comment=content
             )
@@ -140,7 +140,7 @@ def like_post(post_id):
     numberOfLikes = post.numLikes
 
     Like.create(
-        user_id=g.user._get_current_object(),
+        user_id=current_user.id,
         post_id=post
     )
 
@@ -161,7 +161,7 @@ def unlike_post(post_id):
     numberOfLikes = post.numLikes
 
     Like.get(
-        user_id=g.user._get_current_object(),
+        user_id=current_user.id,
         post_id=post
     ).delete_instance()
 

@@ -38,7 +38,7 @@ def new_song():
                     audio_file.filename = secure_filename(unique_audio_filename)
                     upload_file(artwork_file)
                     upload_file(audio_file)
-                    Song.create(user=g.user._get_current_object(),
+                    Song.create(user=current_user.id,
                                 artist=artist,
                                 title=title,
                                 feature=featuring,
