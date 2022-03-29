@@ -8,24 +8,6 @@ from timeago import format
 profile = Blueprint('profile', __name__)
 
 
-@profile.before_request
-def before_request():
-    """Connect to database before each request
-            g is a global object, passed around all time in flask, used to setup things which
-            we wanna have available everywhere.
-    """
-    g.db = database
-    g.db.connect()
-    g.user = current_user
-
-
-@profile.after_request
-def after_request(response):
-    """close all database connection after each request"""
-    g.db.close()
-    return response
-
-
 @profile.route('/my')
 def myprofile():
     user = current_user

@@ -9,26 +9,6 @@ from werkzeug.utils import secure_filename
 
 song = Blueprint('song', __name__)
 
-
-@login_manager.user_loader
-def load_user(id):
-    try:
-        return User.get(User.id == id)
-    except app.models.DoesNotExist:
-        return None
-
-
-@song.before_request
-def before_request():
-    """Connect to database before each request
-            g is a global object, passed around all time in flask, used to setup things which
-            we wanna have available everywhere.
-    """
-    g.db = database
-    g.db.connect()
-    g.user = current_user
-
-
 @song.route('/song_feed')
 def song_feed():
     return render_template('feed/song_feed.html', songs=Song, user=User, format=format)

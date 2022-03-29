@@ -13,32 +13,6 @@ import boto3
 post = Blueprint('post', __name__)
 
 
-@login_manager.user_loader
-def load_user(id):
-    try:
-        return User.get(User.id == id)
-    except app.models.DoesNotExist:
-        return None
-
-
-@post.before_request
-def before_request():
-    """Connect to database before each request
-            g is a global object, passed around all time in flask, used to setup things which
-            we wanna have available everywhere.
-    """
-    g.db = database
-    g.db.connect()
-    g.user = current_user
-
-
-@post.after_request
-def after_request(response):
-    """close all database connection after each request"""
-    g.db.close()
-    return response
-
-
 @post.route('/post_feed')
 def post_feed():
     posts = current_user.get_post_feed()
