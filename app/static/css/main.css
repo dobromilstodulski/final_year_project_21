@@ -106,18 +106,6 @@ main {
 }
 */
 
-/* https://stackoverflow.com/questions/25036597/how-to-enlarge-an-image-on-hover-or-click */
-
-img {
-  transition:transform 0.25s ease;
-}
-
-img:hover {
-  -webkit-transform:scale(1.5); /* or some other value */
-  transform:scale(1.5);
-}
-
-
 .card-img-top {
   width: 50%;
   height: 10vw;
@@ -130,3 +118,12 @@ img:hover {
   color: gray !important;
   font-weight: bold;    
 } 
+
+
+* > .fa-hover-show,
+*:hover > .fa-hover-hidden {
+  display: none;
+}
+*:hover > .fa-hover-show {
+  display: inline-block;
+}

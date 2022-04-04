@@ -16,7 +16,9 @@ def myprofile():
         Relationship.from_user == user).count()
     followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
         Relationship.to_user == user).count()
-    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts)
+    songs = User.get_songs(user)
+    song_count = User.get_songs(user).count()
+    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count)
 
 
 @profile.route('/follow/<username>')

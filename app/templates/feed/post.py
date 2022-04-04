@@ -47,7 +47,32 @@ def new_post():
                     flash('Upload Succeeded!', 'success')
                     return redirect(url_for('post.post_feed'))
                 else:
-                    return redirect("/")
+                    return redirect(url_for('post.post_feed'))
+                
+                
+@post.route('/edit_post/<int:post_id>', methods=('GET', 'POST'))
+def edit_post(post_id):
+    if request.method == 'POST':
+        content = request.form.get('content')
+        file = request.files["media"]
+        if content == '':
+            flash('Please fill out all the values!', 'warning')
+        else:
+            Post.update(content=content).where(Post.id == post_id).execute()
+            flash("Post Updated!", "success")
+            return redirect(request.referrer)
+        if file and allowed_file(file.filename):
+                if file.filename == "" and content == '':
+                    flash('Please fill out all the values!', 'warning')
+                else:
+                    unique_filename = make_unique(file.filename)
+                    file.filename = secure_filename(unique_filename)
+                    upload_file(file)
+                    Post.update(content=content,
+                                media=file.filename,
+                                isMedia=1).where(Post.id == post_id).execute()
+                    flash('Upload Succeeded!', 'success')
+                    return redirect(request.referrer)
 
 
 @post.route('/edit_post/media=null/<int:post_id>', methods=('GET', 'POST'))
