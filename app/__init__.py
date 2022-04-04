@@ -41,6 +41,7 @@ def create_app():
         from app.templates.feed.post import post
         from app.templates.chat.chat import chatroom
         from app.templates.audio.audio import audio
+        from app.templates.legal.legal import legal
 
         app.register_blueprint(auth)
         app.register_blueprint(profile)
@@ -49,6 +50,7 @@ def create_app():
         app.register_blueprint(post)
         app.register_blueprint(chatroom)
         app.register_blueprint(audio)
+        app.register_blueprint(legal)
 
         from app.views import views
         app.register_blueprint(views)
