@@ -305,6 +305,16 @@
                                             container: '#waveform2{{loop.index}}',
                                             waveColor: 'blue',
                                             progressColor: 'navy',
+                                            backend: 'MediaElementWebAudio',
+                                            barGap: 2,
+                                            barHeight: 2,
+                                            barMinHeight: 1,
+                                            barRadius: 2,
+                                            barWidth: 2,
+                                            height: 64,
+                                            normalize: true,
+                                            partialRender: true,
+                                            responsive: true,
                                         });
                         
                                         wavesurfer2{{loop.index}}.load('play/{{song.id}}');
