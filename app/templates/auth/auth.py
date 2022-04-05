@@ -14,23 +14,6 @@ def load_user(id):
 	except app.models.DoesNotExist:
 		return None
 
-@auth.before_request
-def before_request():
-    """Connect to database before each request
-            g is a global object, passed around all time in flask, used to setup things which
-            we wanna have available everywhere.
-    """
-    g.db = database
-    g.db.connect()
-    g.user = current_user
-
-
-@auth.after_request
-def after_request(response):
-    """close all database connection after each request"""
-    g.db.close()
-    return response
-
 @auth.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
