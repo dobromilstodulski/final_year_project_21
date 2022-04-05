@@ -277,38 +277,37 @@
                                         <input type="range" class="form-range" id="customRange1"
                                             onclick="changeVolume()">
 
-                                    <div id="waveform2{{loop.index0}}"></div>
+                                    <div id="waveform2{{loop.index}}"></div>
 
                                     <button type="button" class="btn btn-secondary-outline text-gray-dark">
                                         <i class="bi bi-skip-backward" aria-hidden="true"
-                                            onClick="wavesurfer2{{loop.index0}}.skipBackward()"></i>
+                                            onClick="wavesurfer2{{loop.index}}.skipBackward()"></i>
                                     </button>
                                     <button type="button" class="btn btn-secondary-outline text-gray-dark playPause">
                                         <i class="bi bi-play" aria-hidden="true"
-                                            onClick="wavesurfer2{{loop.index0}}.playPause()"></i>
+                                            onClick="wavesurfer2{{loop.index}}.playPause()"></i>
                                     </button>
                                     <button type="button" class="btn btn-secondary-outline text-gray-dark">
                                         <i class="bi bi-skip-forward" aria-hidden="true"
-                                            onClick="wavesurfer2{{loop.index0}}.skipForward()"></i>
+                                            onClick="wavesurfer2{{loop.index}}.skipForward()"></i>
                                     </button>
                                     <button type="button" class="btn btn-secondary-outline text-gray-dark">
                                         <i class="bi bi-stop" aria-hidden="true"
-                                            onClick="wavesurfer2{{loop.index0}}.stop()"></i>
+                                            onClick="wavesurfer2{{loop.index}}.stop()"></i>
                                     </button>
                                     <button type="button" class="btn btn-secondary-outline text-gray-dark muteUnmute">
                                         <i class="bi bi-volume-up" aria-hidden="true"
-                                            onClick="wavesurfer2{{loop.index0}}.toggleMute()"></i>
+                                            onClick="wavesurfer2{{loop.index}}.toggleMute()"></i>
                                     </button>
 
-
                                     <script>
-                                        var wavesurfer2{{ loop.index0 }} = WaveSurfer.create({
-                                            container: '#waveform2{{loop.index0}}',
+                                        var wavesurfer2{{loop.index}} = WaveSurfer.create({
+                                            container: '#waveform2{{loop.index}}',
                                             waveColor: 'blue',
                                             progressColor: 'navy',
                                         });
                         
-                                                wavesurfer2{ { loop.index0 } }.load('play/{{song.id}}');
+                                        wavesurfer2{{loop.index}}.load('play/{{song.id}}');
 
                                     </script>
 

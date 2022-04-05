@@ -29,7 +29,9 @@
     crossorigin="anonymous"></script>
 
   <!-- wavesurfer.js -->
-  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <!--<script src="https://unpkg.com/wavesurfer.js@6.1.0/dist/wavesurfer.js"></script>-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.4/wavesurfer.min.js" integrity="sha512-mhqErQ0f2UqnbsjgKpM96XfxVjVMnXpszEXKmnJk8467vR8h0MpiPauil8TKi5F5DldQGqNUO/XTyWbQku22LQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+  <script src="{{ url_for('static', filename='node_modules/wavesurfer.js/dist/wavesurfer.js')}}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
