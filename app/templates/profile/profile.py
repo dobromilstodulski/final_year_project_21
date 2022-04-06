@@ -18,7 +18,8 @@ def myprofile():
         Relationship.to_user == user).count()
     songs = User.get_songs(user)
     song_count = User.get_songs(user).count()
-    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count)
+    comments = User.get_comments(user)
+    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments)
 
 
 @profile.route('/follow/<username>')

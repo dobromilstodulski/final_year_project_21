@@ -37,6 +37,9 @@ class User(UserMixin, BaseModel):
 
     def get_songs(self):
         return Song.select().where(Song.user == self).order_by(Song.date_uploaded.desc())
+    
+    def get_comments(self):
+        return Comment.select().where(Comment.user_id == self).order_by(Comment.timestamp.desc())
 
     def get_post_feed(self):
         return Post.select().order_by(Post.pub_date.desc())
