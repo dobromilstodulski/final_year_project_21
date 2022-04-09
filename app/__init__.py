@@ -1,11 +1,15 @@
 import pusher
 import os
+from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from peewee import *
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 from flask_moment import Moment
+from acrcloud.recognizer import ACRCloudRecognizer, ACRCloudRecognizeType
+
+load_dotenv()
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -19,6 +23,17 @@ pusher_client = pusher.Pusher(
     cluster='eu',
     ssl=True
 )
+
+config = {
+    'host': os.getenv("HOST"),
+    'access_key': os.getenv("ACCESS_KEY"),
+    'access_secret': os.getenv("ACCESS_SECRET"),
+    'recognize_type': ACRCloudRecognizeType.ACR_OPT_REC_AUDIO, # you can replace it with [ACR_OPT_REC_AUDIO,ACR_OPT_REC_HUMMING,ACR_OPT_REC_BOTH], The     SDK decide which type fingerprint to create accordings to "recognize_type".
+    'debug':False,
+    'timeout': 10
+}
+
+re = ACRCloudRecognizer(config)
 
 def bad_request(e):
     return render_template('/error/400.html'), 400
@@ -56,6 +71,7 @@ def create_app():
         from app.templates.chat.chat import chatroom
         from app.templates.audio.audio import audio
         from app.templates.legal.legal import legal
+        from app.templates.search.search import search
 
         app.register_blueprint(auth)
         app.register_blueprint(profile)
@@ -65,6 +81,7 @@ def create_app():
         app.register_blueprint(chatroom)
         app.register_blueprint(audio)
         app.register_blueprint(legal)
+        app.register_blueprint(search)
 
         from app.views import views
         app.register_blueprint(views)

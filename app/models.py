@@ -218,6 +218,7 @@ class Group(BaseModel):
 
 
 def initialize():
+    database.close()
     database.connect()
     database.create_tables([User, Post, Song, Message, Comment, Chat, Msg,
                            Like, Favourite, Location, Group, Relationship], safe=True)

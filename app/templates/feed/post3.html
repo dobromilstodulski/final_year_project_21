@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Check For Copyright{% endblock %}
+
+{% block content %}
+                                              
+{% for item in all_items %}                                                       
+    <p>{{ item.media }}</p>                                                    
+{% endfor %}                                                                    
+
+{% if page > 1 %}                                                               
+    <a class="previous" href="./?page={{ page - 1 }}">Previous</a>              
+{% endif %}                                                                     
+{% if pagination.get_page() > page %}                                          
+    <a class="next" href="./?page={{ page + 1 }}">Next</a>                      
+{% endif %} 
+
+{% endblock %}

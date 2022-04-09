@@ -12,3 +12,6 @@ boto3
 flask_socketio
 pusher
 flask-moment
+git+https://github.com/acrcloud/acrcloud_sdk_python
+flask-paginate
+simple-websocket
