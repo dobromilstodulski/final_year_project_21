@@ -1,0 +1,50 @@
+{% if user.profile_picture == "" %}
+
+<center>
+    <img src="../../static/images/deafult_profile_picture.png" class="img-thumbnail" height="100"
+        width="100" alt="Default Profile Picture">
+</center>
+
+{% else %}
+
+<center>
+    <img src="{{user.profile_picture}}" class="img-thumbnail" alt="{{user.username}}">
+</center>
+
+{% endif %}
+
+<br />
+
+<center>
+    {{user.fullname}} / @{{user.username}}
+</center>
+
+<br />
+
+<center>
+    {{user.description}} / Joined @{{ moment(user.join_date).format('LL') }}
+</center>
+
+<br />
+
+{% if following_count == 0 %}
+
+<center>
+    Followers : {{followers_count}}
+</center>
+
+{% elif followers_count == 0 %}
+
+<center>
+    Following : {{following_count}}
+</center>
+
+{% else %}
+
+<center>
+    <a href="/following">Following : {{following_count}}</a> / <a href="/followers">Followers : {{followers_count}}</a>
+</center>
+
+{% endif %}
+
+<br />

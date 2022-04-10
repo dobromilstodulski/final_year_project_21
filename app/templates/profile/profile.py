@@ -25,6 +25,27 @@ def myprofile():
     return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments, pagination=pagination)
 
 
+@profile.route('/following')
+def following():
+    user = current_user
+    following = User.following(user)
+    following_count = User.select().join(Relationship, on=Relationship.to_user).where(
+        Relationship.from_user == user).count()
+    followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
+        Relationship.to_user == user).count()
+    return render_template('profile/following.html', user=user, following=following, following_count=following_count, followers_count=followers_count)
+
+
+@profile.route('/followers')
+def followers():
+    user = current_user
+    followers = User.followers(user)
+    following_count = User.select().join(Relationship, on=Relationship.to_user).where(
+        Relationship.from_user == user).count()
+    followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
+        Relationship.to_user == user).count()
+    return render_template('profile/following.html', user=user, followers=followers, following_count=following_count, followers_count=followers_count)
+
 @profile.route('/follow/<username>')
 @login_required
 def follow(username):
@@ -35,7 +56,7 @@ def follow(username):
     else:
         try:
             Relationship.create(
-                from_user=g.user._get_current_object(),
+                from_user=current_user,
                 to_user=to_user
             )
         except app.models.IntegrityError:
@@ -55,7 +76,7 @@ def unfollow(username):
     else:
         try:
             Relationship.get(
-                from_user=g.user._get_current_object(),
+                from_user=current_user,
                 to_user=to_user
             ).delete_instance()
         except app.models.IntegrityError:

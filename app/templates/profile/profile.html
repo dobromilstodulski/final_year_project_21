@@ -6,56 +6,7 @@
     <div class="row align-items-center g-lg-5 py-5">
         <div class="col-md-10 mx-auto col-lg-5 py-5">
 
-            {% if user.profile_picture == "" %}
-
-            <center>
-                <img src="../../static/images/deafult_profile_picture.png" class="img-thumbnail" height="100"
-                    width="100" alt="Default Profile Picture">
-            </center>
-
-            {% else %}
-
-            <center>
-                <img src="{{user.profile_picture}}" class="img-thumbnail" alt="{{user.username}}">
-            </center>
-
-            {% endif %}
-
-            <br />
-
-            <center>
-                {{user.fullname}} | @{{user.username}}
-            </center>
-
-            <br />
-
-            <center>
-                {{user.description}} | Joined @{{ moment(user.join_date).format('LL') }}
-            </center>
-
-            <br />
-
-            {% if following_count == 0 %}
-
-            <center>
-                Followers : {{followers_count}}
-            </center>
-
-            {% elif followers_count == 0 %}
-
-            <center>
-                Following : {{following_count}}
-            </center>
-
-            {% else %}
-
-            <center>
-                Following : {{following_count}} | Followers : {{followers_count}}
-            </center>
-
-            {% endif %}
-
-            <br />
+           {% include "partials/user-info.html" %}
 
             <nav>
                 <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
@@ -186,6 +137,7 @@
                     </div>
 
                 </div>
+
                 <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">
 
                     {% for song in songs %}

@@ -1,0 +1,37 @@
+<div class="d-flex text-muted pt-3">
+
+    {% if user.profile_picture == "" %}
+
+    <img src="../../static/images/deafult_profile_picture.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+        height="32" width="32" alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
+        preserveAspectRatio="xMidYMid slice" focusable="false">
+
+    {% else %}
+
+    <img src="{{user.profile_picture}}" class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
+        alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
+        focusable="false">
+
+    {% endif %}
+
+    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+        <div class="d-flex justify-content-between">
+            <strong class="text-gray-dark">{{user.fullname}}<span
+                    class="d-block"><i>@{{user.username}}</i></span></strong>
+            {% if user != current_user %}
+            {% if not user in current_user.following() %}
+
+            <a href="{{ url_for('profile.follow', username=user.username) }}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark"><i class="bi bi-person-plus"></i>Follow</a>
+
+            {% else %}
+
+            <a href="{{ url_for('profile.unfollow', username=user.username) }}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark"><i class="bi bi-person-dash"></i>Unfollow</a>
+
+            {% endif %}
+            {% endif %}
+        </div>
+        <!--<span class="d-block">@{{user.username}}</span>-->
+    </div>
+</div>
