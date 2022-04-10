@@ -20,11 +20,13 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-posts-tab" data-bs-toggle="pill" data-bs-target="#pills-posts"
-                        type="button" role="tab" aria-controls="pills-posts" aria-selected="false"><i class="bi bi-text-paragraph"></i> Posts</button>
+                        type="button" role="tab" aria-controls="pills-posts" aria-selected="false"><i
+                            class="bi bi-text-paragraph"></i> Posts</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-songs-tab" data-bs-toggle="pill" data-bs-target="#pills-songs"
-                        type="button" role="tab" aria-controls="pills-songs" aria-selected="false"><i class="bi bi-music-note-beamed"></i> Songs</button>
+                        type="button" role="tab" aria-controls="pills-songs" aria-selected="false"><i
+                            class="bi bi-music-note-beamed"></i> Songs</button>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
@@ -250,96 +252,92 @@
 
                                             <i>#{{song.genre}}</i>
                                         </strong>
+                                        <div class="container">
                                         <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}"
-                                            class="img-fluid" alt="{{song}}">
-                                        <audio id="audio" src="/play/{{song.id}}" type="audio/wav"></audio>
-                                        <progress min="0" max="100" value="0"></progress>
-                                        <button type="button" class="btn btn-secondary-outline playPauseAudio"
-                                            data-id="{{ song.id }}">
-                                            <i class="bi bi-play"></i> | <i class="bi bi-pause"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-secondary-outline" onclick="muteAudio()">
-                                            <i class="bi bi-volume-mute"></i>
-                                        </button>
-                                        <input type="range" class="form-range" id="customRange1"
-                                            onclick="changeVolume()">
+                                            class="img-fluid audioImage" alt="{{song.artwork}}">
+                                            <div class="middle">
+                                                <div id="playPauseAudio{{song.id}}" class="text"><i class="bi bi-play-fill"></i> / <i class="bi bi-pause-fill"></i></div>
+                                            </div>
+                                        </div>
+                                        <audio id="audio{{song.id}}" src="/play/{{song.id}}" type="audio/wav"></audio>
 
-                                    <div id="waveform2{{song.id}}"></div>
+                                        <script>
+                                            document.getElementById("playPauseAudio{{song.id}}").onclick = function() {
+                                                var audio = document.getElementById("audio{{song.id}}");
+                                                if (audio.paused) audio.play();
+                                                else audio.pause();
+                                            };
 
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark">
-                                        <i class="bi bi-skip-backward" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.skipBackward()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark playPause">
-                                        <i class="bi bi-play" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.playPause()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark">
-                                        <i class="bi bi-skip-forward" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.skipForward()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark">
-                                        <i class="bi bi-stop" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.stop()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark muteUnmute">
-                                        <i class="bi bi-volume-up" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.toggleMute()"></i>
-                                    </button>
+                                            function show() {
+                                                $('#playPauseAudio{{song.id}}').find("i").toggleClass("bi-play-fill bi bi-pause-fill");
+                                            }
 
-                                    <script>
-                                        var wavesurfer2{{ song.id }} = WaveSurfer.create({
-                                            container: '#waveform2{{song.id}}',
-                                            waveColor: 'blue',
-                                            progressColor: 'navy',
-                                            backend: 'MediaElementWebAudio',
-                                            barGap: 2,
-                                            barHeight: 2,
-                                            barMinHeight: 1,
-                                            barRadius: 2,
-                                            barWidth: 2,
-                                            height: 64,
-                                            normalize: true,
-                                            partialRender: true,
-                                            responsive: true,
-                                        });
-                        
-                                        wavesurfer2{ { song.id } }.load('play/{{song.id}}');
+                                            $(document).ready(function () {
+                                                $(".bi-play-fill").click(function () {
+                                                    $(this).toggleClass("bi bi-pause-fill");
+                                                });
 
-                                    </script>
+                                                $(document).on('click', '.like, .unlike', function (event) {
 
+                                                    event.preventDefault();
 
-                                    <strong class="d-block text-gray-dark">
+                                                    var id = $(this).attr("post_id");
+                                                    var split_id = id.split("_");
 
-                                        {% if song.numFavorites == 0 %}
+                                                    var text = split_id[0];
+                                                    var post_id1 = split_id[1];  // albumid
 
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-hand-thumbs-up"></i> Like
-                                        </button>
+                                                    req = $.ajax({
+                                                        url: '/likepost/' + post_id1 + '/' + text,
+                                                        type: 'POST',
+                                                        //data: { post_id: post_id1, likeunlike: text },
+                                                        dataType: 'html',
+                                                    });
 
-                                        {% else %}
+                                                    req.done(function (data) {
+                                                        console.log(data);
+                                                        $('#result' + post_id1).fadeOut(0).fadeIn(0);
+                                                        $('#result' + post_id1).html(data);
+                                                    });
+                                                });
+                                            });
+                                        </script>
 
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-hand-thumbs-up"></i> Likes
-                                        </button>
+                                        <strong class="d-block text-gray-dark">
 
-                                        {% endif %}
+                                            {% if song.numFavorites == 0 %}
 
-                                        {% if song.numComments == 0 %}
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-hand-thumbs-up"></i> Like
+                                            </button>
 
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-chat"></i> Comment
-                                        </button>
+                                            {% else %}
 
-                                        {% else %}
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-hand-thumbs-up"></i> Likes
+                                            </button>
 
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-chat"></i> Comments
-                                        </button>
+                                            {% endif %}
 
-                                        {% endif %}
+                                            {% if song.numComments == 0 %}
 
-                                    </strong>
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-chat"></i> Comment
+                                            </button>
+
+                                            {% else %}
+
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-chat"></i> Comments
+                                            </button>
+
+                                            {% endif %}
+
+                                        </strong>
                                     </p>
                                 </div>
                             </div>
