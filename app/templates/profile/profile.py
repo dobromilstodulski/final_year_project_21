@@ -9,9 +9,11 @@ from flask_paginate import Pagination, get_page_parameter
 profile = Blueprint('profile', __name__)
 
 
-@profile.route('/my')
-def myprofile():
-    user = current_user
+@profile.route('/<username>')
+def userProfile(username):
+    #users = User.select().where(User.username == username)
+    #user = users[0]
+    user = User.get(User.username ** username)
     posts = User.get_posts(user)
     following_count = User.select().join(Relationship, on=Relationship.to_user).where(
         Relationship.from_user == user).count()
@@ -23,6 +25,18 @@ def myprofile():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=song_count, record_name='songs', per_page=1)
     return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments, pagination=pagination)
+
+
+@profile.route('/edit-user-details', methods=['GET', 'POST'])
+def editUserDetails():
+    user = current_user
+    
+    User.update(
+            
+        ).where(
+            User.username == user.username
+        ).execute()
+    
 
 
 @profile.route('/following')
@@ -44,7 +58,8 @@ def followers():
         Relationship.from_user == user).count()
     followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
         Relationship.to_user == user).count()
-    return render_template('profile/following.html', user=user, followers=followers, following_count=following_count, followers_count=followers_count)
+    return render_template('profile/followers.html', user=user, followers=followers, following_count=following_count, followers_count=followers_count)
+
 
 @profile.route('/follow/<username>')
 @login_required

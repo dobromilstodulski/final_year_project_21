@@ -39,6 +39,15 @@
 
   <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous" defer></script>
 
+  <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/aplayer/dist/aplayer.min.css') }}">
+  <script src="{{ url_for('static', filename='node_modules/aplayer/dist/aplayer.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='node_modules/bower_components/webcomponentsjs/webcomponents-lite.js') }}"></script>
+  <link rel="import" href="{{ url_for('static', filename='node_modules/bower_components/paper-audio-player/paper-audio-player.html') }}">
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/css/green-audio-player.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/js/green-audio-player.min.js"></script>
+
   <script src="{{ url_for('static', filename='js/chat_page.js') }}"></script>
 
   <title>{% block title %}{% endblock %} KMPSR </title>

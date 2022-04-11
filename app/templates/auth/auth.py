@@ -5,7 +5,7 @@ import app.models
 from app import login_manager, db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-auth = Blueprint('auth', __name__, url_prefix='/auth')
+auth = Blueprint('auth', __name__)
 
 @login_manager.user_loader
 def load_user(id):

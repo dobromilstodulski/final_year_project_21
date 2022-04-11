@@ -1,8 +1,8 @@
 {% if user.profile_picture == "" %}
 
 <center>
-    <img src="../../static/images/deafult_profile_picture.png" class="img-thumbnail" height="100"
-        width="100" alt="Default Profile Picture">
+    <img src="../../static/images/deafult_profile_picture.png" class="img-thumbnail" height="100" width="100"
+        alt="Default Profile Picture">
 </center>
 
 {% else %}
@@ -27,22 +27,16 @@
 
 <br />
 
-{% if following_count == 0 %}
+{% if following_count != 0 and followers_count != 0 %}
 
 <center>
-    Followers : {{followers_count}}
-</center>
-
-{% elif followers_count == 0 %}
-
-<center>
-    Following : {{following_count}}
+    <a href="/following">Following : {{following_count}}</a> / <a href="/followers">Followers : {{followers_count}}</a>
 </center>
 
 {% else %}
 
 <center>
-    <a href="/following">Following : {{following_count}}</a> / <a href="/followers">Followers : {{followers_count}}</a>
+    <p>No Followers or Following</p>
 </center>
 
 {% endif %}

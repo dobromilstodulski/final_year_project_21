@@ -343,6 +343,31 @@
                             </div>
                         </div>
 
+                        
+                        <div id="aplayer{{song.id}}"></div>
+
+                        <script>
+                            const ap{{song.id}} = new APlayer({
+                                container: document.getElementById('aplayer{{song.id}}'),
+                                audio: [{
+                                    name: '{{song.title}}',
+                                    artist: '{{song.artist}}',
+                                    url: '/play/{{song.id}}',
+                                    cover: 'https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}'
+                                }]
+                            });
+
+                            new GreenAudioPlayer('#player{{song.id}}');
+                        </script>
+
+                        <paper-audio-player class="orange x-scope paper-audio-player-0" src="/play/{{song.id}}" title="{{song.artist}} - {{song.title}}"></paper-audio-player>
+
+                        <div id="player{{song.id}}" class="player">
+                            <audio>
+                                <source src="/play/{{song.id}}" type="audio/mpeg">
+                            </audio>
+                        </div>
+
                         {% endfor %}
 
                     </div>

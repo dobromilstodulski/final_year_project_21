@@ -6,24 +6,41 @@
     <div class="row align-items-center g-lg-5 py-5">
         <div class="col-md-10 mx-auto col-lg-5 py-5">
 
-           {% include "partials/user-info.html" %}
+            {% include "partials/user-info.html" %}
 
             <nav>
                 <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                    {% if user == current_user %}
                     <button class="nav-link active" id="nav-details-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-details" type="button" role="tab" aria-controls="nav-details"
                         aria-selected="true">Details</button>
                     <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
                         type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+                    {% else %}
+                    <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
+                        type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+                    {% endif %}
                     <button class="nav-link" id="nav-uploads-tab" data-bs-toggle="tab" data-bs-target="#nav-uploads"
                         type="button" role="tab" aria-controls="nav-uploads" aria-selected="false">Uploads</button>
                     <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments"
                         type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
                 </div>
             </nav>
+
+            {% if user == current_user %}
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-details" role="tabpanel"
                     aria-labelledby="nav-details-tab">
+
+                    <br />
+
+                    <!-- Button trigger modal -->
+                    <center>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#editUserDetailsModal">
+                            <i class="bi bi-pencil-square"></i> Edit Profile
+                        </button>
+                    </center>
 
                     <br />
 
@@ -31,14 +48,431 @@
                     <p>Gender : {{user.gender}}</p>
                     <p>Birthday : {{user.birthday}}</p>
 
+                    <!-- New Post Modal -->
+                    <div class="modal fade" id="editUserDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST"
+                                        enctype="multipart/form-data" action="/edit-user-details{{user.username}}">
+                                        <div class="mb-3">
+                                            <label for="media" class="form-label">Upload Photo or Video</label>
+                                            <!--<input class="form-control" type="file" id="media" name="media">-->
+                                            <input class="form-control" type="file" id="profilePicture" name="profilePicture">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="fullname" name="fullname"
+                                                value="{{user.fullname}}">
+                                            <label for="fullname">Full Name</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                value="{{user.username}}">
+                                            <label for="username">Username</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                value="{{user.email}}">
+                                            <label for="email">Email</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <fieldset disabled>
+                                            <label for="password">Password</label>
+                                            <input type="text" class="form-control" id="password"
+                                                name="password" placeholder="Password">
+                                        </fieldset>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" aria-label="Default select example"
+                                                name="gender" id="gender" value="{{user.gender}}">
+                                                <option selected>Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                                <option value="N/A">Rather Not Say</option>
+                                            </select>
+                                            <label for="gender">Gender</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="date" class="form-control" name="birthday" id="birthday"
+                                                placeholder="birthday" value="{{user.birthday}}">
+                                            <label for="birthday">Date of Birth</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="content" class="form-label">Description</label>
+                                            <textarea class="form-control" id="description" name="description"
+                                                placeholder="Please describe yourself." rows="3" value="{{user.description}}"></textarea>
+                                        </div>
+                                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update Details</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="w-100 btn btn-lg btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
                 <div class="tab-pane fade" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
 
-                    <br />
+                    {% else %}
 
-                    <div class="row">
+                    <div class="tab-pane fade show active" id="nav-posts" role="tabpanel"
+                        aria-labelledby="nav-posts-tab">
 
-                        {% for post in posts %}
+                        {% endif %}
+
+                        <br />
+
+                        <div class="row">
+
+                            {% for post in posts %}
+
+                            <div class="d-flex text-muted pt-3">
+
+                                {% if user.profile_picture == "" %}
+
+                                <img src="../../static/images/deafult_profile_picture.png"
+                                    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
+                                    alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
+                                    preserveAspectRatio="xMidYMid slice" focusable="false">
+
+                                {% else %}
+
+                                <img src="{{user.profile_picture}}"
+                                    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
+                                    alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32"
+                                    preserveAspectRatio="xMidYMid slice" focusable="false">
+
+                                {% endif %}
+
+                                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                    <strong class="d-block text-gray-dark">
+                                        {{post.user.fullname}} <i> @{{post.user.username}} </i>
+                                        <button type="button" class="btn btn-secondary-outline btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary-outline btn-sm">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </strong>
+                                    <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+                                        {{moment(post.pub_date).fromNow()}}</i>
+                                    {{post.content}}
+
+                                    {% if post.isMedia == 1 %}
+
+                                    <a href="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}"
+                                        target="_blank">
+                                        <img class="img-fluid" style="display:block"
+                                            src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}"
+                                            alt="{{post.media}}">
+                                    </a>
+
+                                    {% endif %}
+
+                                    <strong class="d-block text-gray-dark" id="result{{post.id}}">
+
+                                        {% if current_user.hasUserLiked(post.id) %}
+                                        <a href="{{url_for('profile.like_action', post_id=post.id, action='unlike')}}"
+                                            post_id="unlike_{{post.id}}"
+                                            class="btn btn-secondary-outline btn-sm text-gray-dark unlike">
+                                            <i class="bi bi-hand-thumbs-up-fill"></i> You & {{post.numLikes}}
+                                            Others Liked
+                                        </a>
+
+                                        {% else %}
+
+                                        {% if post.numLikes == 0 %}
+
+                                        <a href="{{url_for('profile.like_action', post_id=post.id, action='like')}}"
+                                            post_id="like_{{post.id}}"
+                                            class="btn btn-secondary-outline btn-sm text-gray-dark like">
+                                            <i class="bi bi-hand-thumbs-up"></i> Like
+                                        </a>
+
+                                        {% else %}
+
+                                        <a href="{{url_for('profile.like_action', post_id=post.id, action='like')}}"
+                                            post_id="like_{{post.id}}"
+                                            class="btn btn-secondary-outline btn-sm text-gray-dark like">
+                                            <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
+                                        </a>
+
+                                        {% endif %}
+
+                                        {% endif %}
+
+                                        {% if post.numComments == 0 %}
+
+                                        <a href="/comment/{{post.id}}"
+                                            class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                            <i class="bi bi-chat"></i> Comment
+                                        </a>
+
+                                        {% else %}
+
+                                        <a href="/comment/{{post.id}}"
+                                            class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                            <i class="bi bi-chat"></i> Comments
+                                        </a>
+
+                                        {% endif %}
+
+                                    </strong>
+                                </p>
+
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">
+
+                        {% for song in songs %}
+
+                        <h1>{{song.title}}</h1>
+                        <input type="hidden" id="source" name="source" value="play/{{song.id}}">
+
+                        <i class="bi bi-music" aria-hidden="true"> {{ song.source }}</i>
+                        <i class="bi bi-play-circle" aria-hidden="true"
+                            onClick="wavesurfer{{loop.index0}}.playPause()"></i>
+                        <i class="bi bi-stop-circle" aria-hidden="true" onClick="wavesurfer{{loop.index0}}.stop()"></i>
+                        <div id="waveform{{loop.index0}}"></div>
+
+                        {% for i in range(song_count) %}
+                        <p></p>
+                        {% endfor %}
+
+
+                        <script>
+                            $(document).ready(function () {
+                                $(".bi-play-circle").click(function () {
+                                    $(this).toggleClass("bi-pause-circle");
+                                });
+                                $(".bi-pause-circle").click(function () {
+                                    $(this).parent().find("i.bi-play-circle").removeClass("bi-pause-circle");
+                                });
+
+                            });
+
+                            var wavesurfer{{ loop.index0 }} = WaveSurfer.create({
+                                container: '#waveform{{loop.index0}}',
+                                waveColor: 'violet',
+                                progressColor: 'purple',
+                            });
+
+                        wavesurfer{ { loop.index0 } }.load('https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.source}}');
+
+                        </script>
+                        {% endfor %}
+
+                        <div class="row">
+
+                            {% for song in songs %}
+
+                            <input type="hidden" id="count" name="count" value="{{song_count}}">
+
+                            <div class="d-flex text-muted pt-3">
+                                <div class="card border-secondary mb-3" style="max-width: 32rem;">
+                                    <div class="card-body text-secondary small lh-sm">
+                                        <p class="card-text">
+                                            <strong class="d-block text-gray-dark">
+                                                {% if user.profile_picture == "" %}
+
+                                                <img src="../../static/images/deafult_profile_picture.png"
+                                                    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32"
+                                                    width="32" alt="Default Profile Picture" role="img"
+                                                    aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
+                                                    focusable="false">
+
+                                                {% else %}
+
+                                                <img src="{{user.profile_picture}}"
+                                                    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32"
+                                                    width="32" alt="{{user.username}}" role="img"
+                                                    aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
+                                                    focusable="false">
+
+                                                {% endif %}
+
+                                                {{song.user.fullname}} <i> @{{song.user.username}} </i>
+                                                <button type="button" class="btn btn-secondary-outline btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-secondary-outline btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </strong>
+
+                                            <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+                                                {{moment(song.date_uploaded).format("LL")}}</i>
+
+                                            <strong class="d-block text-gray-dark">
+                                                <i class="bi bi-vinyl"></i> {{song.artist}}
+
+                                                - {{song.title}}
+
+                                                {% if song.feature != "" %}
+
+                                                <i> (feat. {{song.feature}})</i>
+
+                                                {% endif %}
+
+                                                <i>#{{song.genre}}</i>
+                                            </strong>
+                                            <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}"
+                                                class="img-fluid" alt="{{song}}">
+                                            <audio id="audio" src="/play/{{song.id}}" type="audio/wav"></audio>
+                                            <progress min="0" max="100" value="0"></progress>
+                                            <button type="button" class="btn btn-secondary-outline playPauseAudio"
+                                                data-id="{{ song.id }}">
+                                                <i class="bi bi-play"></i> | <i class="bi bi-pause"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-secondary-outline"
+                                                onclick="muteAudio()">
+                                                <i class="bi bi-volume-mute"></i>
+                                            </button>
+                                            <input type="range" class="form-range" id="customRange1"
+                                                onclick="changeVolume()">
+
+                                        <div id="waveform2{{song.id}}"></div>
+
+                                        <button type="button" class="btn btn-secondary-outline text-gray-dark">
+                                            <i class="bi bi-skip-backward" aria-hidden="true"
+                                                onClick="wavesurfer2{{song.id}}.skipBackward()"></i>
+                                        </button>
+                                        <button type="button"
+                                            class="btn btn-secondary-outline text-gray-dark playPause">
+                                            <i class="bi bi-play" aria-hidden="true"
+                                                onClick="wavesurfer2{{song.id}}.playPause()"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary-outline text-gray-dark">
+                                            <i class="bi bi-skip-forward" aria-hidden="true"
+                                                onClick="wavesurfer2{{song.id}}.skipForward()"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary-outline text-gray-dark">
+                                            <i class="bi bi-stop" aria-hidden="true"
+                                                onClick="wavesurfer2{{song.id}}.stop()"></i>
+                                        </button>
+                                        <button type="button"
+                                            class="btn btn-secondary-outline text-gray-dark muteUnmute">
+                                            <i class="bi bi-volume-up" aria-hidden="true"
+                                                onClick="wavesurfer2{{song.id}}.toggleMute()"></i>
+                                        </button>
+
+                                        <script>
+                                            var wavesurfer2{{ song.id }} = WaveSurfer.create({
+                                                container: '#waveform2{{song.id}}',
+                                                waveColor: 'blue',
+                                                progressColor: 'navy',
+                                                backend: 'MediaElementWebAudio',
+                                                barGap: 2,
+                                                barHeight: 2,
+                                                barMinHeight: 1,
+                                                barRadius: 2,
+                                                barWidth: 2,
+                                                height: 64,
+                                                normalize: true,
+                                                partialRender: true,
+                                                responsive: true,
+                                            });
+                        
+                                        wavesurfer2{ { song.id } }.load('play/{{song.id}}');
+
+                                        </script>
+
+
+                                        <strong class="d-block text-gray-dark">
+
+                                            {% if song.numFavorites == 0 %}
+
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-hand-thumbs-up"></i> Like
+                                            </button>
+
+                                            {% else %}
+
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-hand-thumbs-up"></i> Likes
+                                            </button>
+
+                                            {% endif %}
+
+                                            {% if song.numComments == 0 %}
+
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-chat"></i> Comment
+                                            </button>
+
+                                            {% else %}
+
+                                            <button type="button"
+                                                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                                                <i class="bi bi-chat"></i> Comments
+                                            </button>
+
+                                            {% endif %}
+
+                                        </strong>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+
+                            <table class="table table-responsive table-borderless table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Artist</th>
+                                        <th scope="col">Song</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for song in songs %}
+
+                                    <input type="hidden" id="source" name="source"
+                                        value="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.source}}">
+
+                                    <tr>
+                                        <td><img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}"
+                                                class="img-fluid" height="100" width="100" alt="{{song}}"></td>
+                                        <td>{{song.artist}}</td>
+                                        <td>{{song.title}}</td>
+                                        <audio id="audio" src="/play/{{song.id}}" type="audio/wav"></audio>
+                                        <td><button type="button" class="btn btn-secondary-outline playPauseAudio"
+                                                data-id="{{ song.id }}">
+                                                <i class="bi bi-play"></i>
+                                            </button></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+
+                        {% for comment in comments %}
 
                         <div class="d-flex text-muted pt-3">
 
@@ -59,7 +493,7 @@
 
                             <p class="pb-3 mb-0 small lh-sm border-bottom">
                                 <strong class="d-block text-gray-dark">
-                                    {{post.user.fullname}} <i> @{{post.user.username}} </i>
+                                    {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
                                     <button type="button" class="btn btn-secondary-outline btn-sm">
                                         <i class="bi bi-pencil"></i>
                                     </button>
@@ -68,66 +502,8 @@
                                     </button>
                                 </strong>
                                 <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-                                    {{moment(post.pub_date).fromNow()}}</i>
-                                {{post.content}}
-
-                                {% if post.isMedia == 1 %}
-
-                                <a href="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" target="_blank">
-                                    <img class="img-fluid" style="display:block"
-                                        src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}"
-                                        alt="{{post.media}}">
-                                </a>
-
-                                {% endif %}
-
-                                <strong class="d-block text-gray-dark" id="result{{post.id}}">
-
-                                    {% if current_user.hasUserLiked(post.id) %}
-                                    <a href="{{url_for('profile.like_action', post_id=post.id, action='unlike')}}"
-                                        post_id="unlike_{{post.id}}" class="btn btn-secondary-outline btn-sm text-gray-dark unlike">
-                                        <i class="bi bi-hand-thumbs-up-fill"></i> You & {{post.numLikes}}
-                                        Others Liked
-                                    </a>
-
-                                    {% else %}
-
-                                    {% if post.numLikes == 0 %}
-
-                                    <a href="{{url_for('profile.like_action', post_id=post.id, action='like')}}"
-                                        post_id="like_{{post.id}}" class="btn btn-secondary-outline btn-sm text-gray-dark like">
-                                        <i class="bi bi-hand-thumbs-up"></i> Like
-                                    </a>
-
-                                    {% else %}
-
-                                    <a href="{{url_for('profile.like_action', post_id=post.id, action='like')}}"
-                                        post_id="like_{{post.id}}"
-                                        class="btn btn-secondary-outline btn-sm text-gray-dark like">
-                                        <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
-                                    </a>
-
-                                    {% endif %}
-
-                                    {% endif %}
-
-                                    {% if post.numComments == 0 %}
-
-                                    <a href="/comment/{{post.id}}"
-                                        class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                        <i class="bi bi-chat"></i> Comment
-                                    </a>
-
-                                    {% else %}
-
-                                    <a href="/comment/{{post.id}}"
-                                        class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                        <i class="bi bi-chat"></i> Comments
-                                    </a>
-
-                                    {% endif %}
-
-                                </strong>
+                                    {{moment(comment.timestamp).fromNow()}}</i>
+                                {{comment.comment}}
                             </p>
 
                         </div>
@@ -135,592 +511,326 @@
                         {% endfor %}
 
                     </div>
-
                 </div>
 
-                <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">
-
-                    {% for song in songs %}
-
-                    <h1>{{song.title}}</h1>
-                    <input type="hidden" id="source" name="source" value="play/{{song.id}}">
-
-                    <i class="bi bi-music" aria-hidden="true"> {{ song.source }}</i>
-                    <i class="bi bi-play-circle" aria-hidden="true" onClick="wavesurfer{{loop.index0}}.playPause()"></i>
-                    <i class="bi bi-stop-circle" aria-hidden="true" onClick="wavesurfer{{loop.index0}}.stop()"></i>
-                    <div id="waveform{{loop.index0}}"></div>
-
-                    {% for i in range(song_count) %}
-                    <p></p>
-                    {% endfor %}
-
-
-                    <script>
-                        $(document).ready(function () {
-                            $(".bi-play-circle").click(function () {
-                                $(this).toggleClass("bi-pause-circle");
-                            });
-                            $(".bi-pause-circle").click(function () {
-                                $(this).parent().find("i.bi-play-circle").removeClass("bi-pause-circle");
-                            });
-
-                        });
-
-                        var wavesurfer{{ loop.index0 }} = WaveSurfer.create({
-                            container: '#waveform{{loop.index0}}',
-                            waveColor: 'violet',
-                            progressColor: 'purple',
-                        });
-
-                        wavesurfer{ { loop.index0 } }.load('https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.source}}');
-
-                    </script>
-                    {% endfor %}
-
-                    <div class="row">
-
-                        {% for song in songs %}
-
-                        <input type="hidden" id="count" name="count" value="{{song_count}}">
-
-                        <div class="d-flex text-muted pt-3">
-                            <div class="card border-secondary mb-3" style="max-width: 32rem;">
-                                <div class="card-body text-secondary small lh-sm">
-                                    <p class="card-text">
-                                        <strong class="d-block text-gray-dark">
-                                            {% if user.profile_picture == "" %}
-
-                                            <img src="../../static/images/deafult_profile_picture.png"
-                                                class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32"
-                                                width="32" alt="Default Profile Picture" role="img"
-                                                aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
-                                                focusable="false">
-
-                                            {% else %}
-
-                                            <img src="{{user.profile_picture}}"
-                                                class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32"
-                                                width="32" alt="{{user.username}}" role="img"
-                                                aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
-                                                focusable="false">
-
-                                            {% endif %}
-
-                                            {{song.user.fullname}} <i> @{{song.user.username}} </i>
-                                            <button type="button" class="btn btn-secondary-outline btn-sm">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-secondary-outline btn-sm">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </strong>
-
-                                        <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-                                            {{moment(song.date_uploaded).format("LL")}}</i>
-
-                                        <strong class="d-block text-gray-dark">
-                                            <i class="bi bi-vinyl"></i> {{song.artist}}
-
-                                            - {{song.title}}
-
-                                            {% if song.feature != "" %}
-
-                                            <i> (feat. {{song.feature}})</i>
-
-                                            {% endif %}
-
-                                            <i>#{{song.genre}}</i>
-                                        </strong>
-                                        <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}"
-                                            class="img-fluid" alt="{{song}}">
-                                        <audio id="audio" src="/play/{{song.id}}" type="audio/wav"></audio>
-                                        <progress min="0" max="100" value="0"></progress>
-                                        <button type="button" class="btn btn-secondary-outline playPauseAudio"
-                                            data-id="{{ song.id }}">
-                                            <i class="bi bi-play"></i> | <i class="bi bi-pause"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-secondary-outline" onclick="muteAudio()">
-                                            <i class="bi bi-volume-mute"></i>
-                                        </button>
-                                        <input type="range" class="form-range" id="customRange1"
-                                            onclick="changeVolume()">
-
-                                    <div id="waveform2{{song.id}}"></div>
-
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark">
-                                        <i class="bi bi-skip-backward" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.skipBackward()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark playPause">
-                                        <i class="bi bi-play" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.playPause()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark">
-                                        <i class="bi bi-skip-forward" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.skipForward()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark">
-                                        <i class="bi bi-stop" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.stop()"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary-outline text-gray-dark muteUnmute">
-                                        <i class="bi bi-volume-up" aria-hidden="true"
-                                            onClick="wavesurfer2{{song.id}}.toggleMute()"></i>
-                                    </button>
-
-                                    <script>
-                                        var wavesurfer2{{ song.id }} = WaveSurfer.create({
-                                            container: '#waveform2{{song.id}}',
-                                            waveColor: 'blue',
-                                            progressColor: 'navy',
-                                            backend: 'MediaElementWebAudio',
-                                            barGap: 2,
-                                            barHeight: 2,
-                                            barMinHeight: 1,
-                                            barRadius: 2,
-                                            barWidth: 2,
-                                            height: 64,
-                                            normalize: true,
-                                            partialRender: true,
-                                            responsive: true,
-                                        });
-                        
-                                        wavesurfer2{ { song.id } }.load('play/{{song.id}}');
-
-                                    </script>
-
-
-                                    <strong class="d-block text-gray-dark">
-
-                                        {% if song.numFavorites == 0 %}
-
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-hand-thumbs-up"></i> Like
-                                        </button>
-
-                                        {% else %}
-
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-hand-thumbs-up"></i> Likes
-                                        </button>
-
-                                        {% endif %}
-
-                                        {% if song.numComments == 0 %}
-
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-chat"></i> Comment
-                                        </button>
-
-                                        {% else %}
-
-                                        <button type="button" class="btn btn-secondary-outline btn-sm text-gray-dark">
-                                            <i class="bi bi-chat"></i> Comments
-                                        </button>
-
-                                        {% endif %}
-
-                                    </strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {% endfor %}
-
-                        <table class="table table-responsive table-borderless table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Artist</th>
-                                    <th scope="col">Song</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for song in songs %}
-
-                                <input type="hidden" id="source" name="source"
-                                    value="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.source}}">
-
-                                <tr>
-                                    <td><img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}"
-                                            class="img-fluid" height="100" width="100" alt="{{song}}"></td>
-                                    <td>{{song.artist}}</td>
-                                    <td>{{song.title}}</td>
-                                    <audio id="audio" src="/play/{{song.id}}" type="audio/wav"></audio>
-                                    <td><button type="button" class="btn btn-secondary-outline playPauseAudio"
-                                            data-id="{{ song.id }}">
-                                            <i class="bi bi-play"></i>
-                                        </button></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        
-                    </div>
-
-                </div>
-                <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-
-                    {% for comment in comments %}
-
-                    <div class="d-flex text-muted pt-3">
-
-                        {% if user.profile_picture == "" %}
-
-                        <img src="../../static/images/deafult_profile_picture.png"
-                            class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
-                            alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-
-                        {% else %}
-
-                        <img src="{{user.profile_picture}}" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-                            height="32" width="32" alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-
-                        {% endif %}
-
-                        <p class="pb-3 mb-0 small lh-sm border-bottom">
-                            <strong class="d-block text-gray-dark">
-                                {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
-                                <button type="button" class="btn btn-secondary-outline btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button type="button" class="btn btn-secondary-outline btn-sm">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </strong>
-                            <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-                                {{moment(comment.timestamp).fromNow()}}</i>
-                            {{comment.comment}}
-                        </p>
-
-                    </div>
-
-                    {% endfor %}
-
-                </div>
             </div>
-
         </div>
     </div>
-</div>
 
-<script>
+    <script>
 
-    $(document).ready(function () {
-        $(".bi-play").click(function () {
-            $(this).toggleClass("bi bi-pause");
-        });
-        $(".bi-pause").click(function () {
-            $(this).parent().find(".bi-play").removeClass("bi bi-pause");
-        });
-        $(".bi-play").click(function () {
-            $(this).toggleClass("bi bi-pause");
-        });
-        $('.playPause').click(function () {
-            $(this).find('i').toggleClass('bi-play').toggleClass('bi-pause');
-        });
-        $('.muteUnmute').click(function () {
-            $(this).find('i').toggleClass('bi-volume-up').toggleClass('bi-volume-mute');
-        });
-        /*
-        $('.playPause').hover(function() {
-            $(this).find('i').toggleClass('bi-play').toggleClass('bi-play-fill');
-        });
-        $('.playPause').hover(function() {
-            $(this).find('i').toggleClass('bi-pause').toggleClass('bi-pause-fill');
-        });
-        */
+        $(document).ready(function () {
+            $(".bi-play").click(function () {
+                $(this).toggleClass("bi bi-pause");
+            });
+            $(".bi-pause").click(function () {
+                $(this).parent().find(".bi-play").removeClass("bi bi-pause");
+            });
+            $(".bi-play").click(function () {
+                $(this).toggleClass("bi bi-pause");
+            });
+            $('.playPause').click(function () {
+                $(this).find('i').toggleClass('bi-play').toggleClass('bi-pause');
+            });
+            $('.muteUnmute').click(function () {
+                $(this).find('i').toggleClass('bi-volume-up').toggleClass('bi-volume-mute');
+            });
+            /*
+            $('.playPause').hover(function() {
+                $(this).find('i').toggleClass('bi-play').toggleClass('bi-play-fill');
+            });
+            $('.playPause').hover(function() {
+                $(this).find('i').toggleClass('bi-pause').toggleClass('bi-pause-fill');
+            });
+            */
 
-        /*
-        $(".like").click(function(){
-            var id = this.id;   // Getting Button id
-            var split_id = id.split("_");
+            /*
+            $(".like").click(function(){
+                var id = this.id;   // Getting Button id
+                var split_id = id.split("_");
+        
+                var text = split_id[0];
+                var post_id1 = split_id[1];  // postid
+        
+        
+        
+                // AJAX Request
+                $.ajax({
+                    url: '/ur-url',
+                    type: 'post',
+                    data: {post_id1:post_id},
+                    dataType: 'html',
+                    success: function(data){
+                        //var likes = data['likes'];
+                        //var unlikes = data['unlikes'];
+        
+                        $("#likes_"+post_id).html(data);        // setting likes
+                    }
+                });   
+            });
+            */
+
+            /*
+            $(".like").click(function(){
+                var id = this.id;   // Getting Button id
+                var split_id = id.split("_");
     
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // postid
+                var text = split_id[0];
+                var post_id1 = split_id[1];  // postid
+    
+                // AJAX Request
+                $.ajax({
+                    url: '/like',
+                    type: 'POST',
+                    data: { post_id1: post_id1 },
+                    dataType: 'html',
+                    success: function(data){
+                        $("#like_"+post_id).html(data);        // setting likes
+                    }
+                }); 
+                
+                event.preventDefault()
+            });
+            */
+
+            /*
+            $(".like .unlike").click(function (e) {
+    
+                e.preventDefault();
+    
+                var id = $(this).attr("post_id");
+                var split_id = id.split("_");
+    
+                var text = split_id[0];
+                var post_id1 = split_id[1];  // albumid
+    
+                req = $.ajax({
+                    url: '/likepost',
+                    type: 'POST',
+                    data: { post_id: post_id1, likeunlike: text },
+                    dataType: 'html',
+                });
+    
+                req.done(function (data) {
+                    var like = data['like'];
+                    var unlike = data['unlike'];
     
     
+                    $('#like' + post_id).text(data.likes);
+                    $('#unlike' + post_id).json(data.likes);
+                });
+            });
+            */
+
+            $(document).on('click', '.like, .unlike', function (event) {
+
+                event.preventDefault();
+
+                var id = $(this).attr("post_id");
+                var split_id = id.split("_");
+
+                var text = split_id[0];
+                var post_id1 = split_id[1];  // albumid
+
+                req = $.ajax({
+                    url: '/likepost/' + post_id1 + '/' + text,
+                    type: 'POST',
+                    //data: { post_id: post_id1, likeunlike: text },
+                    dataType: 'html',
+                });
+
+                req.done(function (data) {
+                    console.log(data);
+                    $('#result' + post_id1).fadeOut(0).fadeIn(0);
+                    $('#result' + post_id1).html(data);
+                    //$('#counts' + post_id1).text(data.likes);
+                    //$('#unlike_' + post_id1).text(data.likes);
+                });
+            });
+
+            /*
+            $(document).on( 'click', '.like', function (event) {
     
-            // AJAX Request
-            $.ajax({
-                url: '/ur-url',
-                type: 'post',
-                data: {post_id1:post_id},
-                dataType: 'html',
-                success: function(data){
-                    //var likes = data['likes'];
-                    //var unlikes = data['unlikes'];
+                event.preventDefault();
     
-                    $("#likes_"+post_id).html(data);        // setting likes
-                }
-            });   
-        });
-        */
-
-        /*
-        $(".like").click(function(){
-            var id = this.id;   // Getting Button id
-            var split_id = id.split("_");
-
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // postid
-
-            // AJAX Request
-            $.ajax({
-                url: '/like',
-                type: 'POST',
-                data: { post_id1: post_id1 },
-                dataType: 'html',
-                success: function(data){
-                    $("#like_"+post_id).html(data);        // setting likes
-                }
-            }); 
-            
-            event.preventDefault()
-        });
-        */
-
-        /*
-        $(".like .unlike").click(function (e) {
-
-            e.preventDefault();
-
-            var id = $(this).attr("post_id");
-            var split_id = id.split("_");
-
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // albumid
-
-            req = $.ajax({
-                url: '/likepost',
-                type: 'POST',
-                data: { post_id: post_id1, likeunlike: text },
-                dataType: 'html',
+                var post_id = $(this).attr("post_id");
+    
+                req = $.ajax({
+                    url: '/like2',
+                    type: 'POST',
+                    data: { id: post_id},
+                    dataType:'html',
+                });
+    
+                req.done(function (data) {
+                    console.log(data);
+                    $('#result' + post_id).fadeOut(1000).fadeIn(1000);
+                    $('#result' + post_id).html(data);
+                });
             });
-
-            req.done(function (data) {
-                var like = data['like'];
-                var unlike = data['unlike'];
-
-
-                $('#like' + post_id).text(data.likes);
-                $('#unlike' + post_id).json(data.likes);
-            });
-        });
-        */
-
-        $(document).on('click', '.like, .unlike', function (event) {
-
-            event.preventDefault();
-
-            var id = $(this).attr("post_id");
-            var split_id = id.split("_");
-
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // albumid
-
-            req = $.ajax({
-                url: '/likepost/' + post_id1 + '/' + text,
-                type: 'POST',
-                //data: { post_id: post_id1, likeunlike: text },
-                dataType: 'html',
-            });
-
-            req.done(function (data) {
-                console.log(data);
-                $('#result' + post_id1).fadeOut(0).fadeIn(0);
-                $('#result' + post_id1).html(data);
-                //$('#counts' + post_id1).text(data.likes);
-                //$('#unlike_' + post_id1).text(data.likes);
-            });
+            */
         });
 
-        /*
-        $(document).on( 'click', '.like', function (event) {
-
-            event.preventDefault();
-
-            var post_id = $(this).attr("post_id");
-
-            req = $.ajax({
-                url: '/like2',
-                type: 'POST',
-                data: { id: post_id},
-                dataType:'html',
-            });
-
-            req.done(function (data) {
-                console.log(data);
-                $('#result' + post_id).fadeOut(1000).fadeIn(1000);
-                $('#result' + post_id).html(data);
-            });
-        });
-        */
-    });
-
-    function playPauseAudio() {
-        var audio = document.getElementById("audio");
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-    }
-
-    function play(song_id) {
-        var audio = document.getElementById("audio");
-        audio.src = "/play/" + song_id;
-        audio.play();
-    }
-
-    $(document).ready(function () {
-        $(".playPauseAudio").click(function () {
-            var song_id = $(this).data("id");
+        function playPauseAudio() {
             var audio = document.getElementById("audio");
             if (audio.paused) {
-                audio.src = "/play/" + song_id;
                 audio.play();
             } else {
                 audio.pause();
             }
-        });
-    });
-
-    /*
-
-    var songs = document.getElementById('count').value;
-
-    var element = document.getElementById('source').value;
-
-    var wavesurfer = [];
-    var wavesurferBackend = [];
-    var scriptNode = [];
-
-    for (var i = 0; i < songs; i++) {
-
-        $('.players').append('<div id="wavesurfer' + i + '"></div>');
-
-        wavesurfer[i] = WaveSurfer.create({
-            container: this,
-                waveColor: '#ddd',
-                progressColor: '#999',
-                cursorColor: 'transparent',
-                barWidth: 2,
-                barHeight: 1,
-                barGap: 1,
-                height: 40,
-                hideScrollbar: true,
-                interact: false,
-                responsive: true,
-                barRadius: 0,
-                cursorWidth: 0,
-                fillParent: true,
-                normalize: true,
-                plugins: [
-                    WaveSurfer.cursor.create({
-                        showTime: true,
-                        opacity: 1,
-                        customShowTimeStyle: {
-                            'background-color': '#ddd',
-                            color: '#fff',
-                            padding: '2px',
-                            'font-size': '10px',
-                            'border-radius': '3px',
-                            'z-index': '2'
-                        }
-                    })
-                ]
-            });
-
-        wavesurfer[i].load(element);
-
-        wavesurfer[i].on('ready', function () {
-            wavesurferBackend[i] = wavesurfer[i].backend;
-            wavesurfer[i].backend = null;
-            wavesurferBackend[i] = wavesurfer[i].scriptNode;
-            wavesurfer[i].scriptNode = null;
-        });
-
-    }
-    */
-
-    /*
-    var parentAudioList = document.getElementById("controls")
-    var audioEls = document.getElementsByTagName('audio');
-
-    function createAudio(url) {
-        var playbackAudio = document.createElement("div");
-        playbackAudio.setAttribute("class", "playbackAudio");
-        var playbackBtn = document.createElement("button");
-        playbackBtn.innerText = "Play"
-        playbackBtn.setAttribute("class", "playbackBtn");
-
-
-        var audioWave = document.createElement("div");
-        audioWave.setAttribute("class", "audioWave");
-        var wavesurfer = WaveSurfer.create({
-            container: audioWave,
-            backend: 'MediaElement',
-            responsive: true
-        });
-        //attach children to playbackAudio
-        playbackAudio.appendChild(playbackBtn);
-        playbackAudio.appendChild(audioWave);
-
-        parentAudioList.appendChild(playbackAudio);
-        wavesurfer.load(url);
-
-        playbackBtn.addEventListener("click", function () {
-            wavesurfer.playPause();
-            if (this.innerText == "Play") {
-                this.innerText = "Stop";
-            } else {
-                this.innerText = "Play";
-            }
-
-            wavesurfer.on('finish', function () {
-                playbackBtn.innerText = "Play";
-            });
-        });
-
-
-    }
-
-    Array.from(audioEls).forEach(function (audioEl, i) {
-        createAudio(audioEl.src)
-
-    });
-    */
-
-
-    function muteAudio() {
-        var audio = document.getElementById("audio");
-        if (audio.muted) {
-            audio.muted = false;
-        } else {
-            audio.muted = true;
         }
-    }
 
-    function changeVolume() {
-        var audio = document.getElementById("audio");
-        audio.volume = document.getElementById("customRange1").value / 100;
-    }
+        function play(song_id) {
+            var audio = document.getElementById("audio");
+            audio.src = "/play/" + song_id;
+            audio.play();
+        }
 
-    var audio = document.querySelector("audio");
-    var progressBar = document.querySelector("progress");
-    progressBar.addEventListener("click", seek);
+        $(document).ready(function () {
+            $(".playPauseAudio").click(function () {
+                var song_id = $(this).data("id");
+                var audio = document.getElementById("audio");
+                if (audio.paused) {
+                    audio.src = "/play/" + song_id;
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
+            });
+        });
 
-    function seek(e) {
-        var percent = e.offsetX / this.offsetWidth;
-        audio.currentTime = percent * audio.duration;
-        progressBar.value = percent / 100;
-    }
+        /*
+    
+        var songs = document.getElementById('count').value;
+    
+        var element = document.getElementById('source').value;
+    
+        var wavesurfer = [];
+        var wavesurferBackend = [];
+        var scriptNode = [];
+    
+        for (var i = 0; i < songs; i++) {
+    
+            $('.players').append('<div id="wavesurfer' + i + '"></div>');
+    
+            wavesurfer[i] = WaveSurfer.create({
+                container: this,
+                    waveColor: '#ddd',
+                    progressColor: '#999',
+                    cursorColor: 'transparent',
+                    barWidth: 2,
+                    barHeight: 1,
+                    barGap: 1,
+                    height: 40,
+                    hideScrollbar: true,
+                    interact: false,
+                    responsive: true,
+                    barRadius: 0,
+                    cursorWidth: 0,
+                    fillParent: true,
+                    normalize: true,
+                    plugins: [
+                        WaveSurfer.cursor.create({
+                            showTime: true,
+                            opacity: 1,
+                            customShowTimeStyle: {
+                                'background-color': '#ddd',
+                                color: '#fff',
+                                padding: '2px',
+                                'font-size': '10px',
+                                'border-radius': '3px',
+                                'z-index': '2'
+                            }
+                        })
+                    ]
+                });
+    
+            wavesurfer[i].load(element);
+    
+            wavesurfer[i].on('ready', function () {
+                wavesurferBackend[i] = wavesurfer[i].backend;
+                wavesurfer[i].backend = null;
+                wavesurferBackend[i] = wavesurfer[i].scriptNode;
+                wavesurfer[i].scriptNode = null;
+            });
+    
+        }
+        */
 
-</script>
+        /*
+        var parentAudioList = document.getElementById("controls")
+        var audioEls = document.getElementsByTagName('audio');
+    
+        function createAudio(url) {
+            var playbackAudio = document.createElement("div");
+            playbackAudio.setAttribute("class", "playbackAudio");
+            var playbackBtn = document.createElement("button");
+            playbackBtn.innerText = "Play"
+            playbackBtn.setAttribute("class", "playbackBtn");
+    
+    
+            var audioWave = document.createElement("div");
+            audioWave.setAttribute("class", "audioWave");
+            var wavesurfer = WaveSurfer.create({
+                container: audioWave,
+                backend: 'MediaElement',
+                responsive: true
+            });
+            //attach children to playbackAudio
+            playbackAudio.appendChild(playbackBtn);
+            playbackAudio.appendChild(audioWave);
+    
+            parentAudioList.appendChild(playbackAudio);
+            wavesurfer.load(url);
+    
+            playbackBtn.addEventListener("click", function () {
+                wavesurfer.playPause();
+                if (this.innerText == "Play") {
+                    this.innerText = "Stop";
+                } else {
+                    this.innerText = "Play";
+                }
+    
+                wavesurfer.on('finish', function () {
+                    playbackBtn.innerText = "Play";
+                });
+            });
+    
+    
+        }
+    
+        Array.from(audioEls).forEach(function (audioEl, i) {
+            createAudio(audioEl.src)
+    
+        });
+        */
 
 
-{% endblock %}
+        function muteAudio() {
+            var audio = document.getElementById("audio");
+            if (audio.muted) {
+                audio.muted = false;
+            } else {
+                audio.muted = true;
+            }
+        }
+
+        function changeVolume() {
+            var audio = document.getElementById("audio");
+            audio.volume = document.getElementById("customRange1").value / 100;
+        }
+
+        var audio = document.querySelector("audio");
+        var progressBar = document.querySelector("progress");
+        progressBar.addEventListener("click", seek);
+
+        function seek(e) {
+            var percent = e.offsetX / this.offsetWidth;
+            audio.currentTime = percent * audio.duration;
+            progressBar.value = percent / 100;
+        }
+
+    </script>
+
+
+    {% endblock %}

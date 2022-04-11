@@ -8,6 +8,12 @@
 
             {% include "partials/user-info.html" %}
 
+            {% if not following %}
+            
+            <p>You are not following anyone</p>
+
+            {% endif %}    
+
             {% for user in following %}
 
             {% include "partials/user-follow.html" %}
