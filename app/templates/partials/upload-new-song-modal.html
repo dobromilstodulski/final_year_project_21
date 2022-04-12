@@ -1,0 +1,70 @@
+<div class="modal fade" id="uploadSongModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload new music</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                    action="/song/new">
+                    <div class="row g-3">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="artist" name="artist">
+                                <label for="artist">Artist</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="title" name="title">
+                                <label for="title">Title</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="featuring" name="featuring">
+                                <label for="featuring">Featuring</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="genre" name="genre">
+                                <label for="genre">Genre</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="tags" name="tags">
+                                <label for="tags">Tags</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="description" name="description"
+                                    placeholder="Tell us about your track." rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="artwork" class="form-label">Upload Artwork</label>
+                        <input class="form-control" type="file" id="artwork" name="artwork">
+                    </div>
+                    <div class="mb-3">
+                        <label for="audio" class="form-label">Upload Audio</label>
+                        <input class="form-control" type="file" id="audio" name="audio">
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Upload Music</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Register</button> -->
+            </div>
+        </div>
+    </div>
+</div>

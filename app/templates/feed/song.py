@@ -58,7 +58,7 @@ def new_song():
                     return redirect(url_for('song.song_feed'))
                 
 
-@song.route('/edit_song/<int:song_id>', methods=('GET', 'POST'))
+@song.route('/song/edit/<int:song_id>', methods=('GET', 'POST'))
 def edit_song(song_id):
     if request.method == 'POST':
         artist = request.form.get('artist')
@@ -99,7 +99,7 @@ def edit_song(song_id):
                         return redirect(url_for('song.song_feed'))
                     
 
-@song.route('/delete_song/<int:song_id>', methods=('GET', 'POST'))
+@song.route('/song/delete/<int:song_id>', methods=('GET', 'POST'))
 def delete_song(song_id):
     delete_file(Song.get(Song.id == song_id).artwork)
     delete_file(Song.get(Song.id == song_id).source)
@@ -109,7 +109,7 @@ def delete_song(song_id):
 
 
 @song.route('/song/<int:song_id>', methods=['GET', 'POST'])
-def view_post(song_id):
+def view_song(song_id):
     songs = Song.select().where(Song.id == song_id)
     numberOfComments = songs[0].numComments
     comments = Comment.select().where(Comment.song_id == song_id)

@@ -77,7 +77,7 @@ class User(UserMixin, BaseModel):
         except:
             return 0
 
-    def hasUserFavorited(self, song_id):
+    def hasUserFavorite(self, song_id):
         query = Song.select().join(
             Favorite, on=Favorite.song_id
         ).where(
