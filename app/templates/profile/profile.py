@@ -5,6 +5,8 @@ import app.models
 from app import login_manager
 from timeago import format
 from flask_paginate import Pagination, get_page_parameter
+from app.utils import allowed_file, make_unique, upload_file
+from werkzeug.utils import secure_filename
 
 profile = Blueprint('profile', __name__)
 
@@ -30,13 +32,33 @@ def userProfile(username):
 @profile.route('/edit-user-details', methods=['GET', 'POST'])
 def editUserDetails():
     user = current_user
-    
+    file = request.files["profilePicture"]
+    username = request.form.get('username')
+    fullname = request.form.get('fullname')
+    email = request.form.get('email')
+    #password = request.form.get('password')
+    gender = request.form.get('gender')
+    birthday = request.form.get('birthday')
+    description = request.form.get('description')
+    if file.filename == "" and username == '' and fullname == '' and email == '' and gender == '' and birthday == '':
+        flash('Please fill out all the values!', 'warning')
+    else:
+        if file and allowed_file(file.filename):
+            unique_filename = make_unique(file.filename)
+            file.filename = secure_filename(unique_filename)
+            upload_file(file)
     User.update(
-            
+            username = username,
+            fullname = fullname,
+            email = email,
+            gender = gender,
+            birthday = birthday,
+            profile_picture = file.filename,
+            description = description
         ).where(
             User.username == user.username
         ).execute()
-    
+    return redirect(url_for('profile.userProfile', username=user.username))
 
 
 @profile.route('/following')

@@ -25,6 +25,11 @@ def check_copyright():
     #results = eval(re.recognize_by_filebuffer(buf, 0))
     #results = check_file(uploaded_file.filename)
     return results
+
+def copyrightCheck(audio):
+    result = eval(re.recognize_by_file(audio, 0))
+    if result['status']['msg'] == 'Success':
+
     
 @audio.route('/upload', methods=['GET', 'POST'])
 def upload():
