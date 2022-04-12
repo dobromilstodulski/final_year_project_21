@@ -54,5 +54,5 @@ def new_song():
                     else:
                         return redirect("/")
                 else:
-                    flash('This song is copyrighted!', 'danger')
+                    flash('This song is copyrighted!', 'error')
                     return redirect(url_for('song.song_feed'))
