@@ -1,6 +1,6 @@
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash
+from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Song, database
+from app.models import User, Song, Comment, Favorite
 import app.models
 from timeago import format
 from app import re
@@ -106,3 +106,75 @@ def delete_song(song_id):
     Song.delete().where(Song.id == song_id).execute()
     flash('Song deleted!', 'success')
     return redirect(url_for('song.song_feed'))
+
+
+@song.route('/song/<int:song_id>', methods=['GET', 'POST'])
+def view_post(song_id):
+    songs = Song.select().where(Song.id == song_id)
+    numberOfComments = songs[0].numComments
+    comments = Comment.select().where(Comment.song_id == song_id)
+    if request.method == 'POST':
+        content = request.form.get('content')
+
+        if content == '':
+            flash('Please fill out all the values!', 'warning')
+
+        else:
+            Comment.create(
+                user_id=current_user.id,
+                song_id=song_id,
+                comment=content
+            )
+
+            Song.update(
+                numComments=numberOfComments + 1
+            ).where(
+                Song.id == song_id
+            ).execute()
+
+            flash("Comment Posted!", "success")
+            return redirect(request.referrer)
+
+    if songs.count() == 0:
+        abort(0)
+    return render_template('feed/song.html', songs=songs, format=format, comments=comments)
+
+
+@song.route('/favorite/<int:song_id>')
+@login_required
+def like_post(song_id):
+    songs = Song.select().where(Song.id == song_id)
+    song = songs[0]
+    numberOfFavorites = song.numFavorites
+
+    Favorite.create(
+        user_id=current_user.id,
+        song_id=song.id
+    )
+
+    Song.update(
+        numFavorites=numberOfFavorites + 1
+    ).where(
+        Song.id == song.id
+    ).execute()
+    return render_template('/partials/favorite-section.html', song=song)
+
+
+@song.route('/unfavorite/<int:song_id>')
+@login_required
+def unlike_post(song_id):
+    songs = Song.select().where(Song.id == song_id)
+    song = songs[0]
+    numberOfFavorites = song.numFavorites
+
+    Favorite.get(
+        user_id=current_user.id,
+        song_id=song.id
+    ).delete_instance()
+
+    Song.update(
+        numFavorites=numberOfFavorites - 1
+    ).where(
+        Song.id == song.id
+    ).execute()
+    return render_template('/partials/favorite-section.html', song=song)
