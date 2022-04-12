@@ -28,7 +28,11 @@ def check_copyright():
 
 def copyrightCheck(audio):
     result = eval(re.recognize_by_file(audio, 0))
-    if result['status']['msg'] == 'Success':
+    if result['status']['msg'] == 'No result':
+        return False
+    else :
+        flash('This song is copyrighted!', 'danger')
+        return redirect(url_for('song.song_feed'))
 
     
 @audio.route('/upload', methods=['GET', 'POST'])
