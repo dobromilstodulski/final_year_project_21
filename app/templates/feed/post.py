@@ -178,8 +178,7 @@ def like_post(post_id):
     ).where(
         Post.id == post.id
     ).execute()
-
-    return jsonify({'result': 'success'})
+    return render_template('/feed/like-section.html', post=post)
 
 
 @post.route('/unlike/<int:post_id>')
@@ -199,7 +198,7 @@ def unlike_post(post_id):
     ).where(
         Post.id == post.id
     ).execute()
-    return redirect(request.referrer)
+    return render_template('/feed/like-section.html', post=post)
 
 ###### User ######
 
