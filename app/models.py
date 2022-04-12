@@ -77,12 +77,12 @@ class User(UserMixin, BaseModel):
         except:
             return 0
 
-    def hasUserFavourited(self, song_id):
+    def hasUserFavorited(self, song_id):
         query = Song.select().join(
-            Favourite, on=Favourite.song_id
+            Favorite, on=Favorite.song_id
         ).where(
-            Favourite.user_id == self,
-            Favourite.post_id == song_id
+            Favorite.user_id == self,
+            Favorite.song_id == song_id
         )
         try:
             ret = query[0].id
@@ -145,6 +145,8 @@ class Song(BaseModel):
     description = TextField(null=True)
     tags = CharField(null=True)
     source = CharField()
+    numFavorites = IntegerField(default=0)
+    numComments = IntegerField(default=0)
     date_uploaded = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
@@ -200,7 +202,7 @@ class Like(BaseModel):
     post_id = ForeignKeyField(Post, related_name='post_likes', null=True)
 
 
-class Favourite(BaseModel):
+class Favorite(BaseModel):
     user_id = ForeignKeyField(User, related_name='user_likes', null=True)
     song_id = ForeignKeyField(Song, related_name='song_likes', null=True)
 
@@ -221,5 +223,5 @@ def initialize():
     database.close()
     database.connect()
     database.create_tables([User, Post, Song, Message, Comment, Chat, Msg,
-                           Like, Favourite, Location, Group, Relationship], safe=True)
+                           Like, Favorite, Location, Group, Relationship], safe=True)
     database.close()
