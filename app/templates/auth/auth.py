@@ -91,6 +91,7 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+        remember_me = request.form.getList('remember_me')
         
         if email == '' or password == '':
             flash('Please fill out all the values!', 'warning')
@@ -102,7 +103,10 @@ def login():
                 flash('Your email does not match!', 'error')
                 return redirect(url_for('auth.login'))
             if check_password_hash(user.password, password):
-                login_user(user)
+                if remember_me is not None:
+                    login_user(user, remember=True)
+                else:
+                    login_user(user)
                 flash('You have successfully logged in!', 'success')
                 return redirect(url_for('profile.welcome'))
             else:
