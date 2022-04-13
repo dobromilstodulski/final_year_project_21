@@ -1,0 +1,22 @@
+<div class="d-flex text-muted pt-3">
+
+    {% include 'partials/user-photo.html' %}
+
+    <p class="pb-3 mb-0 small lh-sm border-bottom">
+        <strong class="d-block text-gray-dark">
+            <a href="/{{comment.user_id.username}}">
+                {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
+            </a>
+            <button type="button" class="btn btn-secondary-outline btn-sm">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button type="button" class="btn btn-secondary-outline btn-sm">
+                <i class="bi bi-trash"></i>
+            </button>
+        </strong>
+        <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+            {{moment(comment.timestamp).fromNow()}}</i>
+        {{comment.comment}}
+    </p>
+
+</div>
