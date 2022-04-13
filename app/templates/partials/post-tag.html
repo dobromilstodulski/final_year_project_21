@@ -1,0 +1,150 @@
+<div class="d-flex text-muted pt-3">
+
+    {% include 'partials/user-photo.html' %}
+
+    <p class="pb-3 mb-0 small lh-sm border-bottom">
+        <strong class="d-block text-gray-dark">
+            {{post.user.fullname}} <i> @{{post.user.username}} </i>
+
+            {% if post.user == current_user %}
+            <button data-bs-toggle="modal" data-bs-target="#editPostModal{{post.id}}" type="button"
+                class="btn btn-secondary-outline btn-sm">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button data-bs-toggle="modal" data-bs-target="#deletePostModal{{post.id}}" type="button"
+                class="btn btn-secondary-outline btn-sm">
+                <i class="bi bi-trash"></i>
+            </button>
+            {% endif %}
+
+        </strong>
+        <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+            {{moment(post.pub_date).fromNow()}}</i>
+        {{post.content}}
+
+        {% if post.isMedia == 1 %}
+
+        <a href="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" target="_blank">
+            <img class="img-fluid" style="display:block"
+                src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" alt="{{post.media}}">
+        </a>
+
+        {% endif %}
+
+        <strong class="d-block text-gray-dark" id="postReactions{{post.id}}">
+
+            {% if current_user.hasUserLiked(post.id) %}
+            <a href="{{url_for('post.unlike', post_id=post.id')}}" id="{{post.id}}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark unlike">
+                <i class="bi bi-hand-thumbs-up-fill"></i> You & {{post.numLikes}}
+                Others Liked
+            </a>
+
+            {% else %}
+
+            {% if post.numLikes == 0 %}
+
+            <a href="{{url_for('post.like', post_id=post.id')}}" id="{{post.id}}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark like">
+                <i class="bi bi-hand-thumbs-up"></i> Like
+            </a>
+
+            {% else %}
+
+            <a href="{{url_for('post.like', post_id=post.id)}}" id="{{post.id}}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark like">
+                <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
+            </a>
+
+            {% endif %}
+
+            {% endif %}
+
+            {% if post.numComments == 0 %}
+
+            <a href="{{url_for('post.comment', post_id=post.id)}}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                <i class="bi bi-chat"></i> Comment
+            </a>
+
+            {% else %}
+
+            <a href="{{url_for('post.comment', post_id=post.id)}}"
+                class="btn btn-secondary-outline btn-sm text-gray-dark">
+                <i class="bi bi-chat"></i> {{post.numComments}} Comments
+            </a>
+
+            {% endif %}
+
+        </strong>
+    </p>
+</div>
+
+<div class="modal fade" id="editPostModal{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if post.isMedia == 0 %}
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                    action="/post/edit/{{post.id}}">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Post Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="3">{{post.content}}</textarea>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Post</button>
+                </form>
+                {% else %}
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                    action="/post/edit/media/{{post.id}}">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Post Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="3">{{post.content}}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="media" class="form-label">Upload Photo or Video</label>
+                        <input class="form-control" type="file" id="media" name="media" value="{{post.media}}">
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Post</button>
+                </form>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deletePostModal{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+                {% if post.isMedia == 0 %}
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                    action="/post/delete/{{post.id}}">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Post</button>
+                </form>
+                {% else %}
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                    action="/post/delete/media/{{post.id}}">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Post</button>
+                </form>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

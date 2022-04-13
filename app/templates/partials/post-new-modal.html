@@ -1,0 +1,29 @@
+<div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create new post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                    action="/new_post">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Post Content</label>
+                        <textarea class="form-control" id="content" name="content" placeholder="What's popping?"
+                            rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="media" class="form-label">Upload Photo or Video</label>
+                        <input class="form-control" type="file" id="media" name="media">
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Create Post</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Register</button> -->
+            </div>
+        </div>
+    </div>
+</div>
