@@ -17,13 +17,13 @@ from playhouse.flask_utils import object_list
 post = Blueprint('post', __name__)
 
 
-@post.route('/post_feed')
+@post.route('/post/feed')
 def post_feed():
     posts = current_user.get_post_feed()
     return render_template('feed/post_feed.html', stream=posts, user=User, format=format)
 
 
-@post.route('/new_post', methods=('GET', 'POST'))
+@post.route('/post/new', methods=('GET', 'POST'))
 def new_post():
     if request.method == 'POST':
         content = request.form.get('content')
@@ -53,7 +53,8 @@ def new_post():
                 else:
                     return redirect(url_for('post.post_feed'))
                 
-                
+
+'''
 @post.route('/edit_post/<int:post_id>', methods=('GET', 'POST'))
 def edit_post(post_id):
     if request.method == 'POST':
@@ -77,9 +78,10 @@ def edit_post(post_id):
                                 isMedia=1).where(Post.id == post_id).execute()
                     flash('Upload Succeeded!', 'success')
                     return redirect(request.referrer)
+'''
 
 
-@post.route('/edit_post/media=null/<int:post_id>', methods=('GET', 'POST'))
+@post.route('/post/edit/<int:post_id>', methods=('GET', 'POST'))
 def edit_post_media_null(post_id):
     if request.method == 'POST':
         content = request.form.get('content')
@@ -91,7 +93,7 @@ def edit_post_media_null(post_id):
             return redirect(request.referrer)
 
 
-@post.route('/edit_post/media=true/<int:post_id>', methods=('GET', 'POST'))
+@post.route('/post/edit/media/<int:post_id>', methods=('GET', 'POST'))
 def edit_post_media_true(post_id):
     if request.method == 'POST':
         content = request.form.get('content')
@@ -112,7 +114,7 @@ def edit_post_media_true(post_id):
                 return "error"
 
 
-@post.route('/delete_post/media=null/<int:post_id>', methods=('GET', 'POST'))
+@post.route('/post/delete/<int:post_id>', methods=('GET', 'POST'))
 def delete_post_media_null(post_id):
     if request.method == 'POST':
         Post.delete().where(Post.id == post_id).execute()
@@ -120,7 +122,7 @@ def delete_post_media_null(post_id):
         return redirect(request.referrer)
 
 
-@post.route('/delete_post/media=true/<int:post_id>', methods=('GET', 'POST'))
+@post.route('/post/delete/media/<int:post_id>', methods=('GET', 'POST'))
 def delete_post_media_true(post_id):
     if request.method == 'POST':
         delete_file(Post.get(Post.id == post_id).media)
