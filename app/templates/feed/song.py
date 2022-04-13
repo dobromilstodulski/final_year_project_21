@@ -9,12 +9,12 @@ from werkzeug.utils import secure_filename
 
 song = Blueprint('song', __name__)
 
-@song.route('/song_feed')
+@song.route('/song/feed')
 def song_feed():
     return render_template('feed/song_feed.html', songs=Song, user=User, format=format)
 
 
-@song.route('/new_song', methods=('GET', 'POST'))
+@song.route('/song/new', methods=('GET', 'POST'))
 def new_song():
     if request.method == 'POST':
         artist = request.form.get('artist')
