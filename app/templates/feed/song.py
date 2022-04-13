@@ -32,8 +32,8 @@ def new_song():
                 flash('Please fill out all the values!', 'warning')
             else: 
                 result = eval(re.recognize_by_file(audio_file.filename, 0))
-                if result['status']['msg'] == 'No result':
-                    if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
+                if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
+                    if result['status']['msg'] == 'No result':
                         unique_artwork_filename = make_unique(artwork_file.filename)
                         unique_audio_filename = make_unique(audio_file.filename)
                         artwork_file.filename = secure_filename(unique_artwork_filename)
@@ -52,10 +52,10 @@ def new_song():
                         flash('Upload Succeeded!', 'success')
                         return redirect(url_for('song.song_feed'))
                     else:
-                        return redirect("/")
+                        flash('This song is copyrighted!', 'error')
+                        return redirect(url_for('song.song_feed'))
                 else:
-                    flash('This song is copyrighted!', 'error')
-                    return redirect(url_for('song.song_feed'))
+                    return redirect("/")
                 
 
 @song.route('/song/edit/<int:song_id>', methods=('GET', 'POST'))
