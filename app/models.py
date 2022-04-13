@@ -25,7 +25,7 @@ class User(UserMixin, BaseModel):
     gender = CharField()
     birthday = CharField()
     description = TextField(null=True, default=None)
-    profile_picture = CharField(null=True, default=None)
+    profilePicture = CharField(null=True, default=None)
     timestamp = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
