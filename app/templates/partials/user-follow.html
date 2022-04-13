@@ -1,18 +1,6 @@
 <div class="d-flex text-muted pt-3">
 
-    {% if user.profile_picture == "" %}
-
-    <img src="../../static/images/deafult_profile_picture.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-        height="32" width="32" alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
-        preserveAspectRatio="xMidYMid slice" focusable="false">
-
-    {% else %}
-
-    <img src="{{user.profile_picture}}" class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
-        alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
-        focusable="false">
-
-    {% endif %}
+    {% include 'partial/user-photo.html' %}
 
     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between">

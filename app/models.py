@@ -122,7 +122,7 @@ class Relationship(BaseModel):
 
 
 class Post(BaseModel):
-    user = ForeignKeyField(model=User, related_name='posts')
+    user_id = ForeignKeyField(model=User, related_name='posts')
     content = TextField()
     media = CharField(null=True)
     isMedia = BooleanField(default=0)
@@ -138,7 +138,7 @@ class Post(BaseModel):
 
 
 class Song(BaseModel):
-    user = ForeignKeyField(User, backref='songs')
+    user_id = ForeignKeyField(User, backref='songs')
     artwork = CharField()
     artist = CharField()
     title = CharField()

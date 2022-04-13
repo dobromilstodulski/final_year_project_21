@@ -4,9 +4,9 @@
 
     <p class="pb-3 mb-0 small lh-sm border-bottom">
         <strong class="d-block text-gray-dark">
-            {{post.user.fullname}} <i> @{{post.user.username}} </i>
+            {{post.user_id.fullname}} <i> @{{post.user_id.username}} </i>
 
-            {% if post.user == current_user %}
+            {% if post.user_id == current_user %}
             <button data-bs-toggle="modal" data-bs-target="#editPostModal{{post.id}}" type="button"
                 class="btn btn-secondary-outline btn-sm">
                 <i class="bi bi-pencil"></i>

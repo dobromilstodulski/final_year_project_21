@@ -8,9 +8,9 @@
                     
                     {% include 'partials/user-photo.html' %}
 
-                    {{song.user.fullname}} <i> @{{song.user.username}} </i>
+                    {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i>
 
-                    {% if p.user == current_user %}
+                    {% if song.user_id == current_user %}
                     <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
                         class="btn btn-secondary-outline btn-sm">
                         <i class="bi bi-pencil"></i>
