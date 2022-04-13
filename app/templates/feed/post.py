@@ -32,7 +32,7 @@ def new_post():
             if content == '':
                 flash('Please fill out all the values!', 'warning')
             else:
-                Post.create(user=g.user._get_current_object(),
+                Post.create(user_id=current_user.id,
                             content=content)
                 flash("Post Created!", "success")
                 return redirect(url_for('post.post_feed'))
@@ -44,7 +44,7 @@ def new_post():
                     unique_filename = make_unique(file.filename)
                     file.filename = secure_filename(unique_filename)
                     upload_file(file)
-                    Post.create(user=current_user.id,
+                    Post.create(user_id=current_user.id,
                                 content=content,
                                 media=file.filename,
                                 isMedia=1)

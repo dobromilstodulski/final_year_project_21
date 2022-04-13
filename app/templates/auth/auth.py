@@ -91,7 +91,7 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        remember_me = request.form.getList('remember_me')
+        remember_me = request.form.get('remember_me')
         
         if email == '' or password == '':
             flash('Please fill out all the values!', 'warning')

@@ -40,7 +40,7 @@ def new_song():
                         audio_file.filename = secure_filename(unique_audio_filename)
                         upload_file(artwork_file)
                         upload_file(audio_file)
-                        Song.create(user=current_user.id,
+                        Song.create(user_id=current_user.id,
                                     artist=artist,
                                     title=title,
                                     feature=featuring,

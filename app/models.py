@@ -33,22 +33,22 @@ class User(UserMixin, BaseModel):
         order_by = ('-timestamp',)
 
     def get_posts(self):
-        return Post.select().where(Post.user == self).order_by(Post.pub_date.desc())
+        return Post.select().where(Post.user == self).order_by(Post.timestamp.desc())
 
     def get_songs(self):
-        return Song.select().where(Song.user == self).order_by(Song.date_uploaded.desc())
+        return Song.select().where(Song.user == self).order_by(Song.timestamp.desc())
     
     def get_comments(self):
         return Comment.select().where(Comment.user_id == self).order_by(Comment.timestamp.desc())
 
     def get_post_feed(self):
-        return Post.select().order_by(Post.pub_date.desc())
+        return Post.select().order_by(Post.timestamp.desc())
 
     def get_private_post_feed(self):
         return Post.select().where(
             # all posts from people Im following
             (Post.user << self.following())
-        ).order_by(Post.pub_date.desc())
+        ).order_by(Post.timestamp.desc())
 
     def following(self):
         '''The users that we are following.'''
