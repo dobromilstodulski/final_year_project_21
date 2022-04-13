@@ -10,7 +10,7 @@
 
                     {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i>
 
-                    {% if song.user_id == current_user %}
+                    {% if current_user == song.user_id %}
                     <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
                         class="btn btn-secondary-outline btn-sm">
                         <i class="bi bi-pencil"></i>
@@ -55,7 +55,7 @@
 
             </script>
 
-            <strong class="d-block text-gray-dark">
+            <strong class="d-block text-gray-dark" id="{{song.id}}">
 
                 {% if current_user.hasUserFavorite(song.id) %}
                 <a href="{{url_for('song.unfavorite', song_id=song.id')}}" id="{{song.id}}"
@@ -92,7 +92,7 @@
 
                 {% else %}
 
-                <a href="{{url_for('song.view_ong', song_id=song.id')}}"
+                <a href="{{url_for('song.view_song', song_id=song.id')}}"
                     class="btn btn-secondary-outline btn-sm text-gray-dark">
                     <i class="bi bi-chat"></i> {{song.numComments}} Comments
                 </a>

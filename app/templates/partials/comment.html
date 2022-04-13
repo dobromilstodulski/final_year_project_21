@@ -16,7 +16,11 @@
             </button>
         </strong>
         <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+        {% if comment.isEdited == 0 %}
             {{moment(comment.timestamp).fromNow()}}</i>
+        {% else %}
+            edited {{moment(comment.editedTimestamp).fromNow()}}</i>
+        {% endif %}
         {{comment.comment}}
     </p>
 
@@ -47,7 +51,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="modal fade" id="deleteCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"

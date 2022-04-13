@@ -129,7 +129,7 @@ class Post(BaseModel):
     numLikes = IntegerField(default=0)
     numComments = IntegerField(default=0)
     isEdited = BooleanField(default=0)
-    isEditedTimestamp = DateTimeField(default=datetime.datetime.now)
+    editedTimestamp = DateTimeField(default=datetime.datetime.now)
     timestamp = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
@@ -150,7 +150,7 @@ class Song(BaseModel):
     numFavorites = IntegerField(default=0)
     numComments = IntegerField(default=0)
     isEdited = BooleanField(default=0)
-    isEditedTimestamp = DateTimeField(default=datetime.datetime.now)
+    editedTimestamp = DateTimeField(default=datetime.datetime.now)
     timestamp = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
@@ -195,7 +195,7 @@ class Comment(BaseModel):
     song_id = ForeignKeyField(model=Song, related_name='song_likes', null=True)
     comment = TextField()
     isEdited = BooleanField(default=0)
-    isEditedTimestamp = DateTimeField(default=datetime.datetime.now)
+    editedTimestamp = DateTimeField(default=datetime.datetime.now)
     timestamp = DateTimeField(default=datetime.datetime.now)
 
     class Meta:

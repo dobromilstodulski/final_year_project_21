@@ -19,7 +19,11 @@
 
         </strong>
         <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-            {{moment(post.pub_date).fromNow()}}</i>
+        {% if post.isEdited == 0 %}
+            {{moment(post.timestamp).fromNow()}}</i>
+        {% else %}
+            edited {{moment(post.editedTimestamp).fromNow()}}</i>
+        {% endif %}
         {{post.content}}
 
         {% if post.isMedia == 1 %}
