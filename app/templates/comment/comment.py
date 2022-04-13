@@ -11,6 +11,9 @@ def edit_comment(comment_id):
         if content == '':
             flash('Please fill out all the values!', 'warning')
         else:
-            Post.update(content=content).where(Comment.id == comment_id).execute()
+            Post.update(content=content,
+                        isEdited = 1,
+                        isEditedTimestamp = 
+                        ).where(Comment.id == comment_id).execute()
             flash("Post Updated!", "success")
             return redirect(request.referrer)
