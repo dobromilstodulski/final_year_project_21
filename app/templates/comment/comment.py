@@ -12,8 +12,15 @@ def edit_comment(comment_id):
             flash('Please fill out all the values!', 'warning')
         else:
             Post.update(content=content,
-                        isEdited = 1,
-                        isEditedTimestamp = 
+                        isEdited = 1
                         ).where(Comment.id == comment_id).execute()
-            flash("Post Updated!", "success")
+            flash("Comment Updated!", "success")
             return redirect(request.referrer)
+
+
+@comment.route('/comment/delete/<int:comment_id>', methods=('GET', 'POST'))
+def delete_comment(comment_id):
+    if request.method == 'POST':
+        Post.delete().where(Comment.id == comment_id).execute()
+        flash("Comment Deleted!", "success")
+        return redirect(request.referrer)

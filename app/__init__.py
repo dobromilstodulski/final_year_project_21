@@ -72,6 +72,7 @@ def create_app():
         from app.templates.audio.audio import audio
         from app.templates.legal.legal import legal
         from app.templates.search.search import search
+        from app.templates.comment.comment import comment
 
         app.register_blueprint(auth)
         app.register_blueprint(profile)
@@ -82,6 +83,7 @@ def create_app():
         app.register_blueprint(audio)
         app.register_blueprint(legal)
         app.register_blueprint(search)
+        app.register_blueprint(comment)
 
         from app.views import views
         app.register_blueprint(views)
