@@ -1,25 +1,45 @@
-<div class="d-flex text-muted pt-3">
+<div class="overflow-x-auto w-full">
+    <table class="table w-full">
+        <!-- head -->
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Favorite Color</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- row 1 -->
+            <tr>
+                <td>
+                    <div class="flex items-center space-x-3">
 
-    {% include 'partials/user-photo.html' %}
+                        {% include 'partials/user-photo.html' %}
 
-    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-        <div class="d-flex justify-content-between">
-            <strong><a href="{{url_for('profile.userProfile', username=user.username)}}">{{user.fullname}}<span
-                        class="d-block"><i>@{{user.username}}</i></span></a></strong>
-            {% if user != current_user %}
-            {% if not user in current_user.following() %}
+                        <div>
+                            <div class="font-bold">{{user.fullname}}</div>
+                            <div class="text-sm opacity-50">{{@user.usernmae}}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% if user != current_user %}
+                    {% if not user in current_user.following() %}
 
-            <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-sm myBtn"><i
-                    class="bi bi-person-plus"></i>Follow</a>
+                    <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-outline"><i
+                            class="fa-solid fa-user-plus"></i>Follow</a>
 
-            {% else %}
+                    {% else %}
 
-            <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-sm myBtn"><i
-                    class="bi bi-person-dash"></i>Unfollow</a>
+                    <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-outline"><i
+                            class="fa-solid fa-user-minus"></i>Unfollow</a>
 
-            {% endif %}
-            {% endif %}
-        </div>
-        <!--<span class="d-block">@{{user.username}}</span>-->
-    </div>
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
 </div>
