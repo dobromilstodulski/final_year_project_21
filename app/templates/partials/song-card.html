@@ -2,9 +2,9 @@
 
 <div class="d-flex text-muted pt-3">
     <div class="card border-secondary mb-3" style="max-width: 32rem;">
-        <div class="card-body text-secondary small lh-sm">
+        <div class="card-body text-secondary small lh-sm myCard">
             <p class="card-text">
-                <strong class="d-block text-gray-dark">
+                <strong class="d-block">
                     
                     {% include 'partials/user-photo.html' %}
 
@@ -12,21 +12,21 @@
 
                     {% if current_user == song.user_id %}
                     <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
-                        class="btn btn-secondary-outline btn-sm">
+                        class="btn btn-sm myBtn">
                         <i class="bi bi-pencil"></i>
                     </button>
                     <button data-bs-toggle="modal" data-bs-target="#deleteSongModal{{ song.id }}" type="button"
-                        class="btn btn-secondary-outline btn-sm">
+                        class="btn btn-sm myBtn">
                         <i class="bi bi-trash"></i>
                     </button>
                     {% endif %}
 
                 </strong>
 
-                <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-                    {{moment(song.date_uploaded).format("LL")}}</i>
+                <i class="d-block"><i class="bi bi-clock"></i>
+                    {{moment(song.timestamp).format("LL")}}</i>
 
-                <strong class="d-block text-gray-dark">
+                <strong class="d-block">
                     <i class="bi bi-vinyl"></i> {{song.artist}}
 
                     - {{song.title}}
@@ -55,11 +55,11 @@
 
             </script>
 
-            <strong class="d-block text-gray-dark" id="{{song.id}}">
+            <strong class="d-block" id="{{song.id}}">
 
                 {% if current_user.hasUserFavorite(song.id) %}
-                <a href="{{url_for('song.unfavorite', song_id=song.id')}}" id="{{song.id}}"
-                    class="btn btn-secondary-outline btn-sm text-gray-dark unfavorite">
+                <a href="{{url_for('song.unfavorite', song_id=song.id)}}" id="{{song.id}}"
+                    class="btn btn-sm unfavorite myBtn">
                     <i class="bi bi-hand-thumbs-up"></i> Like
                 </a>
 
@@ -67,15 +67,15 @@
 
                 {% if song.numFavorites == 0 %}
 
-                <a href="{{url_for('song.favorite', song_id=song.id')}}" id="{{song.id}}"
-                    class="btn btn-secondary-outline btn-sm text-gray-dark favorite">
+                <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+                    class="btn btn-sm favorite myBtn">
                     <i class="bi bi-hand-thumbs-up"></i> Favorite
                 </a>
 
                 {% else %}
 
-                <a href="{{url_for('song.favorite', song_id=song.id')}}" id="{{song.id}}"
-                    class="btn btn-secondary-outline btn-sm text-gray-dark favorite">
+                <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+                    class="btn btn-sm favorite myBtn">
                     <i class="bi bi-hand-thumbs-up"></i> {{song.numFavorites}} Favorites
                 </a>
 
@@ -85,15 +85,15 @@
 
                 {% if song.numComments == 0 %}
 
-                <a href="{{url_for('song.view_song', song_id=song.id')}}"
-                    class="btn btn-secondary-outline btn-sm text-gray-dark">
+                <a href="{{url_for('song.view_song', song_id=song.id)}}"
+                    class="btn btn-sm myBtn">
                     <i class="bi bi-chat"></i> Comment
                 </a>
 
                 {% else %}
 
-                <a href="{{url_for('song.view_song', song_id=song.id')}}"
-                    class="btn btn-secondary-outline btn-sm text-gray-dark">
+                <a href="{{url_for('song.view_song', song_id=song.id)}}"
+                    class="btn btn-sm myBtn">
                     <i class="bi bi-chat"></i> {{song.numComments}} Comments
                 </a>
 
@@ -109,13 +109,13 @@
 <div class="modal fade" id="editSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content myModal">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Upload new music</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                <form class="p-4 p-md-5 border rounded-3" method="POST" enctype="multipart/form-data"
                     action="/song/edit/{{song.id}}">
                     <div class="row g-3">
                         <div class="col">
@@ -185,7 +185,7 @@
 <div class="modal fade" id="deleteSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content myModal">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Delete Song</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

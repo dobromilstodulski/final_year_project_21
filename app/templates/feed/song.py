@@ -142,7 +142,7 @@ def view_song(song_id):
 
 @song.route('/favorite/<int:song_id>')
 @login_required
-def like_post(song_id):
+def favorite(song_id):
     songs = Song.select().where(Song.id == song_id)
     song = songs[0]
     numberOfFavorites = song.numFavorites
@@ -162,7 +162,7 @@ def like_post(song_id):
 
 @song.route('/unfavorite/<int:song_id>')
 @login_required
-def unlike_post(song_id):
+def unfavorite(song_id):
     songs = Song.select().where(Song.id == song_id)
     song = songs[0]
     numberOfFavorites = song.numFavorites

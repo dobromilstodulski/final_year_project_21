@@ -1,21 +1,21 @@
 <div class="d-flex text-muted pt-3">
 
-    {% include 'partial/user-photo.html' %}
+    {% include 'partials/user-photo.html' %}
 
     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between">
-            <strong class="text-gray-dark">{{user.fullname}}<span
-                    class="d-block"><i>@{{user.username}}</i></span></strong>
+            <strong><a href="{{url_for('profile.userProfile', username=user.username)}}">{{user.fullname}}<span
+                        class="d-block"><i>@{{user.username}}</i></span></a></strong>
             {% if user != current_user %}
             {% if not user in current_user.following() %}
 
-            <a href="{{ url_for('profile.follow', username=user.username) }}"
-                class="btn btn-secondary-outline btn-sm text-gray-dark"><i class="bi bi-person-plus"></i>Follow</a>
+            <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-sm myBtn"><i
+                    class="bi bi-person-plus"></i>Follow</a>
 
             {% else %}
 
-            <a href="{{ url_for('profile.unfollow', username=user.username) }}"
-                class="btn btn-secondary-outline btn-sm text-gray-dark"><i class="bi bi-person-dash"></i>Unfollow</a>
+            <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-sm myBtn"><i
+                    class="bi bi-person-dash"></i>Unfollow</a>
 
             {% endif %}
             {% endif %}

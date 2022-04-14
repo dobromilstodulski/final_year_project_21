@@ -17,10 +17,10 @@
                         </span>
                         <span id="profileInfo" class="float-start">
                             <a class="profileLinkClass" href="/" style="text-decoration: none; color:black;">
-                                <p> {{ p.user.fullname }}<br>
+                                <p> {{ p.user_id.fullname }}<br>
                             </a>
                             <button class="btn btn-outline-success btn-sm rounded-pill"><i class="bi bi-at"></i>{{
-                                p.user.username }}</button>
+                                p.user_id.username }}</button>
                             {% if not p.user in current_user.following() %}
 
                             <a href="/" class="btn btn-outline-primary btn-sm rounded-pill"><i
@@ -36,9 +36,9 @@
                             {% endif %}
                             </p>
                         </span>
-                        <span class="time float-end" id="postTime"> <time data-time="{{ format(p.pub_date) }}"
-                                class="distime" datetime="{{ format(p.pub_date) }}"><i class="bi bi-clock"></i> {{
-                                format(p.pub_date)
+                        <span class="time float-end" id="postTime"> <time data-time="{{ format(p.timestamp) }}"
+                                class="distime" datetime="{{ format(p.timestamp) }}"><i class="bi bi-clock"></i> {{
+                                format(p.timestamp)
                                 }}</time></span>
                     </div>
                     {% if p.isMedia == 1 %}

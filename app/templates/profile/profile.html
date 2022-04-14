@@ -64,7 +64,8 @@
                                         <div class="mb-3">
                                             <label for="media" class="form-label">Upload Photo or Video</label>
                                             <!--<input class="form-control" type="file" id="media" name="media">-->
-                                            <input class="form-control" type="file" id="profilePicture" name="profilePicture">
+                                            <input class="form-control" type="file" id="profilePicture"
+                                                name="profilePicture">
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="fullname" name="fullname"
@@ -83,10 +84,10 @@
                                         </div>
                                         <div class="mb-3">
                                             <fieldset disabled>
-                                            <label for="password">Password</label>
-                                            <input type="text" class="form-control" id="password"
-                                                name="password" placeholder="Password">
-                                        </fieldset>
+                                                <label for="password">Password</label>
+                                                <input type="text" class="form-control" id="password" name="password"
+                                                    placeholder="Password">
+                                            </fieldset>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <select class="form-select" aria-label="Default select example"
@@ -107,9 +108,11 @@
                                         <div class="mb-3">
                                             <label for="content" class="form-label">Description</label>
                                             <textarea class="form-control" id="description" name="description"
-                                                placeholder="Please describe yourself." rows="3" value="{{user.description}}"></textarea>
+                                                placeholder="Please describe yourself." rows="3"
+                                                value="{{user.description}}"></textarea>
                                         </div>
-                                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update Details</button>
+                                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update
+                                            Details</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -140,7 +143,7 @@
 
                             <div class="d-flex text-muted pt-3">
 
-                                {% if user.profile_picture == "" %}
+                                {% if user.profilePicture == "" %}
 
                                 <img src="../../static/images/deafult_profile_picture.png"
                                     class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
@@ -149,7 +152,7 @@
 
                                 {% else %}
 
-                                <img src="{{user.profile_picture}}"
+                                <img src="{{user.profilePicture}}"
                                     class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
                                     alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32"
                                     preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -158,7 +161,7 @@
 
                                 <p class="pb-3 mb-0 small lh-sm border-bottom">
                                     <strong class="d-block text-gray-dark">
-                                        {{post.user.fullname}} <i> @{{post.user.username}} </i>
+                                        {{post.user_id.fullname}} <i> @{{post.user_id.username}} </i>
                                         <button type="button" class="btn btn-secondary-outline btn-sm">
                                             <i class="bi bi-pencil"></i>
                                         </button>
@@ -167,7 +170,7 @@
                                         </button>
                                     </strong>
                                     <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-                                        {{moment(post.pub_date).fromNow()}}</i>
+                                        {{moment(post.timestamp).fromNow()}}</i>
                                     {{post.content}}
 
                                     {% if post.isMedia == 1 %}
@@ -301,7 +304,7 @@
 
                                                 {% else %}
 
-                                                <img src="{{user.profile_picture}}"
+                                                <img src="{{user.profilePicture}}"
                                                     class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32"
                                                     width="32" alt="{{user.username}}" role="img"
                                                     aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice"
@@ -309,7 +312,7 @@
 
                                                 {% endif %}
 
-                                                {{song.user.fullname}} <i> @{{song.user.username}} </i>
+                                                {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i>
                                                 <button type="button" class="btn btn-secondary-outline btn-sm">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
@@ -319,7 +322,7 @@
                                             </strong>
 
                                             <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-                                                {{moment(song.date_uploaded).format("LL")}}</i>
+                                                {{moment(song.timestamp).format("LL")}}</i>
 
                                             <strong class="d-block text-gray-dark">
                                                 <i class="bi bi-vinyl"></i> {{song.artist}}
@@ -476,33 +479,44 @@
 
                         <div class="d-flex text-muted pt-3">
 
-                            {% if user.profile_picture == "" %}
+                            {% if comment.user_id.profilePicture == "" %}
 
-                            <img src="../../static/images/deafult_profile_picture.png"
+                            <img src="../../static/images/default_profile_picture.png"
                                 class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
                                 alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
                                 preserveAspectRatio="xMidYMid slice" focusable="false">
 
                             {% else %}
 
-                            <img src="{{user.profile_picture}}" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-                                height="32" width="32" alt="{{user.username}}" role="img"
-                                aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{comment.user_id.profilePicture}}"
+                                class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
+                                alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
 
                             {% endif %}
 
                             <p class="pb-3 mb-0 small lh-sm border-bottom">
                                 <strong class="d-block text-gray-dark">
-                                    {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
-                                    <button type="button" class="btn btn-secondary-outline btn-sm">
+                                    <a href="/{{comment.user_id.username}}">
+                                        {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
+                                    </a>
+                                    {% if current_user == comment.user_id %}
+                                    <button data-bs-toggle="modal" data-bs-target="#editCommentModal{{comment.id}}"
+                                        type="button" class="btn btn-secondary-outline btn-sm">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button type="button" class="btn btn-secondary-outline btn-sm">
+                                    <button data-bs-toggle="modal" data-bs-target="#deleteCommentModal{{comment.id}}"
+                                        type="button" class="btn btn-secondary-outline btn-sm">
                                         <i class="bi bi-trash"></i>
                                     </button>
+                                    {% endif %}
                                 </strong>
                                 <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+                                    {% if comment.isEdited == 0 %}
                                     {{moment(comment.timestamp).fromNow()}}</i>
+                                {% else %}
+                                edited {{moment(comment.editedTimestamp).fromNow()}}</i>
+                                {% endif %}
                                 {{comment.comment}}
                             </p>
 
