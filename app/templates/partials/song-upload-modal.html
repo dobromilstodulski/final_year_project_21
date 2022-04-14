@@ -1,71 +1,60 @@
-<div class="modal fade" id="uploadSongModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload new music</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="uploadSongModal" class="modal-toggle">
+<div class="modal">
+  <div class="modal-box relative">
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div class="card-body">
+          <form method="POST" action="/song/new" enctype="multipart/form-data">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Artist</span>
+              </label>
+              <input type="text" name="artist" id="artist" placeholder="Artist" class="input input-bordered">
             </div>
-            <div class="modal-body">
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/song/new">
-                    <div class="row g-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="artist" name="artist">
-                                <label for="artist">Artist</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="title" name="title">
-                                <label for="title">Title</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="featuring" name="featuring">
-                                <label for="featuring">Featuring</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="genre" name="genre">
-                                <label for="genre">Genre</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="tags" name="tags">
-                                <label for="tags">Tags</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <textarea class="form-control" id="description" name="description"
-                                    placeholder="Tell us about your track." rows="2"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="artwork" class="form-label">Upload Artwork</label>
-                        <input class="form-control" type="file" id="artwork" name="artwork">
-                    </div>
-                    <div class="mb-3">
-                        <label for="audio" class="form-label">Upload Audio</label>
-                        <input class="form-control" type="file" id="audio" name="audio">
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Upload Music</button>
-                </form>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Title</span>
+              </label>
+              <input type="text" name="title" id="title" placeholder="Title" class="input input-bordered">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Register</button> -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Featuring</span>
+              </label>
+              <input type="text" name="featuring" id="featuring" placeholder="Featuring" class="input input-bordered">
             </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Tags</span>
+              </label>
+              <input type="tags" name="tags" id="tags" placeholder="Tags" class="input input-bordered">
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Genre</span>
+              </label>
+              <select class="select select-bordered w-full max-w-xs" name="genre" id="genre">
+                <option disabled selected>Select Genre</option>
+                    {% include 'partials/genre.html' %}
+              </select>
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Album Art</span>
+              </label>
+              <input type="file" name="artwork" id="artwork" class="input input-bordered">
+            </div>
+            <div class="form-control">
+              <label class="label cursor-pointer">
+                <span class="label-text">Audio</span>
+                <input type="file" name="audio" id="audio" class="input input-bordered">
+              </label>
+            </div>
+            <div class="form-control mt-6">
+              <button class="btn btn-primary" type="submit">Upload</button>
+            </div>
+          </form>
         </div>
-    </div>
+      </div>
+  </div>
 </div>
-
