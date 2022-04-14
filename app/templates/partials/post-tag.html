@@ -1,64 +1,61 @@
-<div class="d-flex text-muted pt-3">
+<div class="card w-96 bg-base-100 shadow-xl">
+    {% if post.isMedia == 1 %}
+    <figure class="px-10 pt-10">
+        <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" alt="{{post.media}}" class="rounded-xl" />
+    </figure>
+    {% endif %}
+    <div class="card-body items-center text-center">
 
-    {% include 'partials/user-photo.html' %}
+        <span class="block">
 
-    <p class="pb-3 mb-0 small lh-sm border-bottom myP">
-        <strong class="d-block ">
-            {{post.user_id.fullname}} <i> @{{post.user_id.username}} </i>
+            {% include 'partials/user-photo.html' %}
+
+            {{post.user_id.fullname}}
+            <i>@{{post.user_id.username}}</i>
 
             {% if post.user_id == current_user %}
-            <button data-bs-toggle="modal" data-bs-target="#editPostModal{{post.id}}" type="button"
-                class="btn btn-sm myBtn">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button data-bs-toggle="modal" data-bs-target="#deletePostModal{{post.id}}" type="button"
-                class="btn btn-sm myBtn">
-                <i class="bi bi-trash"></i>
-            </button>
+
+            <label for="editPostModal" class="btn btn-outline modal-button"><i
+                    class="fa-solid fa-pen-to-square"></i></label>
+
+            <label for="deletePostModal" class="btn btn-outline modal-button"><i
+                    class="fa-solid fa-trash-can"></i></label>
+
             {% endif %}
 
-        </strong>
-        <i class="d-block"><i class="bi bi-clock"></i>
+        </span>
+
         {% if post.isEdited == 0 %}
-            {{moment(post.timestamp).fromNow()}}</i>
+
+        <span class="block"><i class="fa-solid fa-clock"></i> {{post.timestamp}}</span>
+
         {% else %}
-            edited {{moment(post.editedTimestamp).fromNow()}}</i>
-        {% endif %}
-        {{post.content}}
 
-        {% if post.isMedia == 1 %}
-
-        <a href="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" target="_blank">
-            <img class="img-fluid" style="display:block"
-                src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" alt="{{post.media}}">
-        </a>
+        <span class="block"><i>edited</i> <i class="fa-solid fa-clock-seven"></i> {{post.editedTimestamp}}</span>
 
         {% endif %}
 
-        <strong class="d-block text-gray-dark" id="postReactions{{post.id}}">
+        <div class="card-actions">
+            <p> {{post.content}} </p>
+        </div>
+
+        <span class="block">
 
             {% if current_user.hasUserLiked(post.id) %}
-            <a href="{{url_for('post.unlike_post', post_id=post.id)}}" id="{{post.id}}"
-                class="btn btn-sm unlike myBtn">
-                <i class="bi bi-hand-thumbs-up-fill"></i> You & {{post.numLikes}}
-                Others Liked
-            </a>
+
+            <a href="/post/unlike/{{post.id}}" class="btn btn-outline unlike"><i class="fa-solid fa-thumbs-down"></i>
+                Unlike - <i class="fa-solid fa-thumbs-up"></i> {{post.numLikes}} Likes</a>
 
             {% else %}
 
             {% if post.numLikes == 0 %}
 
-            <a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}"
-                class="btn btn-sm like myBtn">
-                <i class="bi bi-hand-thumbs-up"></i> Like
-            </a>
+            <a href="/post/like/{{post.id}}" class="btn btn-outline like"><i class="fa-solid fa-thumbs-up"></i> Like</a>
 
             {% else %}
 
-            <a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}"
-                class="btn btn-sm like myBtn">
-                <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
-            </a>
+            <a href="/post/like/{{post.id}}" class="btn btn-outline like"><i class="fa-solid fa-thumbs-up"></i>
+                {{post.numLikes}} Likes</a>
 
             {% endif %}
 
@@ -66,88 +63,81 @@
 
             {% if post.numComments == 0 %}
 
-            <a href="{{url_for('post.view_post', post_id=post.id)}}"
-                class="btn btn-sm myBtn">
-                <i class="bi bi-chat"></i> Comment
-            </a>
+            <a href="/post/{{post.id}}" class="btn btn-outline"><i class="fa-solid fa-comment"></i> Comment</a>
 
             {% else %}
 
-            <a href="{{url_for('post.view_post', post_id=post.id)}}"
-                class="btn btn-sm myBtn">
-                <i class="bi bi-chat"></i> {{post.numComments}} Comments
-            </a>
+            <a href="/post/{{post.id}}" class="btn btn-outline"><i class="fa-solid fa-comment"></i> {{post.numComments}}
+                Comments</a>
 
             {% endif %}
 
-        </strong>
-    </p>
+        </span>
+    </div>
 </div>
 
-<div class="modal fade" id="editPostModal{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content myModal">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<input type="checkbox" id="editPostModal" class="modal-toggle">
+<div class="modal">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
                 {% if post.isMedia == 0 %}
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/post/edit/{{post.id}}">
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Post Content</label>
-                        <textarea class="form-control" id="content" name="content" rows="3">{{post.content}}</textarea>
+                <form method="POST" action="/post/edit/{{song.id}}" enctype="multipart/form-data">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Content</span>
+                        </label>
+                        <textarea class="textarea textarea-bordered" name="content" id="content"
+                            value="{{post.content}}"></textarea>
                     </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Post</button>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-primary" type="submit">Update</button>
+                    </div>
                 </form>
                 {% else %}
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/post/edit/media/{{post.id}}">
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Post Content</label>
-                        <textarea class="form-control" id="content" name="content" rows="3">{{post.content}}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="media" class="form-label">Upload Photo or Video</label>
-                        <input class="form-control" type="file" id="media" name="media" value="{{post.media}}">
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Post</button>
+                <form method="POST" action="/post/edit/media/{{song.id}}" enctype="multipart/form-data"></form>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Content</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered" name="content" id="content"
+                        value="{{post.content}}"></textarea>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Media</span>
+                        <input type="file" name="media" id="media" value="{{post.media}}" class="input input-bordered">
+                    </label>
+                </div>
+                <div class="form-control mt-6">
+                    <button class="btn btn-primary" type="submit">Upload</button>
+                </div>
                 </form>
                 {% endif %}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="deletePostModal{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content myModal">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<input type="checkbox" id="deletePostModal" class="modal-toggle">
+<div class="modal">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
                 <p>Are you sure?</p>
                 {% if post.isMedia == 0 %}
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/post/delete/{{post.id}}">
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Post</button>
+                <form method="POST" action="/post/delete/{{song.id}}" enctype="multipart/form-data">
+                    <div class="form-control mt-6">
+                        <button class="btn btn-error" type="submit">Delete</button>
+                    </div>
                 </form>
                 {% else %}
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/post/delete/media/{{post.id}}">
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Post</button>
+                <form method="POST" action="/post/delete/media/{{song.id}}" enctype="multipart/form-data">
+                    <div class="form-control mt-6">
+                        <button class="btn btn-error" type="submit">Delete</button>
+                    </div>
                 </form>
                 {% endif %}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
