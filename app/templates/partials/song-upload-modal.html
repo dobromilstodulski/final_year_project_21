@@ -1,60 +1,67 @@
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="uploadSongModal" class="modal-toggle">
 <div class="modal">
-  <div class="modal-box relative">
-    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        <div class="card-body">
-          <form method="POST" action="/song/new" enctype="multipart/form-data">
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Artist</span>
-              </label>
-              <input type="text" name="artist" id="artist" placeholder="Artist" class="input input-bordered">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <form method="POST" action="/song/new" enctype="multipart/form-data">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Artist</span>
+                        </label>
+                        <input type="text" name="artist" id="artist" placeholder="Artist" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Title</span>
+                        </label>
+                        <input type="text" name="title" id="title" placeholder="Title" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Featuring</span>
+                        </label>
+                        <input type="text" name="featuring" id="featuring" placeholder="Featuring"
+                            class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Tags</span>
+                        </label>
+                        <input type="tags" name="tags" id="tags" placeholder="Tags" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Genre</span>
+                        </label>
+                        <select class="select select-bordered w-full max-w-xs" name="genre" id="genre">
+                            <option disabled selected>Select Genre</option>
+                            {% include 'partials/genre.html' %}
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Description</span>
+                        </label>
+                        <textarea class="textarea textarea-bordered" name="description" id="description" placeholder="Tell us about your song."></textarea>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Album Art</span>
+                        </label>
+                        <input type="file" name="artwork" id="artwork" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <span class="label-text">Audio</span>
+                            <input type="file" name="audio" id="audio" class="input input-bordered">
+                        </label>
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-primary" type="submit">Upload</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Title</span>
-              </label>
-              <input type="text" name="title" id="title" placeholder="Title" class="input input-bordered">
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Featuring</span>
-              </label>
-              <input type="text" name="featuring" id="featuring" placeholder="Featuring" class="input input-bordered">
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Tags</span>
-              </label>
-              <input type="tags" name="tags" id="tags" placeholder="Tags" class="input input-bordered">
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Genre</span>
-              </label>
-              <select class="select select-bordered w-full max-w-xs" name="genre" id="genre">
-                <option disabled selected>Select Genre</option>
-                    {% include 'partials/genre.html' %}
-              </select>
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Album Art</span>
-              </label>
-              <input type="file" name="artwork" id="artwork" class="input input-bordered">
-            </div>
-            <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text">Audio</span>
-                <input type="file" name="audio" id="audio" class="input input-bordered">
-              </label>
-            </div>
-            <div class="form-control mt-6">
-              <button class="btn btn-primary" type="submit">Upload</button>
-            </div>
-          </form>
         </div>
-      </div>
-  </div>
+    </div>
 </div>
