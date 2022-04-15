@@ -126,13 +126,13 @@
             <div class="card-body">
                 <p>Are you sure?</p>
                 {% if post.isMedia == 0 %}
-                <form method="POST" action="/post/delete/{{song.id}}" enctype="multipart/form-data">
+                <form method="POST" action="/post/delete/{{post.id}}" enctype="multipart/form-data">
                     <div class="form-control mt-6">
                         <button class="btn btn-error" type="submit">Delete</button>
                     </div>
                 </form>
                 {% else %}
-                <form method="POST" action="/post/delete/media/{{song.id}}" enctype="multipart/form-data">
+                <form method="POST" action="/post/delete/media/{{post.id}}" enctype="multipart/form-data">
                     <div class="form-control mt-6">
                         <button class="btn btn-error" type="submit">Delete</button>
                     </div>
