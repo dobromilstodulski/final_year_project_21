@@ -1,75 +1,92 @@
-<div class="d-flex text-muted pt-3">
+<div class="d-flex justify-content-center">
+    <div class="d-flex text-muted pt-3">
 
-    {% include 'partials/user-photo.html' %}
+        {% if not comment.user_id.profilePicture %}
 
-    <p class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">
-            <a href="/{{comment.user_id.username}}">
-                {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
-            </a>
-            {% if current_user == comment.user_id  %}
-            <button data-bs-toggle="modal" data-bs-target="#editCommentModal{{comment.id}}" type="button" class="btn btn-secondary-outline btn-sm">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button data-bs-toggle="modal" data-bs-target="#deleteCommentModal{{comment.id}}" type="button" class="btn btn-secondary-outline btn-sm">
-                <i class="bi bi-trash"></i>
-            </button>
-        </strong>
-        <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
-        {% if comment.isEdited == 0 %}
-            {{moment(comment.timestamp).fromNow()}}</i>
+        <img src="../../static/images/default_profile_picture.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+            height="32" width="32" alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
+            preserveAspectRatio="xMidYMid slice" focusable="false">
+
         {% else %}
-            edited {{moment(comment.editedTimestamp).fromNow()}}</i>
+
+        <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{comment.user_id.profilePicture}}"
+            class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32" alt="{{user.username}}"
+            role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
+
         {% endif %}
-        {{comment.comment}}
-    </p>
 
-</div>
+        <p class="pb-3 mb-0 small lh-sm border-bottom">
+            <strong class="d-block text-gray-dark">
+                <a href="/{{comment.user_id.username}}">
+                    {{comment.user_id.fullname}} <i> @{{comment.user_id.username}} </i>
+                </a>
+                {% if current_user == comment.user_id %}
+                <button data-bs-toggle="modal" data-bs-target="#editCommentModal{{comment.id}}" type="button"
+                    class="btn btn-secondary-outline btn-sm">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button data-bs-toggle="modal" data-bs-target="#deleteCommentModal{{comment.id}}" type="button"
+                    class="btn btn-secondary-outline btn-sm">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </strong>
+            <i class="d-block text-gray-dark"><i class="bi bi-clock"></i>
+                {% if comment.isEdited == 0 %}
+                {{moment(comment.timestamp).fromNow()}}</i>
+            {% else %}
+            edited {{moment(comment.editedTimestamp).fromNow()}}</i>
+            {% endif %}
+            {{comment.comment}}
+        </p>
+
+    </div>
 
 
-<div class="modal fade" id="editCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/comment/edit/{{comment.id}}">
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Post Content</label>
-                        <textarea class="form-control" id="content" name="content" rows="3">{{comment.content}}</textarea>
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Comment</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+    <div class="modal fade" id="editCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                        action="/comment/edit/{{comment.id}}">
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Post Content</label>
+                            <textarea class="form-control" id="content" name="content"
+                                rows="3">{{comment.content}}</textarea>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update Comment</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="modal fade" id="deleteCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Comment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure?</p>
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/comment/delete/{{comment.id}}">
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Comment</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+    <div class="modal fade" id="deleteCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure?</p>
+                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                        action="/comment/delete/{{comment.id}}">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Comment</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

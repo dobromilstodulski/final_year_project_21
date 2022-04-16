@@ -1,208 +1,225 @@
-<input type="hidden" id="count" name="count" value="{{song_count}}">
+<div class="d-flex justify-content-center">
 
-<div class="d-flex text-muted pt-3">
-    <div class="card border-secondary mb-3" style="max-width: 32rem;">
-        <div class="card-body text-secondary small lh-sm myCard">
-            <p class="card-text">
-                <strong class="d-block">
-                    
-                    {% include 'partials/user-photo.html' %}
+    <div class="d-flex text-muted pt-3">
+        <div class="card border-secondary mb-3" style="max-width: 32rem;">
+            <div class="card-body text-secondary small lh-sm myCard">
+                <p class="card-text">
+                    <strong class="d-block">
 
-                    {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i>
+                        {% if not song.user_id.profilePicture %}
 
-                    {% if current_user == song.user_id %}
-                    <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
-                        class="btn btn-sm myBtn">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button data-bs-toggle="modal" data-bs-target="#deleteSongModal{{ song.id }}" type="button"
-                        class="btn btn-sm myBtn">
-                        <i class="bi bi-trash"></i>
-                    </button>
+                        <img src="../../static/images/default_profile_picture.png"
+                            class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
+                            alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
+                            preserveAspectRatio="xMidYMid slice" focusable="false">
+
+                        {% else %}
+
+                        <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.user_id.profilePicture}}"
+                            class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
+                            alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32"
+                            preserveAspectRatio="xMidYMid slice" focusable="false">
+
+                        {% endif %}
+
+                        {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i>
+
+                        {% if current_user == song.user_id %}
+                        <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
+                            class="btn btn-sm myBtn">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button data-bs-toggle="modal" data-bs-target="#deleteSongModal{{ song.id }}" type="button"
+                            class="btn btn-sm myBtn">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        {% endif %}
+
+                    </strong>
+
+                    <i class="d-block"><i class="bi bi-clock"></i>
+                        {{moment(song.timestamp).format("LL")}}</i>
+
+                    <strong class="d-block">
+                        <i class="bi bi-vinyl"></i> {{song.artist}}
+
+                        - {{song.title}}
+
+                        {% if song.feature != "" %}
+
+                        <i> (feat. {{song.feature}})</i>
+
+                        {% endif %}
+
+                        <i>#{{song.genre}}</i>
+                    </strong>
+
+                <div class="container">
+                    <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}" class="img-fluid audioImage"
+                        alt="{{song.artwork}}">
+                    <div class="middle">
+                        <div id="playPauseAudio{{song.id}}" class="text"><i class="bi bi-play-fill"></i> / <i
+                                class="bi bi-pause-fill"></i></div>
+                    </div>
+                </div>
+
+                <audio id="audio{{song.id}}" src="/play/{{song.id}}" type="audio/wav"></audio>
+
+                <script>
+
+                </script>
+
+                <strong class="d-block" id="{{song.id}}">
+
+                    {% if current_user.hasUserFavorite(song.id) %}
+                    <a href="{{url_for('song.unfavorite', song_id=song.id)}}" id="{{song.id}}"
+                        class="btn btn-sm unfavorite myBtn">
+                        <i class="bi bi-hand-thumbs-up"></i> Like
+                    </a>
+
+                    {% else %}
+
+                    {% if song.numFavorites == 0 %}
+
+                    <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+                        class="btn btn-sm favorite myBtn">
+                        <i class="bi bi-hand-thumbs-up"></i> Favorite
+                    </a>
+
+                    {% else %}
+
+                    <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+                        class="btn btn-sm favorite myBtn">
+                        <i class="bi bi-hand-thumbs-up"></i> {{song.numFavorites}} Favorites
+                    </a>
+
+                    {% endif %}
+
+                    {% endif %}
+
+                    {% if song.numComments == 0 %}
+
+                    <a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm myBtn">
+                        <i class="bi bi-chat"></i> Comment
+                    </a>
+
+                    {% else %}
+
+                    <a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm myBtn">
+                        <i class="bi bi-chat"></i> {{song.numComments}} Comments
+                    </a>
+
                     {% endif %}
 
                 </strong>
+                </p>
+            </div>
+        </div>
+    </div>
 
-                <i class="d-block"><i class="bi bi-clock"></i>
-                    {{moment(song.timestamp).format("LL")}}</i>
 
-                <strong class="d-block">
-                    <i class="bi bi-vinyl"></i> {{song.artist}}
-
-                    - {{song.title}}
-
-                    {% if song.feature != "" %}
-
-                    <i> (feat. {{song.feature}})</i>
-
-                    {% endif %}
-
-                    <i>#{{song.genre}}</i>
-                </strong>
-
-            <div class="container">
-                <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}" class="img-fluid audioImage"
-                    alt="{{song.artwork}}">
-                <div class="middle">
-                    <div id="playPauseAudio{{song.id}}" class="text"><i class="bi bi-play-fill"></i> / <i
-                            class="bi bi-pause-fill"></i></div>
+    <div class="modal fade" id="editSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content myModal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload new music</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="p-4 p-md-5 border rounded-3" method="POST" enctype="multipart/form-data"
+                        action="/song/edit/{{song.id}}">
+                        <div class="row g-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="artist" name="artist"
+                                        value="{{song.artist}}">
+                                    <label for="artist">Artist</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="title" name="title"
+                                        value="{{song.title}}">
+                                    <label for="title">Title</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="featuring" name="featuring"
+                                        value="{{song.featuring}}">
+                                    <label for="featuring">Featuring</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="genre" name="genre"
+                                        value="{{song.genre}}">
+                                    <label for="genre">Genre</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="tags" name="tags" value="{{song.tags}}">
+                                    <label for="tags">Tags</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="description" name="description"
+                                        placeholder="Tell us about your track." rows="2"
+                                        value="{{song.description}}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="artwork" class="form-label">Upload Artwork</label>
+                            <input class="form-control" type="file" id="artwork" name="artwork"
+                                value="{{song.artwork}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="audio" class="form-label">Upload Audio</label>
+                            <input class="form-control" type="file" id="audio" name="audio" value="{{song.source}}">
+                        </div>
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update Music</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
                 </div>
             </div>
-
-            <audio id="audio{{song.id}}" src="/play/{{song.id}}" type="audio/wav"></audio>
-
-            <script>
-
-            </script>
-
-            <strong class="d-block" id="{{song.id}}">
-
-                {% if current_user.hasUserFavorite(song.id) %}
-                <a href="{{url_for('song.unfavorite', song_id=song.id)}}" id="{{song.id}}"
-                    class="btn btn-sm unfavorite myBtn">
-                    <i class="bi bi-hand-thumbs-up"></i> Like
-                </a>
-
-                {% else %}
-
-                {% if song.numFavorites == 0 %}
-
-                <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
-                    class="btn btn-sm favorite myBtn">
-                    <i class="bi bi-hand-thumbs-up"></i> Favorite
-                </a>
-
-                {% else %}
-
-                <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
-                    class="btn btn-sm favorite myBtn">
-                    <i class="bi bi-hand-thumbs-up"></i> {{song.numFavorites}} Favorites
-                </a>
-
-                {% endif %}
-
-                {% endif %}
-
-                {% if song.numComments == 0 %}
-
-                <a href="{{url_for('song.view_song', song_id=song.id)}}"
-                    class="btn btn-sm myBtn">
-                    <i class="bi bi-chat"></i> Comment
-                </a>
-
-                {% else %}
-
-                <a href="{{url_for('song.view_song', song_id=song.id)}}"
-                    class="btn btn-sm myBtn">
-                    <i class="bi bi-chat"></i> {{song.numComments}} Comments
-                </a>
-
-                {% endif %}
-
-            </strong>
-            </p>
         </div>
     </div>
-</div>
 
 
-<div class="modal fade" id="editSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content myModal">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload new music</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="p-4 p-md-5 border rounded-3" method="POST" enctype="multipart/form-data"
-                    action="/song/edit/{{song.id}}">
-                    <div class="row g-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="artist" name="artist"
-                                    value="{{song.artist}}">
-                                <label for="artist">Artist</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="title" name="title" value="{{song.title}}">
-                                <label for="title">Title</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="featuring" name="featuring"
-                                    value="{{song.featuring}}">
-                                <label for="featuring">Featuring</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="genre" name="genre" value="{{song.genre}}">
-                                <label for="genre">Genre</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="tags" name="tags" value="{{song.tags}}">
-                                <label for="tags">Tags</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <textarea class="form-control" id="description" name="description"
-                                    placeholder="Tell us about your track." rows="2"
-                                    value="{{song.description}}"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="artwork" class="form-label">Upload Artwork</label>
-                        <input class="form-control" type="file" id="artwork" name="artwork" value="{{song.artwork}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="audio" class="form-label">Upload Audio</label>
-                        <input class="form-control" type="file" id="audio" name="audio" value="{{song.source}}">
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Music</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Register</button> -->
+    <div class="modal fade" id="deleteSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content myModal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Song</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure?</p>
+                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
+                        action="/song/delete/{{song.id}}">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Song</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<div class="modal fade" id="deleteSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content myModal">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Song</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure?</p>
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
-                    action="/song/delete/{{song.id}}">
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Song</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Register</button> -->
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>

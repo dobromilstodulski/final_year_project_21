@@ -20,3 +20,4 @@ def search_query():
     posts_result = Post.select().where(Post.content.contains(query))
     songs_result = Song.select().where(Song.title.contains(query) | Song.artist.contains(query) | Song.feature.contains(query))
     return render_template('search/search.html', query=query, users_result=users_result, posts_result=posts_result, songs_result=songs_result, user=user)
+    
