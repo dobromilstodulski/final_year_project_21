@@ -44,72 +44,7 @@
 }
 
 html, body {
-  background-color: #001122;
   font-family: Intro;
-}
-
-/* https://css-tricks.com/couple-takes-sticky-footer/ */
-.content {
-  min-height: calc(80vh - 50px);
-}
-
-.footer {
-  height: 50px;
-}
-
-/* https://stackoverflow.com/questions/37391541/how-to-make-nav-fixed-top-push-down-content-like-non-fixed-navbar */
-nav.navbar-fixed-top {
-  position:fixed;
-  top:0;
-}
-
-body::before {
-  display:block;
-  content: '';
-  height:60px; /* or whatever */
-}
-
-.navbar {
-  background-color: #001122;
-}
-
-a {
-  color: #81766c;
-}
-
-a:hover {
-  color: #81766c;
-}
-
-a:visited {
-  color: #81766c;
-}
-
-div {
-  color: #81766c;
-}
-
-.myCard {
-  background-color: #131929!important;
-  color: #f3ddcc!important;
-}
-
-.myBtn {
-  color: #f3ddcc!important;
-}
-
-.myModal {
-  background-color: #131929!important;
-  color: #f3ddcc!important;
-}
-
-input, textarea {
-  color: #302736!important;
-  background-color: #f3ddcc!important;
-}
-
-.myP {
-  color: #f3ddcc!important;
 }
 
 .alert {
