@@ -82,7 +82,7 @@
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div class="card-body">
                 {% if post.isMedia == 0 %}
-                <form method="POST" action="/post/edit/{{song.id}}" enctype="multipart/form-data">
+                <form method="POST" action="/post/edit/{{post.id}}" enctype="multipart/form-data">
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Content</span>
@@ -95,7 +95,7 @@
                     </div>
                 </form>
                 {% else %}
-                <form method="POST" action="/post/edit/media/{{song.id}}" enctype="multipart/form-data"></form>
+                <form method="POST" action="/post/edit/media/{{post.id}}" enctype="multipart/form-data"></form>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Content</span>
