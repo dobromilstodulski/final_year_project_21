@@ -1,16 +1,22 @@
-{% if user.profilePicture == "" %}
+<center>
 
-<img src="../../static/images/default_profile_picture.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-    height="32" width="32" alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
+{% if not user.profilePicture %}
+
+<img src="../../static/images/default_profile_picture.png"
+    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="128" width="128"
+    alt="Default Profile Picture" role="img" aria-label="Placeholder: 128x128"
     preserveAspectRatio="xMidYMid slice" focusable="false">
 
 {% else %}
 
 <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{user.profilePicture}}"
-    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32" alt="{{user.username}}" role="img"
-    aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
+    class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="128" width="128"
+    alt="{{user.username}}" role="img" aria-label="Placeholder: 128x128"
+    preserveAspectRatio="xMidYMid slice" focusable="false">
 
 {% endif %}
+
+</center>
 
 <br />
 

@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 profile = Blueprint('profile', __name__)
 
 
-@profile.route('/<username>')
+@profile.route('/profile/<username>')
 def userProfile(username):
     #users = User.select().where(User.username == username)
     #user = users[0]

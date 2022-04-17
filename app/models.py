@@ -43,6 +43,9 @@ class User(UserMixin, BaseModel):
 
     def get_post_feed(self):
         return Post.select().order_by(Post.timestamp.desc())
+    
+    def get_song_feed(self):
+        return Song.select().order_by(Song.timestamp.desc())
 
     def get_private_post_feed(self):
         return Post.select().where(

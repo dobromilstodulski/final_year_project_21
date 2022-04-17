@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
     <div class="d-flex text-muted pt-3">
 
-        {% if user.profilePicture == "" %}
+        {% if not user.profilePicture %}
 
         <img src="../../static/images/default_profile_picture.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded"
             height="32" width="32" alt="Default Profile Picture" role="img" aria-label="Placeholder: 32x32"
@@ -22,12 +22,12 @@
                 {% if user != current_user %}
                 {% if not user in current_user.following() %}
 
-                <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-sm myBtn"><i
+                <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-sm btn-secondary-outline"><i
                         class="bi bi-person-plus"></i>Follow</a>
 
                 {% else %}
 
-                <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-sm myBtn"><i
+                <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-sm btn-secondary-outline"><i
                         class="bi bi-person-dash"></i>Unfollow</a>
 
                 {% endif %}

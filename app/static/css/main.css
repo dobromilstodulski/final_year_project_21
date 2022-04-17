@@ -51,59 +51,11 @@ html, body {
   width:75%;    
 }
 
-/* https://www.codeply.com/p/w5ZxAjmjpo */
-* {
-  border-radius: 5px;
-}
-
-body.thumb {
-  transform: scale(0.4);
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-}
-
-main {
-  min-height: 80vh;
-}
-
-/*
-[class*='container'] {
-  border: 1px dashed #eee;
-  background-clip: content-box;
-}
-
-.row [class*='col'] {
-  background-color: #efefef;
-  background-clip: content-box;
-}
-*/
-
-/*
-.nav-item {
-  background-color: #eeeeff;
-  background-clip: content-box;
-}
-*/
-
-.card-img-top {
-  width: 50%;
-  height: 10vw;
-  object-fit: cover;
-}
-
 /* https://stackoverflow.com/questions/67952873/customizing-bootstrap-5-button-colors-and-properties-in-it */
 
 .btn-secondary-outline {
   color: gray !important;
   font-weight: bold;    
-} 
-
-
-* > .fa-hover-show,
-*:hover > .fa-hover-hidden {
-  display: none;
-}
-*:hover > .fa-hover-show {
-  display: inline-block;
 }
 
 container {
