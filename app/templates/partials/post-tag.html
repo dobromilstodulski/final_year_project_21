@@ -62,13 +62,15 @@
 
                 {% if post.numLikes == 0 %}
 
-                <a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}" class="btn btn-sm btn-secondary-outline like">
+                <a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}"
+                    class="btn btn-sm btn-secondary-outline like">
                     <i class="bi bi-hand-thumbs-up"></i> Like
                 </a>
 
                 {% else %}
 
-                <a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}" class="btn btn-sm btn-secondary-outline like">
+                <a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}"
+                    class="btn btn-sm btn-secondary-outline like">
                     <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
                 </a>
 
@@ -154,7 +156,7 @@
                     {% else %}
                     <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
                         action="/post/delete/media/{{post.id}}">
-                        <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Post</button>
+                        <button class="w-100 btn btn-lg btn-danger" type="submit">Delete Post</button>
                     </form>
                     {% endif %}
                 </div>

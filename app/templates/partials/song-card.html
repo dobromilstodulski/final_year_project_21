@@ -26,11 +26,11 @@
 
                         {% if current_user == song.user_id %}
                         <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
-                            class="btn btn-sm myBtn">
+                            class="btn btn-sm btn-secondary-outline">
                             <i class="bi bi-pencil"></i>
                         </button>
                         <button data-bs-toggle="modal" data-bs-target="#deleteSongModal{{ song.id }}" type="button"
-                            class="btn btn-sm myBtn">
+                            class="btn btn-sm btn-secondary-outline">
                             <i class="bi bi-trash"></i>
                         </button>
                         {% endif %}
@@ -73,7 +73,7 @@
 
                     {% if current_user.hasUserFavorite(song.id) %}
                     <a href="{{url_for('song.unfavorite', song_id=song.id)}}" id="{{song.id}}"
-                        class="btn btn-sm unfavorite myBtn">
+                        class="btn btn-sm btn-secondary-outline unfavorite">
                         <i class="bi bi-hand-thumbs-up"></i> Like
                     </a>
 
@@ -82,14 +82,14 @@
                     {% if song.numFavorites == 0 %}
 
                     <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
-                        class="btn btn-sm favorite myBtn">
+                        class="btn btn-sm btn-secondary-outline favorite">
                         <i class="bi bi-hand-thumbs-up"></i> Favorite
                     </a>
 
                     {% else %}
 
                     <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
-                        class="btn btn-sm favorite myBtn">
+                        class="btn btn-sm btn-secondary-outline favorite">
                         <i class="bi bi-hand-thumbs-up"></i> {{song.numFavorites}} Favorites
                     </a>
 
@@ -99,13 +99,13 @@
 
                     {% if song.numComments == 0 %}
 
-                    <a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm myBtn">
+                    <a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm btn-secondary-outline">
                         <i class="bi bi-chat"></i> Comment
                     </a>
 
                     {% else %}
 
-                    <a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm myBtn">
+                    <a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm btn-secondary-outline">
                         <i class="bi bi-chat"></i> {{song.numComments}} Comments
                     </a>
 
@@ -209,7 +209,7 @@
                     <p>Are you sure?</p>
                     <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" enctype="multipart/form-data"
                         action="/song/delete/{{song.id}}">
-                        <button class="w-100 btn btn-lg btn-primary" type="submit">Delete Song</button>
+                        <button class="w-100 btn btn-lg btn-danger" type="submit">Delete Song</button>
                     </form>
                 </div>
                 <div class="modal-footer">
