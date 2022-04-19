@@ -22,13 +22,13 @@
                 {% if user != current_user %}
                 {% if not user in current_user.following() %}
 
-                <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-sm btn-secondary-outline"><i
-                        class="bi bi-person-plus"></i>Follow</a>
+                <a href="{{ url_for('profile.follow', username=user.username) }}"
+                    class="btn btn-sm btn-secondary-outline"><i class="bi bi-person-plus"></i>Follow</a>
 
                 {% else %}
 
-                <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-sm btn-secondary-outline"><i
-                        class="bi bi-person-dash"></i>Unfollow</a>
+                <a href="{{ url_for('profile.unfollow', username=user.username) }}"
+                    class="btn btn-sm btn-secondary-outline"><i class="bi bi-person-dash"></i>Unfollow</a>
 
                 {% endif %}
                 {% endif %}

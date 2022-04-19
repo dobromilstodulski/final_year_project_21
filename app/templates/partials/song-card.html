@@ -93,7 +93,7 @@
                         <i class="bi bi-hand-thumbs-up"></i> {{song.numFavorites}} Favorites
                     </a>
 
-                    {% else %}
+                    {% endif %}
 
                     {% endif %}
 
@@ -195,6 +195,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="deleteSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
