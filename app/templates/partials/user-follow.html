@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="d-flex justify-content-center">
     <div class="d-flex text-muted pt-3">
 
@@ -36,4 +37,50 @@
             <!--<span class="d-block">@{{user.username}}</span>-->
         </div>
     </div>
+=======
+<div class="overflow-x-auto w-full">
+    <table class="table w-full">
+        <!-- head -->
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Favorite Color</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- row 1 -->
+            <tr>
+                <td>
+                    <div class="flex items-center space-x-3">
+
+                        {% include 'partials/user-photo.html' %}
+
+                        <div>
+                            <div class="font-bold">{{user.fullname}}</div>
+                            <div class="text-sm opacity-50">{{@user.usernmae}}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% if user != current_user %}
+                    {% if not user in current_user.following() %}
+
+                    <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-outline"><i
+                            class="fa-solid fa-user-plus"></i>Follow</a>
+
+                    {% else %}
+
+                    <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-outline"><i
+                            class="fa-solid fa-user-minus"></i>Unfollow</a>
+
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
 </div>

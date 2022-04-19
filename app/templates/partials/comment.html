@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="d-flex justify-content-center">
     <div class="d-flex text-muted pt-3">
 
@@ -64,10 +65,69 @@
                 <div class="modal-footer">
                     <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
+=======
+<div class="card w-96 bg-base-100 shadow-xl">
+
+    <div class="card-body items-center text-center">
+        <p>
+            <span class="block">
+
+                {% include 'partials/user-photo.html' %}
+
+                {{comment.user_id.fullname}}
+                <i>@{{comment.user_id.username}}</i>
+
+                {% if comment.user_id == current_user %}
+
+                <label for="editCommentModal" class="btn btn-outline modal-button"><i
+                        class="fa-solid fa-pen-to-square"></i></label>
+
+                <label for="deleteCommentModal" class="btn btn-outline modal-button"><i
+                        class="fa-solid fa-trash-can"></i></label>
+
+                {% endif %}
+
+            </span>
+
+            {% if comment.isEdited == 0 %}
+            <span class="block">{{comment.timestamp}}</span>
+            {% else %}
+            <span class="block"> edited {{comment.editedTimestamp}}</span>
+            {% endif %}
+
+            {{comment.comment}}
+
+        </p>
+
+        <div class="card-actions">
+            <button class="btn btn-primary"><i class="fa-solid fa-play"></i> Listen Now</button>
+        </div>
+    </div>
+</div>
+
+<input type="checkbox" id="editCommentModal" class="modal-toggle">
+<div class="modal">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <form method="POST" action="/comment/edit/{{comment.id}}" enctype="multipart/form-data"></form>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Content</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered" name="content" id="content"
+                        value="{{comment.comment}}"></textarea>
+                </div>
+                <div class="form-control mt-6">
+                    <button class="btn btn-primary" type="submit">Create Post</button>
+                </div>
+                </form>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
             </div>
         </div>
     </div>
 
+<<<<<<< HEAD
 
     <div class="modal fade" id="deleteCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -87,6 +147,19 @@
                 <div class="modal-footer">
                     <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
+=======
+<input type="checkbox" id="deleteCommentModal" class="modal-toggle">
+<div class="modal">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <p>Are you sure?</p>
+                <form method="POST" action="/comment/delete/{{comment.id}}" enctype="multipart/form-data">
+                    <div class="form-control mt-6">
+                        <button class="btn btn-error" type="submit">Delete</button>
+                    </div>
+                </form>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
             </div>
         </div>
     </div>

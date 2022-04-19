@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="d-flex justify-content-center">
 
     <div class="d-flex text-muted pt-3">
@@ -92,9 +93,48 @@
                         class="btn btn-sm favorite myBtn">
                         <i class="bi bi-hand-thumbs-up"></i> {{song.numFavorites}} Favorites
                     </a>
+=======
+<div class="card w-96 bg-base-100 shadow-xl">
+    <figure class="px-10 pt-10">
+      <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}" alt="{{song.artwork}}" class="rounded-xl" />
+    </figure>
+    <div class="card-body items-center text-center">
+        
+      {% if song.featuring == "" %}
+      <h2 class="card-title"><i class="fa-solid fa-album"></i> {{song.artist}} - {{song.title}}</h2>
+      {% else %}
+      <h2 class="card-title"><i class="fa-solid fa-album"></i> {{song.artist}} - {{song.title}} feat. <i>({{song.featuring}})</i></h2>
+      {% endif %}
 
-                    {% endif %}
+      <span class="block">
+        
+        {% include 'partials/user-photo.html' %}
 
+        {{song.user_id.fullname}} 
+        <i>@{{song.user_id.username}}</i>
+        
+        {% if song.user_id == current_user %}
+
+        <label for="editSongModal" class="btn btn-outline modal-button"><i class="fa-solid fa-pen-to-square"></i></label>
+
+        <label for="deleteSongModal" class="btn btn-outline modal-button"><i class="fa-solid fa-trash-can"></i></label>
+
+        {% endif %}
+    
+    </span>
+
+      <span class="block">{{song.timestamp}}</span>
+
+      <span class="block">
+
+        {% if current_user.hasUserFavorite(song.id) %}
+
+        <a href="/song/unfavorite/{{song.id}}" class="btn btn-outline unfavorite"><i class="fa-solid fa-heart-crack"></i> Unfavorite</a>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
+
+        {% else %}
+
+<<<<<<< HEAD
                     {% endif %}
 
                     {% if song.numComments == 0 %}
@@ -194,8 +234,38 @@
                 </div>
             </div>
         </div>
+=======
+        {% if song.numFavorites == 0 %}
+
+        <a href="/song/favorite/{{song.id}}" class="btn btn-outline"><i class="fa-solid fa-heart"></i> Favorite</a>
+
+        {% else %}
+
+        <a href="/song/favorite/{{song.id}}" class="btn btn-outline"><i class="fa-solid fa-heart"></i> {{song.numFavorites}} Favorites</a>
+
+        {% endif %}
+
+        {% endif %}
+
+        {% if song.numComments == 0 %}
+
+        <a href="/song/{{song.id}}" class="btn btn-outline"><i class="fa-solid fa-comment"></i> Comment</a>
+
+        {% else %}
+
+        <a href="/song/{{song.id}}" class="btn btn-outline"><i class="fa-solid fa-comment"></i> {{song.numComments}} Comment</a>
+
+        {% endif %}
+
+      </span>
+
+      <div class="card-actions">
+        <button class="btn btn-primary"><i class="fa-solid fa-play"></i> Listen Now</button>
+      </div>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
     </div>
 
+<<<<<<< HEAD
 
     <div class="modal fade" id="deleteSongModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -216,13 +286,95 @@
                     <button type="button" class="w-100 btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
                     <!-- <button type="button" class="btn btn-primary">Register</button> -->
                 </div>
+=======
+<input type="checkbox" id="editSongModal" class="modal-toggle">
+<div class="modal">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <form method="POST" action="/song/edit/{{song.id}}" enctype="multipart/form-data">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Artist</span>
+                        </label>
+                        <input type="text" name="artist" id="artist" value="{{song.artist}}" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Title</span>
+                        </label>
+                        <input type="text" name="title" id="title" value="{{song.title}}" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Featuring</span>
+                        </label>
+                        <input type="text" name="featuring" id="featuring" value="{{song.featuring}}"
+                            class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Tags</span>
+                        </label>
+                        <input type="tags" name="tags" id="tags" value={{song.tags}} class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Genre</span>
+                        </label>
+                        <select class="select select-bordered w-full max-w-xs" name="genre" id="genre" value="{{song.genre}}">
+                            <option disabled selected>Select Genre</option>
+                            {% include 'partials/genre.html' %}
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Description</span>
+                        </label>
+                        <textarea class="textarea textarea-bordered" name="description" id="description" value="{{song.description}}"></textarea>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Album Art</span>
+                        </label>
+                        <input type="file" name="artwork" id="artwork" value="{{song.artwork}}" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <span class="label-text">Audio</span>
+                            <input type="file" name="audio" id="audio" value="{{song.audio}}" class="input input-bordered">
+                        </label>
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-primary" type="submit">Upload</button>
+                    </div>
+                </form>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
             </div>
         </div>
     </div>
 
+<<<<<<< HEAD
 </div>
 
 <script>
 
 
 </script>
+=======
+<input type="checkbox" id="deleteSongModal" class="modal-toggle">
+<div class="modal">
+    <div class="modal-box relative">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <p>Are you sure?</p>
+                <form method="POST" action="/song/delete/{{song.id}}" enctype="multipart/form-data">
+                    <div class="form-control mt-6">
+                        <button class="btn btn-error" type="submit">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> 90e7ff9c7585a7b8d7f2efb595d5d8762ead4186
