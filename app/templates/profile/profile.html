@@ -2,436 +2,177 @@
 
 {% block content %}
 
-{% include 'partials/user-info.html' %}
+<div class="justify-content-center">
 
+            {% include "partials/user-info.html" %}
 
+            <nav>
+                <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                    {% if user == current_user %}
+                    <button class="nav-link active" id="nav-details-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-details" type="button" role="tab" aria-controls="nav-details"
+                        aria-selected="true">Details</button>
+                    <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
+                        type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+                    {% else %}
+                    <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
+                        type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+                    {% endif %}
+                    <button class="nav-link" id="nav-uploads-tab" data-bs-toggle="tab" data-bs-target="#nav-uploads"
+                        type="button" role="tab" aria-controls="nav-uploads" aria-selected="false">Uploads</button>
+                    <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments"
+                        type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
+                </div>
+            </nav>
 
-<div class="tabs">
-    {% if user == current_user %}
-    <a href="/{{user.username}}" class="tab tab-bordered tab-active">Details</a>
-    <a href="/{{user.username}}/posts" class="tab tab-bordered">Posts</a>
-    {% else %}
-    <a href="/{{user.username}}/posts" class="tab tab-bordered tab-active">Posts</a>
-    {% endif %}
-    <a href="/{{user.username}}/songs" class="tab tab-bordered">Songs</a>
-    <a href="/{{user.username}}/comments" class="tab tab-bordered">Comments</a>
-</div>
+            {% if user == current_user %}
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-details" role="tabpanel"
+                    aria-labelledby="nav-details-tab">
 
-<br />
+                    <br />
 
-{% if user == current_user %}
+                    <!-- Button trigger modal -->
+                    <center>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#editUserDetailsModal">
+                            <i class="bi bi-pencil-square"></i> Edit Profile
+                        </button>
+                    </center>
 
-<!-- Button trigger modal -->
-<center>
-    <label for="editProfileModal" class="btn modal-button">Edit Profile</label>
-</center>
+                    <br />
 
-<br />
+                    <p>Email : {{user.email}}</p>
+                    <p>Gender : {{user.gender}}</p>
+                    <p>Birthday : {{user.birthday}}</p>
 
-<p>Email : {{user.email}}</p>
-<p>Gender : {{user.gender}}</p>
-<p>Birthday : {{user.birthday}}</p>
-
-<input type="checkbox" id="editProfileModal" class="modal-toggle">
-<div class="modal">
-    <div class="modal-box relative">
-        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <div class="card-body">
-                <form method="POST">
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Profile Picture</span>
-                        </label>
-                        <input type="text" name="profilePicture" id="profilePicture" value="{{user.profilePicture}}"
-                            class="input input-bordered">
+                    <!-- New Post Modal -->
+                    <div class="modal fade" id="editUserDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST"
+                                        enctype="multipart/form-data" action="/edit-user-details{{user.username}}">
+                                        <div class="mb-3">
+                                            <label for="media" class="form-label">Upload Photo or Video</label>
+                                            <!--<input class="form-control" type="file" id="media" name="media">-->
+                                            <input class="form-control" type="file" id="profilePicture"
+                                                name="profilePicture">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="fullname" name="fullname"
+                                                value="{{user.fullname}}">
+                                            <label for="fullname">Full Name</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                value="{{user.username}}">
+                                            <label for="username">Username</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                value="{{user.email}}">
+                                            <label for="email">Email</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <fieldset disabled>
+                                                <label for="password">Password</label>
+                                                <input type="text" class="form-control" id="password" name="password"
+                                                    placeholder="Password">
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" aria-label="Default select example"
+                                                name="gender" id="gender" value="{{user.gender}}">
+                                                <option selected>Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                                <option value="N/A">Rather Not Say</option>
+                                            </select>
+                                            <label for="gender">Gender</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="date" class="form-control" name="birthday" id="birthday"
+                                                placeholder="birthday" value="{{user.birthday}}">
+                                            <label for="birthday">Date of Birth</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="content" class="form-label">Description</label>
+                                            <textarea class="form-control" id="description" name="description"
+                                                placeholder="Please describe yourself." rows="3"
+                                                value="{{user.description}}"></textarea>
+                                        </div>
+                                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update
+                                            Details</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="w-100 btn btn-lg btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Full Name</span>
-                        </label>
-                        <input type="text" name="fullname" id="fullname" value="{{user.fullname}}"
-                            class="input input-bordered">
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+
+                    {% else %}
+
+                    <div class="tab-pane fade show active" id="nav-posts" role="tabpanel"
+                        aria-labelledby="nav-posts-tab">
+
+                        {% endif %}
+
+                        <br />
+
+                        <div class="row">
+
+                            {% for post in posts %}
+
+                            {% include 'partials/post-tag.html' %}
+
+                            {% endfor %}
+
+                        </div>
+
                     </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Username</span>
-                        </label>
-                        <input type="text" name="username" id="username" value="{{user.username}}"
-                            class="input input-bordered">
+
+                    <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">
+
+                        <div class="row">
+
+                            {% for song in songs %}
+
+                            {% include 'partials/song-card.html' %}
+
+                            {% endfor %}
+
+                        </div>
+
                     </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Email</span>
-                        </label>
-                        <input type="text" name="email" id="email" value="{{user.email}}" class="input input-bordered">
+                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+
+                        <div class="row">
+
+                            {% for comment in comments %}
+
+                            {% include 'partials/comment.html' %}
+
+                            {% endfor %}
+
+                        </div>
                     </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Password</span>
-                        </label>
-                        <input type="password" name="password" id="password" placeholder="Password"
-                            class="input input-bordered">
-                    </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Gender</span>
-                        </label>
-                        <select class="select select-bordered w-full max-w-xs" name="gender" id="gender"
-                            value="{{user.gender}}">
-                            <option disabled selected>Select Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Non-binary</option>
-                            <option>Other</option>
-                            <option>Rather Not Say</option>
-                            <option>N/A</option>
-                        </select>
-                    </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Birthday</span>
-                        </label>
-                        <input type="date" name="birthday" id="birthday" value="{{user.birthday}}"
-                            class="input input-bordered">
-                    </div>
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Bio</span>
-                        </label>
-                        <textarea class="textarea textarea-bordered" name="bio" id="bio"
-                            value="{{user.description}}"></textarea>
-                    </div>
-                    <div class="form-control mt-6">
-                        <button class="btn btn-primary" type="submit">Update Details</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-{% endif %}
+                </div>
 
-{% for post in posts %}
-
-{% include 'partials/post-tag.html' %}
-
-{% endfor %}
-
-<script>
-
-    $(document).ready(function () {
-        $(".bi-play").click(function () {
-            $(this).toggleClass("bi bi-pause");
-        });
-        $(".bi-pause").click(function () {
-            $(this).parent().find(".bi-play").removeClass("bi bi-pause");
-        });
-        $(".bi-play").click(function () {
-            $(this).toggleClass("bi bi-pause");
-        });
-        $('.playPause').click(function () {
-            $(this).find('i').toggleClass('bi-play').toggleClass('bi-pause');
-        });
-        $('.muteUnmute').click(function () {
-            $(this).find('i').toggleClass('bi-volume-up').toggleClass('bi-volume-mute');
-        });
-        /*
-        $('.playPause').hover(function() {
-            $(this).find('i').toggleClass('bi-play').toggleClass('bi-play-fill');
-        });
-        $('.playPause').hover(function() {
-            $(this).find('i').toggleClass('bi-pause').toggleClass('bi-pause-fill');
-        });
-        */
-
-        /*
-        $(".like").click(function(){
-            var id = this.id;   // Getting Button id
-            var split_id = id.split("_");
-    
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // postid
-    
-    
-    
-            // AJAX Request
-            $.ajax({
-                url: '/ur-url',
-                type: 'post',
-                data: {post_id1:post_id},
-                dataType: 'html',
-                success: function(data){
-                    //var likes = data['likes'];
-                    //var unlikes = data['unlikes'];
-    
-                    $("#likes_"+post_id).html(data);        // setting likes
-                }
-            });   
-        });
-        */
-
-        /*
-        $(".like").click(function(){
-            var id = this.id;   // Getting Button id
-            var split_id = id.split("_");
- 
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // postid
- 
-            // AJAX Request
-            $.ajax({
-                url: '/like',
-                type: 'POST',
-                data: { post_id1: post_id1 },
-                dataType: 'html',
-                success: function(data){
-                    $("#like_"+post_id).html(data);        // setting likes
-                }
-            }); 
-            
-            event.preventDefault()
-        });
-        */
-
-        /*
-        $(".like .unlike").click(function (e) {
- 
-            e.preventDefault();
- 
-            var id = $(this).attr("post_id");
-            var split_id = id.split("_");
- 
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // albumid
- 
-            req = $.ajax({
-                url: '/likepost',
-                type: 'POST',
-                data: { post_id: post_id1, likeunlike: text },
-                dataType: 'html',
-            });
- 
-            req.done(function (data) {
-                var like = data['like'];
-                var unlike = data['unlike'];
- 
- 
-                $('#like' + post_id).text(data.likes);
-                $('#unlike' + post_id).json(data.likes);
-            });
-        });
-        */
-
-        $(document).on('click', '.like, .unlike', function (event) {
-
-            event.preventDefault();
-
-            var id = $(this).attr("post_id");
-            var split_id = id.split("_");
-
-            var text = split_id[0];
-            var post_id1 = split_id[1];  // albumid
-
-            req = $.ajax({
-                url: '/likepost/' + post_id1 + '/' + text,
-                type: 'POST',
-                //data: { post_id: post_id1, likeunlike: text },
-                dataType: 'html',
-            });
-
-            req.done(function (data) {
-                console.log(data);
-                $('#result' + post_id1).fadeOut(0).fadeIn(0);
-                $('#result' + post_id1).html(data);
-                //$('#counts' + post_id1).text(data.likes);
-                //$('#unlike_' + post_id1).text(data.likes);
-            });
-        });
-
-        /*
-        $(document).on( 'click', '.like', function (event) {
- 
-            event.preventDefault();
- 
-            var post_id = $(this).attr("post_id");
- 
-            req = $.ajax({
-                url: '/like2',
-                type: 'POST',
-                data: { id: post_id},
-                dataType:'html',
-            });
- 
-            req.done(function (data) {
-                console.log(data);
-                $('#result' + post_id).fadeOut(1000).fadeIn(1000);
-                $('#result' + post_id).html(data);
-            });
-        });
-        */
-    });
-
-    function playPauseAudio() {
-        var audio = document.getElementById("audio");
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-    }
-
-    function play(song_id) {
-        var audio = document.getElementById("audio");
-        audio.src = "/play/" + song_id;
-        audio.play();
-    }
-
-    $(document).ready(function () {
-        $(".playPauseAudio").click(function () {
-            var song_id = $(this).data("id");
-            var audio = document.getElementById("audio");
-            if (audio.paused) {
-                audio.src = "/play/" + song_id;
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        });
-    });
-
-    /*
- 
-    var songs = document.getElementById('count').value;
- 
-    var element = document.getElementById('source').value;
- 
-    var wavesurfer = [];
-    var wavesurferBackend = [];
-    var scriptNode = [];
- 
-    for (var i = 0; i < songs; i++) {
- 
-        $('.players').append('<div id="wavesurfer' + i + '"></div>');
- 
-        wavesurfer[i] = WaveSurfer.create({
-            container: this,
-                waveColor: '#ddd',
-                progressColor: '#999',
-                cursorColor: 'transparent',
-                barWidth: 2,
-                barHeight: 1,
-                barGap: 1,
-                height: 40,
-                hideScrollbar: true,
-                interact: false,
-                responsive: true,
-                barRadius: 0,
-                cursorWidth: 0,
-                fillParent: true,
-                normalize: true,
-                plugins: [
-                    WaveSurfer.cursor.create({
-                        showTime: true,
-                        opacity: 1,
-                        customShowTimeStyle: {
-                            'background-color': '#ddd',
-                            color: '#fff',
-                            padding: '2px',
-                            'font-size': '10px',
-                            'border-radius': '3px',
-                            'z-index': '2'
-                        }
-                    })
-                ]
-            });
- 
-        wavesurfer[i].load(element);
- 
-        wavesurfer[i].on('ready', function () {
-            wavesurferBackend[i] = wavesurfer[i].backend;
-            wavesurfer[i].backend = null;
-            wavesurferBackend[i] = wavesurfer[i].scriptNode;
-            wavesurfer[i].scriptNode = null;
-        });
- 
-    }
-    */
-
-    /*
-    var parentAudioList = document.getElementById("controls")
-    var audioEls = document.getElementsByTagName('audio');
- 
-    function createAudio(url) {
-        var playbackAudio = document.createElement("div");
-        playbackAudio.setAttribute("class", "playbackAudio");
-        var playbackBtn = document.createElement("button");
-        playbackBtn.innerText = "Play"
-        playbackBtn.setAttribute("class", "playbackBtn");
- 
- 
-        var audioWave = document.createElement("div");
-        audioWave.setAttribute("class", "audioWave");
-        var wavesurfer = WaveSurfer.create({
-            container: audioWave,
-            backend: 'MediaElement',
-            responsive: true
-        });
-        //attach children to playbackAudio
-        playbackAudio.appendChild(playbackBtn);
-        playbackAudio.appendChild(audioWave);
- 
-        parentAudioList.appendChild(playbackAudio);
-        wavesurfer.load(url);
- 
-        playbackBtn.addEventListener("click", function () {
-            wavesurfer.playPause();
-            if (this.innerText == "Play") {
-                this.innerText = "Stop";
-            } else {
-                this.innerText = "Play";
-            }
- 
-            wavesurfer.on('finish', function () {
-                playbackBtn.innerText = "Play";
-            });
-        });
- 
- 
-    }
- 
-    Array.from(audioEls).forEach(function (audioEl, i) {
-        createAudio(audioEl.src)
- 
-    });
-    */
-
-
-    function muteAudio() {
-        var audio = document.getElementById("audio");
-        if (audio.muted) {
-            audio.muted = false;
-        } else {
-            audio.muted = true;
-        }
-    }
-
-    function changeVolume() {
-        var audio = document.getElementById("audio");
-        audio.volume = document.getElementById("customRange1").value / 100;
-    }
-
-    var audio = document.querySelector("audio");
-    var progressBar = document.querySelector("progress");
-    progressBar.addEventListener("click", seek);
-
-    function seek(e) {
-        var percent = e.offsetX / this.offsetWidth;
-        audio.currentTime = percent * audio.duration;
-        progressBar.value = percent / 100;
-    }
-
-</script>
-
-
-{% endblock %}
+        {% endblock %}
