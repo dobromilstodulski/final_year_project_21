@@ -8,49 +8,43 @@
             type="button" role="tab" aria-controls="pills-feed" aria-selected="true">Feed</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-chat-tab" data-bs-toggle="pill" data-bs-target="#pills-chat" type="button"
-            role="tab" aria-controls="pills-chat" aria-selected="false">Chat</button>
+        <button class="nav-link" id="pills-upload-tab" data-bs-toggle="pill" data-bs-target="#pills-upload"
+            type="button" role="tab" aria-controls="pills-upload" aria-selected="true">Upload</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users"
-            type="button" role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
+        <!-- <button class="nav-link" id="pills-chat-tab" data-bs-toggle="pill" data-bs-target="#pills-chat" type="button"
+            role="tab" aria-controls="pills-chat" aria-selected="false">Chat</button> -->
+        <a class="flex-sm-fill text-sm-center nav-link" href="/chat" target="_blank">Chat</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button"
+            role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
     </li>
     <li class="nav-item" role="presentation">
         <!-- <button class="nav-link" id="pills-profile-tab"
             type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button> -->
-        <a class="flex-sm-fill text-sm-center nav-link" href="/profile/{{current_user.username}}">Profile</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/profile/{{current_user.username}}"
+            target="_blank">Profile</a>
     </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-feed" role="tabpanel" aria-labelledby="pills-feed-tab">
 
-        <div class="d-flex justify-content-center">
-            <div class="hstack gap-3">
-                <div>
+        {% for post in posts %}
 
-                    {% for post in posts %}
+        {% include 'partials/post-tag.html' %}
 
-                    {% include 'partials/post-tag.html' %}
-
-                    {% endfor %}
-
-                </div>
-                <div class="vr"></div>
-                <div>
-
-                    {% for song in songs %}
-
-                    {% include 'partials/song-card.html' %}
-
-                    {% endfor %}
-
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    <div class="tab-pane fade" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab">
 
+    <div class="tab-pane fade show" id="pills-upload" role="tabpanel" aria-labelledby="pills-upload-tab">
+        {% for song in songs %}
+
+        {% include 'partials/song-card.html' %}
+
+        {% endfor %}
     </div>
+
     <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
 
         {% for user in users %}

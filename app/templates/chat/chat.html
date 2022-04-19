@@ -3,39 +3,34 @@
 {% block content %}
 
 {% if current_user.is_authenticated %}
-    <input type="text" class="form-control" hidden="true" id="username" name="username" value="{{current_user.username}}">
+<input type="text" class="form-control" hidden="true" id="username" name="username" value="{{current_user.username}}">
 {% endif %}
 
-<div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="row align-items-center g-lg-5 py-5">
-        <div class="col-md-10 mx-auto col-lg-5">
+<div class="d-flex justify-content-center">
 
-            <div class="card" style="width: 30rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Chat Room</h5>
-                    <div id="messages">
-                        {% for message in messages %}
-                        <p> {{message}} </p>
-                        {% endfor %}
-                    </div>
-                </div>
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Chat Room</h5>
+            <div id="messages">
+                {% for message in messages %}
+                <p> {{message}} </p>
+                {% endfor %}
             </div>
-
-            <form>
-            <div class="mb-3">
-                <label for="myMessage" class="form-label">Send Message</label>
-                <input type="text" class="form-control" id="myMessage" name="myMessage"
-                    placeholder="Input your message">
-            </div>
-
-            <button type="button" id="sendmessage" class="btn btn-primary">Send</button>
-            </form>
-
-            <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-            <input id="text" size="80" placeholder="Enter your message here"><br><br>
-
         </div>
     </div>
+
+    <form>
+        <div class="mb-3">
+            <label for="myMessage" class="form-label">Send Message</label>
+            <input type="text" class="form-control" id="myMessage" name="myMessage" placeholder="Input your message">
+        </div>
+
+        <button type="button" id="sendmessage" class="btn btn-primary">Send</button>
+    </form>
+
+    <textarea id="chat" cols="80" rows="20"></textarea><br><br>
+    <input id="text" size="80" placeholder="Enter your message here"><br><br>
+
 </div>
 
 {% endblock %}
