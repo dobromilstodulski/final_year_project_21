@@ -1,0 +1,40 @@
+{% if current_user.hasUserLiked(post.id) %}
+<a href="{{url_for('post.unlike_post', post_id=post.id)}}" id="{{post.id}}"
+    class="btn btn-sm btn-secondary-outline unlike">
+    <i class="bi bi-hand-thumbs-up-fill"></i> You & {{post.numLikes}}
+    Others Liked
+</a>
+
+{% else %}
+
+{% if post.numLikes == 0 %}
+
+<a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}"
+    class="btn btn-sm btn-secondary-outline like">
+    <i class="bi bi-hand-thumbs-up"></i> Like
+</a>
+
+{% else %}
+
+<a href="{{url_for('post.like_post', post_id=post.id)}}" id="{{post.id}}"
+    class="btn btn-sm btn-secondary-outline like">
+    <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
+</a>
+
+{% endif %}
+
+{% endif %}
+
+{% if post.numComments == 0 %}
+
+<a href="{{url_for('post.view_post', post_id=post.id)}}" class="btn btn-sm btn-secondary-outline">
+    <i class="bi bi-chat"></i> Comment
+</a>
+
+{% else %}
+
+<a href="{{url_for('post.view_post', post_id=post.id)}}" class="btn btn-sm btn-secondary-outline">
+    <i class="bi bi-chat"></i> {{post.numComments}} Comments
+</a>
+
+{% endif %}

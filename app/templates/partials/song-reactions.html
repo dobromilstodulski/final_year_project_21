@@ -1,0 +1,39 @@
+{% if current_user.hasUserFavorite(song.id) %}
+<a href="{{url_for('song.unfavorite', song_id=song.id)}}" id="{{song.id}}"
+    class="btn btn-sm btn-secondary-outline unfavorite">
+    <i class="bi bi-heart-fill"></i> {{song.numFavorites}} Favorites
+</a>
+
+{% else %}
+
+{% if song.numFavorites == 0 %}
+
+<a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+    class="btn btn-sm btn-secondary-outline favorite">
+    <i class="bi bi-heart"></i> Favorite
+</a>
+
+{% else %}
+
+<a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+    class="btn btn-sm btn-secondary-outline favorite">
+    <i class="bi bi-heart"></i> {{song.numFavorites}} Favorites
+</a>
+
+{% endif %}
+
+{% endif %}
+
+{% if song.numComments == 0 %}
+
+<a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm btn-secondary-outline">
+    <i class="bi bi-chat"></i> Comment
+</a>
+
+{% else %}
+
+<a href="{{url_for('song.view_song', song_id=song.id)}}" class="btn btn-sm btn-secondary-outline">
+    <i class="bi bi-chat"></i> {{song.numComments}} Comments
+</a>
+
+{% endif %}
