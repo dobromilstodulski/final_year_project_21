@@ -160,7 +160,7 @@ def view_post(post_id):
 
     if posts.count() == 0:
         abort(0)
-    return render_template('feed/post.html', stream=posts, format=format, comments=comments)
+    return render_template('feed/post.html', posts=posts, format=format, comments=comments)
 
 
 @post.route('/like/<int:post_id>')

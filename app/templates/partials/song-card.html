@@ -17,19 +17,19 @@
 
                         <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.user_id.profilePicture}}"
                             class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
-                            alt="{{user.username}}" role="img" aria-label="Placeholder: 32x32"
+                            alt="{{song.user_id.username}}" role="img" aria-label="Placeholder: 32x32"
                             preserveAspectRatio="xMidYMid slice" focusable="false">
 
                         {% endif %}
 
-                        {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i>
+                        <a href="/profile/{{song.user_id.username}}"> {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i></a>
 
                         {% if current_user == song.user_id %}
-                        <button data-bs-toggle="modal" data-bs-target="#editSongModal{{ song.id }}" type="button"
+                        <button data-bs-toggle="modal" data-bs-target="#editSongModal{{song.id}}" type="button"
                             class="btn btn-sm btn-secondary-outline">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button data-bs-toggle="modal" data-bs-target="#deleteSongModal{{ song.id }}" type="button"
+                        <button data-bs-toggle="modal" data-bs-target="#deleteSongModal{{song.id}}" type="button"
                             class="btn btn-sm btn-secondary-outline">
                             <i class="bi bi-trash"></i>
                         </button>

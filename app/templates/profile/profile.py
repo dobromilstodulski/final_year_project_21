@@ -123,12 +123,6 @@ def unfollow(username):
     return redirect(request.referrer)
 
 
-@profile.route('/welcome')
-@login_required
-def welcome():
-    user = current_user
-    return render_template('profile/welcome.html', user=user)
-
 @profile.route('/likepost/<int:post_id>/<action>', methods=['GET', 'POST'])
 def like_action(post_id, action):
     posts = Post.select().where(Post.id == post_id)
