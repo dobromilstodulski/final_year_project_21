@@ -53,7 +53,7 @@ def editUserDetails():
             email = email,
             gender = gender,
             birthday = birthday,
-            profile_picture = file.filename,
+            profilePicture = file.filename,
             description = description
         ).where(
             User.username == user.username

@@ -4,175 +4,170 @@
 
 <div class="justify-content-center">
 
-            {% include "partials/user-info.html" %}
+    {% include "partials/user-info.html" %}
 
-            <nav>
-                <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                    {% if user == current_user %}
-                    <button class="nav-link active" id="nav-details-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-details" type="button" role="tab" aria-controls="nav-details"
-                        aria-selected="true">Details</button>
-                    <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
-                        type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
-                    {% else %}
-                    <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
-                        type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
-                    {% endif %}
-                    <button class="nav-link" id="nav-uploads-tab" data-bs-toggle="tab" data-bs-target="#nav-uploads"
-                        type="button" role="tab" aria-controls="nav-uploads" aria-selected="false">Uploads</button>
-                    <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments"
-                        type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
-                </div>
-            </nav>
-
+    <nav>
+        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
             {% if user == current_user %}
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-details" role="tabpanel"
-                    aria-labelledby="nav-details-tab">
+            <button class="nav-link active" id="nav-details-tab" data-bs-toggle="tab" data-bs-target="#nav-details"
+                type="button" role="tab" aria-controls="nav-details" aria-selected="true">Details</button>
+            <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button"
+                role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+            {% else %}
+            <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts"
+                type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+            {% endif %}
+            <button class="nav-link" id="nav-uploads-tab" data-bs-toggle="tab" data-bs-target="#nav-uploads"
+                type="button" role="tab" aria-controls="nav-uploads" aria-selected="false">Uploads</button>
+            <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments"
+                type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
+        </div>
+    </nav>
 
-                    <br />
+    {% if user == current_user %}
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-details" role="tabpanel" aria-labelledby="nav-details-tab">
 
-                    <!-- Button trigger modal -->
-                    <center>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#editUserDetailsModal">
-                            <i class="bi bi-pencil-square"></i> Edit Profile
-                        </button>
-                    </center>
+            <br />
 
-                    <br />
+            <!-- Button trigger modal -->
+            <center>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#editUserDetailsModal">
+                    <i class="bi bi-pencil-square"></i> Edit Profile
+                </button>
+            </center>
 
-                    <p>Email : {{user.email}}</p>
-                    <p>Gender : {{user.gender}}</p>
-                    <p>Birthday : {{user.birthday}}</p>
+            <br />
 
-                    <!-- New Post Modal -->
-                    <div class="modal fade" id="editUserDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+            <p>Email : {{user.email}}</p>
+            <p>Gender : {{user.gender}}</p>
+            <p>Birthday : {{user.birthday}}</p>
+
+            <!-- New Post Modal -->
+            <div class="modal fade" id="editUserDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST"
+                                enctype="multipart/form-data" action="/edit-user-details">
+                                <div class="mb-3">
+                                    <label for="media" class="form-label">Upload Photo or Video</label>
+                                    <!--<input class="form-control" type="file" id="media" name="media">-->
+                                    <input class="form-control" type="file" id="profilePicture" name="profilePicture">
                                 </div>
-                                <div class="modal-body">
-                                    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST"
-                                        enctype="multipart/form-data" action="/edit-user-details{{user.username}}">
-                                        <div class="mb-3">
-                                            <label for="media" class="form-label">Upload Photo or Video</label>
-                                            <!--<input class="form-control" type="file" id="media" name="media">-->
-                                            <input class="form-control" type="file" id="profilePicture"
-                                                name="profilePicture">
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="fullname" name="fullname"
-                                                value="{{user.fullname}}">
-                                            <label for="fullname">Full Name</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                value="{{user.username}}">
-                                            <label for="username">Username</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="email" name="email"
-                                                value="{{user.email}}">
-                                            <label for="email">Email</label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <fieldset disabled>
-                                                <label for="password">Password</label>
-                                                <input type="text" class="form-control" id="password" name="password"
-                                                    placeholder="Password">
-                                            </fieldset>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <select class="form-select" aria-label="Default select example"
-                                                name="gender" id="gender" value="{{user.gender}}">
-                                                <option selected>Select Gender</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                                <option value="other">Other</option>
-                                                <option value="N/A">Rather Not Say</option>
-                                            </select>
-                                            <label for="gender">Gender</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="date" class="form-control" name="birthday" id="birthday"
-                                                placeholder="birthday" value="{{user.birthday}}">
-                                            <label for="birthday">Date of Birth</label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="content" class="form-label">Description</label>
-                                            <textarea class="form-control" id="description" name="description"
-                                                placeholder="Please describe yourself." rows="3"
-                                                value="{{user.description}}"></textarea>
-                                        </div>
-                                        <button class="w-100 btn btn-lg btn-primary" type="submit">Update
-                                            Details</button>
-                                    </form>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="fullname" name="fullname"
+                                        value="{{user.fullname}}">
+                                    <label for="fullname">Full Name</label>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="w-100 btn btn-lg btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <!-- <button type="button" class="btn btn-primary">Register</button> -->
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        value="{{user.username}}">
+                                    <label for="username">Username</label>
                                 </div>
-                            </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        value="{{user.email}}">
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="mb-3">
+                                    <fieldset disabled>
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control" id="password" name="password"
+                                            placeholder="Password">
+                                    </fieldset>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" aria-label="Default select example" name="gender"
+                                        id="gender" value="{{user.gender}}">
+                                        <option selected>Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                        <option value="N/A">Rather Not Say</option>
+                                    </select>
+                                    <label for="gender">Gender</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="birthday" id="birthday"
+                                        placeholder="birthday" value="{{user.birthday}}">
+                                    <label for="birthday">Date of Birth</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="content" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description"
+                                        placeholder="Please describe yourself." rows="3"
+                                        value="{{user.description}}"></textarea>
+                                </div>
+                                <button class="w-100 btn btn-lg btn-primary" type="submit">Update
+                                    Details</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="w-100 btn btn-lg btn-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Register</button> -->
                         </div>
                     </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+
+            {% else %}
+
+            <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+
+                {% endif %}
+
+                <br />
+
+                <div class="row">
+
+                    {% for post in posts %}
+
+                    {% include 'partials/post-tag.html' %}
+
+                    {% endfor %}
 
                 </div>
 
-                <div class="tab-pane fade" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+            </div>
 
-                    {% else %}
+            <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">
 
-                    <div class="tab-pane fade show active" id="nav-posts" role="tabpanel"
-                        aria-labelledby="nav-posts-tab">
+                <div class="row">
 
-                        {% endif %}
+                    {% for song in songs %}
 
-                        <br />
+                    {% include 'partials/song-card.html' %}
 
-                        <div class="row">
-
-                            {% for post in posts %}
-
-                            {% include 'partials/post-tag.html' %}
-
-                            {% endfor %}
-
-                        </div>
-
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-uploads" role="tabpanel" aria-labelledby="nav-uploads-tab">
-
-                        <div class="row">
-
-                            {% for song in songs %}
-
-                            {% include 'partials/song-card.html' %}
-
-                            {% endfor %}
-
-                        </div>
-
-                    </div>
-                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-
-                        <div class="row">
-
-                            {% for comment in comments %}
-
-                            {% include 'partials/comment.html' %}
-
-                            {% endfor %}
-
-                        </div>
-                    </div>
+                    {% endfor %}
 
                 </div>
+
+            </div>
+            <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+
+                <div class="row">
+
+                    {% for comment in comments %}
+
+                    {% include 'partials/comment.html' %}
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
 
         {% endblock %}
