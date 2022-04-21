@@ -1,5 +1,4 @@
 <script src="{{ url_for('static', filename='js/favorite.js') }}"></script>
-<script src="{{ url_for('static', filename='js/audio.js') }}"></script>
 
 <div class="d-flex justify-content-center">
 
@@ -69,7 +68,13 @@
                 <audio id="audio{{song.id}}" src="/play/{{song.id}}" type="audio/wav"></audio>
 
                 <script>
-
+                    $(document).ready(function () {
+                        document.getElementById("playPauseAudio{{song.id}}").onclick = function () {
+                            var audio = document.getElementById("audio{{song.id}}");
+                            if (audio.paused) audio.play();
+                            else audio.pause();
+                        };
+                    });
                 </script>
 
                 <strong class="d-block" id="songReactions{{song.id}}">
