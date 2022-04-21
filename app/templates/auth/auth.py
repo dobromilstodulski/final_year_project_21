@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, database
@@ -16,6 +17,7 @@ def load_user(id):
 
 @auth.route("/register", methods=['GET', 'POST'])
 def register():
+    year = datetime.date.today().year
     if request.method == 'POST':
         # code to validate and add user to database goes here
         username = request.form.get('username')
@@ -49,7 +51,7 @@ def register():
             )
             flash('Successfully Registered!', 'success')
             return redirect(url_for('auth.login'))
-    return render_template('auth/register.html')
+    return render_template('auth/register.html', year=year)
 
 '''
 @auth.route('/register', methods=['GET', 'POST'])
@@ -88,6 +90,7 @@ def register():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    year = datetime.date.today().year
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -111,7 +114,7 @@ def login():
                 return redirect(url_for('profile.welcome'))
             else:
                 flash('Your password does not match!', 'error')
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', year=year)
 
 
 @auth.route('/logout')
@@ -120,8 +123,4 @@ def logout():
     flash('Successfully logged out!', 'success')
     flash('You can always access the login page to gain access back to the site!', 'info')
     return redirect(url_for('views.index'))
-
-@auth.route('/test')
-def test():
-    return render_template('auth/test.html', form=LoginForm())
 

@@ -1,6 +1,6 @@
 {% if current_user.hasUserFavorite(song.id) %}
 <a href="/unfavorite/{{song.id}}" id="{{song.id}}" class="btn btn-sm btn-secondary-outline unfavorite">
-    <i class="bi bi-heart-fill"></i> {{song.numFavorites}} You & {{song.numFavorites}} Favorite This
+    <i class="bi bi-heart-fill"></i> You & {{song.numFavorites}} Favorite This
 </a>
 
 {% else %}

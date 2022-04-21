@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort, jsonify, make_response
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post, database, Comment, Like
@@ -15,12 +16,6 @@ from playhouse.shortcuts import model_to_dict, dict_to_model
 from playhouse.flask_utils import object_list
 
 post = Blueprint('post', __name__)
-
-
-@post.route('/post/feed')
-def post_feed():
-    posts = current_user.get_post_feed()
-    return render_template('feed/post_feed.html', stream=posts, user=User, format=format)
 
 
 @post.route('/post/new', methods=('GET', 'POST'))
@@ -133,6 +128,7 @@ def delete_post_media_true(post_id):
 
 @post.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def view_post(post_id):
+    year = datetime.date.today().year
     posts = Post.select().where(Post.id == post_id)
     numberOfComments = posts[0].numComments
     comments = Comment.select().where(Comment.post_id == post_id)
@@ -160,7 +156,7 @@ def view_post(post_id):
 
     if posts.count() == 0:
         abort(0)
-    return render_template('feed/post.html', posts=posts, format=format, comments=comments)
+    return render_template('feed/post.html', posts=posts, format=format, comments=comments, year=year)
 
 
 @post.route('/like/<int:post_id>', methods=['GET', 'POST'])

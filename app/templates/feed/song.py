@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Song, Comment, Favorite
@@ -8,10 +9,6 @@ from app.utils import allowed_file, make_unique, upload_file, delete_file
 from werkzeug.utils import secure_filename
 
 song = Blueprint('song', __name__)
-
-@song.route('/song/feed')
-def song_feed():
-    return render_template('feed/song_feed.html', songs=Song, user=User, format=format)
 
 
 @song.route('/song/new', methods=('GET', 'POST'))
@@ -110,6 +107,7 @@ def delete_song(song_id):
 
 @song.route('/song/<int:song_id>', methods=['GET', 'POST'])
 def view_song(song_id):
+    year = datetime.date.today().year
     songs = Song.select().where(Song.id == song_id)
     numberOfComments = songs[0].numComments
     comments = Comment.select().where(Comment.song_id == song_id)
@@ -137,7 +135,7 @@ def view_song(song_id):
 
     if songs.count() == 0:
         abort(0)
-    return render_template('feed/song.html', songs=songs, format=format, comments=comments)
+    return render_template('feed/song.html', songs=songs, format=format, comments=comments, year=year)
 
 
 @song.route('/favorite/<int:song_id>', methods=['GET', 'POST'])

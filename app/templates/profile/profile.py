@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, g, jsonify, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Relationship, Post, database, Comment, Like
@@ -13,6 +14,7 @@ profile = Blueprint('profile', __name__)
 
 @profile.route('/profile/<username>')
 def userProfile(username):
+    year = datetime.date.today().year
     #users = User.select().where(User.username == username)
     #user = users[0]
     user = User.get(User.username ** username)
@@ -26,7 +28,7 @@ def userProfile(username):
     comments = User.get_comments(user)
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=song_count, record_name='songs', per_page=1)
-    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments, pagination=pagination)
+    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments, pagination=pagination, year=year)
 
 
 @profile.route('/edit-user-details', methods=['GET', 'POST'])
@@ -63,24 +65,26 @@ def editUserDetails():
 
 @profile.route('/following')
 def following():
+    year = datetime.date.today().year
     user = current_user
     following = User.following(user)
     following_count = User.select().join(Relationship, on=Relationship.to_user).where(
         Relationship.from_user == user).count()
     followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
         Relationship.to_user == user).count()
-    return render_template('profile/following.html', user=user, following=following, following_count=following_count, followers_count=followers_count)
+    return render_template('profile/following.html', user=user, following=following, following_count=following_count, followers_count=followers_count, year=year)
 
 
 @profile.route('/followers')
 def followers():
+    year = datetime.date.today().year
     user = current_user
     followers = User.followers(user)
     following_count = User.select().join(Relationship, on=Relationship.to_user).where(
         Relationship.from_user == user).count()
     followers_count = User.select().join(Relationship, on=Relationship.from_user).where(
         Relationship.to_user == user).count()
-    return render_template('profile/followers.html', user=user, followers=followers, following_count=following_count, followers_count=followers_count)
+    return render_template('profile/followers.html', user=user, followers=followers, following_count=following_count, followers_count=followers_count, year=year)
 
 
 @profile.route('/follow/<username>')

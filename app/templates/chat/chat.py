@@ -16,8 +16,9 @@ ROOMS = ["Deep House", "Slap House", "Pop", "Rock", "Hip Hop", "Techno", "House"
 @chatroom.route("/chat", methods=['GET', 'POST'])
 @login_required
 def chat():
+    year = datetime.date.today().year
     messages = Msg
-    return render_template("chat/chat.html", username=current_user.username, messages=messages)
+    return render_template("chat/chat.html", username=current_user.username, messages=messages, year=year)
 
 @chatroom.route("/chat2", methods=['GET', 'POST'])
 @login_required

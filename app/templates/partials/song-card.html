@@ -24,7 +24,8 @@
 
                         {% endif %}
 
-                        <a href="/profile/{{song.user_id.username}}"> {{song.user_id.fullname}} <i> @{{song.user_id.username}} </i></a>
+                        <a href="/profile/{{song.user_id.username}}"> {{song.user_id.fullname}} <i>
+                                @{{song.user_id.username}} </i></a>
 
                         {% if current_user == song.user_id %}
                         <button data-bs-toggle="modal" data-bs-target="#editSongModal{{song.id}}" type="button"
@@ -89,15 +90,13 @@
 
                     {% if song.numFavorites == 0 %}
 
-                    <a href="/favorite/{{song.id}}" id="{{song.id}}"
-                        class="btn btn-sm btn-secondary-outline favorite">
+                    <a href="/favorite/{{song.id}}" id="{{song.id}}" class="btn btn-sm btn-secondary-outline favorite">
                         <i class="bi bi-heart"></i> Favorite
                     </a>
 
                     {% else %}
 
-                    <a href="/favorite/{{song.id}}" id="{{song.id}}"
-                        class="btn btn-sm btn-secondary-outline favorite">
+                    <a href="/favorite/{{song.id}}" id="{{song.id}}" class="btn btn-sm btn-secondary-outline favorite">
                         <i class="bi bi-heart"></i> {{song.numFavorites}} Favorites
                     </a>
 
