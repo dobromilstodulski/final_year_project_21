@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 from flask import Blueprint, g, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, database
@@ -18,6 +19,8 @@ def load_user(id):
 @auth.route("/register", methods=['GET', 'POST'])
 def register():
     year = datetime.date.today().year
+    gdpr = datetime.datetime.today() - relativedelta(years=13)
+    age = gdpr.strftime('%Y-%m-%d')
     if request.method == 'POST':
         # code to validate and add user to database goes here
         username = request.form.get('username')
@@ -51,7 +54,8 @@ def register():
             )
             flash('Successfully Registered!', 'success')
             return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', year=year)
+    print(age)
+    return render_template('auth/register.html', year=year, age=age)
 
 '''
 @auth.route('/register', methods=['GET', 'POST'])
