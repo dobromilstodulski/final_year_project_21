@@ -16,8 +16,8 @@ ROOMS = ["Deep House", "Slap House", "Pop", "Rock", "Hip Hop", "Techno", "House"
 @chatroom.route("/chat", methods=['GET', 'POST'])
 @login_required
 def chat():
-    chats = Chat
-    return render_template("chat/chat.html", username=current_user.username, chats=chats)
+    messages = Msg
+    return render_template("chat/chat.html", username=current_user.username, messages=messages)
 
 @chatroom.route("/chat2", methods=['GET', 'POST'])
 @login_required
@@ -52,6 +52,12 @@ def joined(message):
 def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
+    
+    Msg.create(
+        username=current_user.username,
+        message=message['msg']
+    )
+    
     emit('message', {'msg': current_user.username + ': ' + message['msg']})
 
 

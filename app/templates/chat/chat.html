@@ -15,7 +15,7 @@
             <h5 class="card-title">Chat Room</h5>
             <div id="messages">
                 {% for message in messages %}
-                <p> {{message}} </p>
+                <p> {{message.user}} : {{message.message}} </p>
                 {% endfor %}
             </div>
         </div>
