@@ -9,9 +9,6 @@ import datetime
 
 chatroom = Blueprint('chatroom', __name__)
 
-ROOMS = ["Deep House", "Slap House", "Pop", "Rock", "Hip Hop", "Techno", "House", "Dance", "Drum & Bass", "Dubstep", 
-        "Trance", "Reggae", "Jazz", "Classical", "Blues", "Country", "Folk", "Soul", "Indie", "Electronic", "Other"]
-
 
 @chatroom.route("/chat", methods=['GET', 'POST'])
 @login_required
@@ -20,27 +17,6 @@ def chat():
     messages = Msg
     return render_template("chat/chat.html", username=current_user.username, messages=messages, year=year)
 
-@chatroom.route("/chat2", methods=['GET', 'POST'])
-@login_required
-def chat2():
-    return render_template("chat/chat2.html")
-
-@chatroom.route("/pusher", methods=['GET', 'POST'])
-@login_required
-def pusher():
-    msgs = Msg
-    username = request.form.get('username')
-    message = request.form.get('message')
-    
-    Msg.create(
-                username=username,
-                message=message
-            )
-    
-    pusher_client.trigger('chat-channel', 'new-message', {'username' : username, 'message': message})
-
-    
-    return render_template("chat/pusher.html", msgs=msgs, current_user=current_user)
 
 @socketio.on('joined', namespace='/chat')
 def joined(message):
@@ -67,14 +43,3 @@ def left(message):
     """Sent by clients when they leave a room.
     A status message is broadcast to all people in the room."""
     emit('status', {'msg': current_user.username + ' has left the room.'})
-
-
-@socketio.on('message')
-def handleMessage(msg):
-    print('Message: ' + msg)
-    send(msg, broadcast=True)
-    
-
-
-
-
