@@ -163,8 +163,7 @@ def view_post(post_id):
     return render_template('feed/post.html', posts=posts, format=format, comments=comments)
 
 
-@post.route('/like/<int:post_id>')
-@login_required
+@post.route('/like/<int:post_id>', methods=['GET', 'POST'])
 def like_post(post_id):
     posts = Post.select().where(Post.id == post_id)
     post = posts[0]
@@ -180,11 +179,10 @@ def like_post(post_id):
     ).where(
         Post.id == post.id
     ).execute()
-    return render_template('/feed/like-section.html', post=post)
+    return render_template('/partials/post-reactions.html', post=post)
 
 
-@post.route('/unlike/<int:post_id>')
-@login_required
+@post.route('/unlike/<int:post_id>', methods=['GET', 'POST'])
 def unlike_post(post_id):
     posts = Post.select().where(Post.id == post_id)
     post = posts[0]
@@ -200,7 +198,7 @@ def unlike_post(post_id):
     ).where(
         Post.id == post.id
     ).execute()
-    return render_template('/feed/like-section.html', post=post)
+    return render_template('/partials/post-reactions.html', post=post)
 
 ###### User ######
 
