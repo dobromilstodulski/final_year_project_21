@@ -6,7 +6,7 @@ from app.models import User, Post, Comment, Like
 main = Blueprint('main', __name__)
 
 @main.route('/index', methods=('GET', 'POST'))
-def main_page():
+def home():
     year = datetime.date.today().year
     posts = current_user.get_post_feed()
     songs = current_user.get_song_feed()

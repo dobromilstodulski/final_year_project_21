@@ -57,40 +57,6 @@ def register():
     print(age)
     return render_template('auth/register.html', year=year, age=age)
 
-'''
-@auth.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        # code to validate and add user to database goes here
-        username = request.form.get('username')
-        fullname = request.form.get('fullname')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        gender = request.form.get('gender')
-        birthday = request.form.get('birthday')
-
-        if username == '' or fullname == '' or email == '' or password == '' or gender == '' or birthday == '':
-            flash('Please fill out all the values!', 'warning')
-
-        else:
-            user = User.query.filter_by(email=email).first()
-
-            if user:  # if a user is found, we want to redirect back to signup page so user can try again
-                flash('Email address or username already exists!', 'error')
-                return redirect(url_for('auth.register'))
-
-            new_user = User(username=username, fullname=fullname, email=email, password=generate_password_hash(password),
-                            gender=gender, birthday=birthday, profile_picture='/static/images/default_profile_picture.png',
-                            description=None)
-
-            db.session.add(new_user)
-            db.session.commit()
-
-            flash('Successfully Registered!', 'success')
-            return redirect(url_for('auth.login'))
-    return render_template('auth/register.html')
-'''
-
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -115,7 +81,7 @@ def login():
                 else:
                     login_user(user)
                 flash('You have successfully logged in!', 'success')
-                return redirect(url_for('profile.welcome'))
+                return redirect(url_for('main.home'))
             else:
                 flash('Your password does not match!', 'error')
     return render_template('auth/login.html', year=year)

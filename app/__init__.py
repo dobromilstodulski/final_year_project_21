@@ -65,9 +65,8 @@ def create_app():
     with app.app_context():
         from app.templates.auth.auth import auth
         from app.templates.profile.profile import profile
-        from app.templates.feed.feed import feed
-        from app.templates.feed.song import song
-        from app.templates.feed.post import post
+        from app.templates.song.song import song
+        from app.templates.post.post import post
         from app.templates.chat.chat import chatroom
         from app.templates.audio.audio import audio
         from app.templates.legal.legal import legal
@@ -77,7 +76,6 @@ def create_app():
 
         app.register_blueprint(auth)
         app.register_blueprint(profile)
-        app.register_blueprint(feed)
         app.register_blueprint(song)
         app.register_blueprint(post)
         app.register_blueprint(chatroom)

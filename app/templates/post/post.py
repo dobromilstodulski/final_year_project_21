@@ -44,9 +44,9 @@ def new_post():
                                 media=file.filename,
                                 isMedia=1)
                     flash('Upload Succeeded!', 'success')
-                    return redirect(url_for('post.post_feed'))
+                    return redirect(url_for('main.home'))
                 else:
-                    return redirect(url_for('post.post_feed'))
+                    return redirect(url_for('main.home'))
 
 
 @post.route('/post/edit/<int:post_id>', methods=('GET', 'POST'))
@@ -129,7 +129,7 @@ def view_post(post_id):
 
     if posts.count() == 0:
         abort(0)
-    return render_template('feed/post.html', posts=posts, format=format, comments=comments, year=year)
+    return render_template('post/post.html', posts=posts, format=format, comments=comments, year=year)
 
 
 @post.route('/like/<int:post_id>', methods=['GET', 'POST'])

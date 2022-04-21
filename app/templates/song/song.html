@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for song in songs %}
+
+{% include 'partials/song-card.html' %}
+
+{% endfor %}
+
+<br>
+
+{% include 'partials/comment-new.html' %}
+
+<br>
+
+{% for comment in comments %}
+
+{% include 'partials/comment.html' %}
+
+<br>
+
+{% endfor %}
+
+{% endblock %}

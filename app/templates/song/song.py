@@ -47,10 +47,10 @@ def new_song():
                                     artwork=artwork_file.filename,
                                     source=audio_file.filename)
                         flash('Upload Succeeded!', 'success')
-                        return redirect(url_for('song.song_feed'))
+                        return redirect(url_for('main.home'))
                     else:
                         flash('This song is copyrighted!', 'error')
-                        return redirect(url_for('song.song_feed'))
+                        return redirect(url_for('main.home'))
                 else:
                     return redirect("/")
                 
@@ -90,10 +90,10 @@ def edit_song(song_id):
                                     artwork=artwork_file.filename,
                                     source=audio_file.filename).where(Song.id == song_id).execute()
                         flash('Upload Succeeded!', 'success')
-                        return redirect(url_for('song.song_feed'))
+                        return redirect(url_for('main.home'))
                     else:
                         flash('This song is copyrighted!', 'error')
-                        return redirect(url_for('song.song_feed'))
+                        return redirect(url_for('main.home'))
                     
 
 @song.route('/song/delete/<int:song_id>', methods=('GET', 'POST'))
@@ -135,7 +135,7 @@ def view_song(song_id):
 
     if songs.count() == 0:
         abort(0)
-    return render_template('feed/song.html', songs=songs, format=format, comments=comments, year=year)
+    return render_template('song/song.html', songs=songs, comments=comments, year=year)
 
 
 @song.route('/favorite/<int:song_id>', methods=['GET', 'POST'])
