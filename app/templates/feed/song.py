@@ -140,7 +140,7 @@ def view_song(song_id):
     return render_template('feed/song.html', songs=songs, format=format, comments=comments)
 
 
-@song.route('/favorite/<int:song_id>')
+@song.route('/favorite/<int:song_id>', methods=['GET', 'POST'])
 @login_required
 def favorite(song_id):
     songs = Song.select().where(Song.id == song_id)
@@ -157,10 +157,10 @@ def favorite(song_id):
     ).where(
         Song.id == song.id
     ).execute()
-    return render_template('/partials/favorite-section.html', song=song)
+    return render_template('/partials/song-reactions.html', song=song)
 
 
-@song.route('/unfavorite/<int:song_id>')
+@song.route('/unfavorite/<int:song_id>', methods=['GET', 'POST'])
 @login_required
 def unfavorite(song_id):
     songs = Song.select().where(Song.id == song_id)
@@ -177,4 +177,4 @@ def unfavorite(song_id):
     ).where(
         Song.id == song.id
     ).execute()
-    return render_template('/partials/favorite-section.html', song=song)
+    return render_template('/partials/song-reactions.html', song=song)

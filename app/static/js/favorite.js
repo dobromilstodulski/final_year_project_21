@@ -3,7 +3,7 @@ $(document).ready(function () {
 
         event.preventDefault();
 
-        var id = $(this).data("id");
+        var id = $(this).attr("id");
 
         req = $.ajax({
             url: '/favorite/' + id,
@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         event.preventDefault();
 
-        var id = $(this).data("id");
+        var id = $(this).attr("id");
 
         req = $.ajax({
             url: '/unfavorite/' + id,

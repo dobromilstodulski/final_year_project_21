@@ -75,23 +75,23 @@
                 <strong class="d-block" id="songReactions{{song.id}}">
 
                     {% if current_user.hasUserFavorite(song.id) %}
-                    <a href="{{url_for('song.unfavorite', song_id=song.id)}}" id="{{song.id}}"
+                    <a href="/unfavorite/{{song.id}}" id="{{song.id}}"
                         class="btn btn-sm btn-secondary-outline unfavorite">
-                        <i class="bi bi-heart-fill"></i> {{song.numFavorites}} Favorites
+                        <i class="bi bi-heart-fill"></i> You & {{song.numFavorites}} Favorite This
                     </a>
 
                     {% else %}
 
                     {% if song.numFavorites == 0 %}
 
-                    <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+                    <a href="/favorite/{{song.id}}" id="{{song.id}}"
                         class="btn btn-sm btn-secondary-outline favorite">
                         <i class="bi bi-heart"></i> Favorite
                     </a>
 
                     {% else %}
 
-                    <a href="{{url_for('song.favorite', song_id=song.id)}}" id="{{song.id}}"
+                    <a href="/favorite/{{song.id}}" id="{{song.id}}"
                         class="btn btn-sm btn-secondary-outline favorite">
                         <i class="bi bi-heart"></i> {{song.numFavorites}} Favorites
                     </a>
