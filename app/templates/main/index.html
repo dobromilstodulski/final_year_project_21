@@ -5,26 +5,26 @@
 <ul class="nav nav-pills nav-fill nav-justified mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-feed-tab" data-bs-toggle="pill" data-bs-target="#pills-feed"
-            type="button" role="tab" aria-controls="pills-feed" aria-selected="true">Feed</button>
+            type="button" role="tab" aria-controls="pills-feed" aria-selected="true"><i class="bi bi-blockquote-left"></i> Feed</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-upload-tab" data-bs-toggle="pill" data-bs-target="#pills-upload"
-            type="button" role="tab" aria-controls="pills-upload" aria-selected="true">Upload</button>
+            type="button" role="tab" aria-controls="pills-upload" aria-selected="true"><i class="bi bi-music-note-list"></i> Upload</button>
     </li>
     <li class="nav-item" role="presentation">
         <!-- <button class="nav-link" id="pills-chat-tab" data-bs-toggle="pill" data-bs-target="#pills-chat" type="button"
             role="tab" aria-controls="pills-chat" aria-selected="false">Chat</button> -->
-        <a class="flex-sm-fill text-sm-center nav-link" href="/chat" target="_blank">Chat</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/chat" target="_blank"><i class="bi bi-chat-left"></i> Chat</a>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button"
-            role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
+            role="tab" aria-controls="pills-users" aria-selected="false"><i class="bi bi-people"></i> Users</button>
     </li>
     <li class="nav-item" role="presentation">
         <!-- <button class="nav-link" id="pills-profile-tab"
             type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button> -->
         <a class="flex-sm-fill text-sm-center nav-link" href="/profile/{{current_user.username}}"
-            target="_blank">Profile</a>
+            target="_blank"><i class="bi bi-person-circle"></i> Profile</a>
     </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
