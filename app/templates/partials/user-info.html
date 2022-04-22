@@ -24,6 +24,24 @@
 
 <br />
 
+{% if user != current_user %}
+{% if not user in current_user.following() %}
+
+<center>
+    <a href="{{ url_for('profile.follow', username=user.username) }}" class="btn btn-sm btn-secondary-outline"><i
+            class="bi bi-person-plus-fill"></i>Follow</a>
+
+    {% else %}
+
+    <a href="{{ url_for('profile.unfollow', username=user.username) }}" class="btn btn-sm btn-secondary-outline"><i
+            class="bi bi-person-dash-fill"></i>Unfollow</a>
+</center>
+
+<br />
+
+{% endif %}
+{% endif %}
+
 <center>
     {{user.description}} / Joined @{{ moment(user.timestamp).format('LL') }}
 </center>
