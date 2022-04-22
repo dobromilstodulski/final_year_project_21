@@ -162,8 +162,9 @@
                             </div>
                             <div class="col">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="genre" name="genre"
-                                        value="{{song.genre}}">
+                                    <select class="form-select" name="genre" id="genre" value="{{song.genre}}">
+                                        {% include 'partials/genre.html' %}
+                                    </select>
                                     <label for="genre">Genre</label>
                                 </div>
                             </div>
