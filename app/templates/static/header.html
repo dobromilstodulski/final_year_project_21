@@ -1,9 +1,9 @@
 <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
   <div class="col-4">
     <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      <img src="/static/images/favicon/favicon.ico"
-      class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="40" width="40" alt="Official Logo"
-      role="img" aria-label="Placeholder: 128x128" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <img src="/static/images/favicon/favicon.ico" class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="40"
+        width="40" alt="Official Logo" role="img" aria-label="Placeholder: 128x128" preserveAspectRatio="xMidYMid slice"
+        focusable="false">
       <span class="fs-4">KMPSR</span>
     </a>
   </div>
@@ -12,7 +12,8 @@
   {% if current_user.is_authenticated %}
   <div class="col-4 d-flex justify-content-end align-items-center">
     <form class="d-flex" action="/search">
-        <input type="text" class="form-control" id="search" name="search" placeholder="Search" aria-label="Search" aria-describedby="search-addon1">
+      <input type="text" class="form-control" id="search" name="search" placeholder="Search" aria-label="Search"
+        aria-describedby="search-addon1">
     </form>
     <a href="/logout" class="btn btn-secondary-outline"><i class="bi bi-box-arrow-right"></i></a>
   </div>
