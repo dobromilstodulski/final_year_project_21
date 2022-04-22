@@ -3,9 +3,5 @@ env
 venv
 .venv
 __pycache__/
-app.static.node_modules
-.app.static.node_modules
 app/static/node_modules
 app/static/uploads
-.app/static/uploads
-app.static.uploads
