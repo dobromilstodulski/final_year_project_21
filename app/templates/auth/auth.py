@@ -33,6 +33,9 @@ def register():
         if username == '' or fullname == '' or email == '' or password == '' or gender == '' or birthday == '':
             flash('Please fill out all the values!', 'warning')
             
+        #elif request.form.get("t&c") is None:
+        #    flash("Null", "error")
+            
         elif User.select().where(User.email == email):
             flash('Email already in use!', 'error')
             return redirect(url_for('auth.register'))
@@ -54,7 +57,6 @@ def register():
             )
             flash('Successfully Registered!', 'success')
             return redirect(url_for('auth.login'))
-    print(age)
     return render_template('auth/register.html', year=year, age=age)
 
 
