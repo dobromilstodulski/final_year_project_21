@@ -27,16 +27,18 @@ def new_song():
                 flash('Please fill out all the values!', 'warning')
             else: 
                 result = eval(re.recognize_by_file(audio_file.filename, 0))
-                if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
-                    if result['status']['msg'] == 'No result':
+                if not result['status']['msg'] == 'No result':
+                    flash('This song is copyrighted!', 'error')
+                    return redirect(url_for('main.home'))
+                else:
+                    if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
                         unique_artwork_filename = make_unique(artwork_file.filename)
                         unique_audio_filename = make_unique(audio_file.filename)
                         artwork_file.filename = secure_filename(unique_artwork_filename)
                         audio_file.filename = secure_filename(unique_audio_filename)
                         upload_file(artwork_file)
                         upload_file(audio_file)
-                        Song.create(user_id=current_user.id,
-                                    artist=artist,
+                        Song.create(artist=artist,
                                     title=title,
                                     feature=featuring,
                                     genre=genre,
@@ -47,10 +49,8 @@ def new_song():
                         flash('Upload Succeeded!', 'success')
                         return redirect(url_for('main.home'))
                     else:
-                        flash('This song is copyrighted!', 'error')
+                        flash('Upload Failed!', 'error')
                         return redirect(url_for('main.home'))
-                else:
-                    return redirect("/")
                 
 
 @song.route('/song/edit/<int:song_id>', methods=('GET', 'POST'))
@@ -71,7 +71,10 @@ def edit_song(song_id):
                 flash('Please fill out all the values!', 'warning')
             else: 
                 result = eval(re.recognize_by_file(audio_file.filename, 0))
-                if result['status']['msg'] == 'No result':
+                if not result['status']['msg'] == 'No result':
+                    flash('This song is copyrighted!', 'error')
+                    return redirect(url_for('main.home'))
+                else:
                     if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
                         unique_artwork_filename = make_unique(artwork_file.filename)
                         unique_audio_filename = make_unique(audio_file.filename)
@@ -90,7 +93,7 @@ def edit_song(song_id):
                         flash('Upload Succeeded!', 'success')
                         return redirect(url_for('main.home'))
                     else:
-                        flash('This song is copyrighted!', 'error')
+                        flash('Upload Failed!', 'error')
                         return redirect(url_for('main.home'))
                     
 

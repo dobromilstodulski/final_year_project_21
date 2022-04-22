@@ -26,6 +26,8 @@
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-feed" role="tabpanel" aria-labelledby="pills-feed-tab">
 
+        {% include 'partials/post-new-modal.html' %}
+
         {% for post in posts %}
 
         {% include 'partials/post-tag.html' %}
@@ -34,6 +36,9 @@
     </div>
 
     <div class="tab-pane fade show" id="pills-upload" role="tabpanel" aria-labelledby="pills-upload-tab">
+
+        {% include 'partials/song-upload-modal.html' %}
+
         {% for song in songs %}
 
         {% include 'partials/song-card.html' %}

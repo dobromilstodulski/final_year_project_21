@@ -2,6 +2,7 @@ flask
 gunicorn
 python-dotenv
 peewee
+psycopg2-binary
 git+https://github.com/maxcountryman/flask-login.git
 werkzeug
 boto3
