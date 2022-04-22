@@ -151,6 +151,7 @@ class Song(BaseModel):
     source = CharField()
     numFavorites = IntegerField(default=0)
     numComments = IntegerField(default=0)
+    numStreams = IntegerField(default=0)
     isEdited = BooleanField(default=0)
     editedTimestamp = DateTimeField(default=datetime.datetime.now)
     timestamp = DateTimeField(default=datetime.datetime.now)

@@ -1,13 +1,10 @@
 import os
 import os.path
-from statistics import correlation
 import librosa
 import requests
-import json
 import wave
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort, jsonify, make_response
-from app.models import User, Song, Comment, Favorite
-from app.templates.audio.keyfinder import Tonal_Fragment
+from flask import Blueprint, jsonify
+from app.models import Song
 from app.templates.audio.music_note_detection import note_detect
 
 

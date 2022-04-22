@@ -174,3 +174,18 @@ def unfavorite(song_id):
         Song.id == song.id
     ).execute()
     return render_template('/partials/song-reactions.html', song=song)
+
+
+@song.route('/stream/<int:song_id>', methods=['GET', 'POST'])
+@login_required
+def stream(song_id):
+    songs = Song.select().where(Song.id == song_id)
+    song = songs[0]
+    numberOfStreams = song.numStreams
+    
+    Song.update(
+        numStreams=numberOfStreams + 1
+    ).where(
+        Song.id == song.id
+    ).execute()
+    return redirect(request.referrer)

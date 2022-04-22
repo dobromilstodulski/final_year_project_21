@@ -57,6 +57,10 @@
                         <i>#{{song.genre}}</i>
                     </strong>
 
+                    {% if not song.numStreams == 0 %}
+                        <i class="d-block"><i class="bi bi-play-fill"></i> {{song.numStreams}} Plays </i>
+                    {% endif %}
+
                 <div class="container">
                     <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}" class="img-fluid audioImage"
                         alt="{{song.artwork}}">
