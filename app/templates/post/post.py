@@ -1,24 +1,15 @@
 import datetime
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort, jsonify, make_response
-from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Post, database, Comment, Like
-import app.models
-from app import login_manager
-from timeago import format
+from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
+from flask_login import current_user, login_required
+from app.models import Post, Comment, Like
 from app.utils import allowed_file, make_unique, upload_file, delete_file
 from werkzeug.utils import secure_filename
-from urllib.parse import urljoin
-import os
-import boto3
-import time
-import random
-from playhouse.shortcuts import model_to_dict, dict_to_model
-from playhouse.flask_utils import object_list
 
 post = Blueprint('post', __name__)
 
 
 @post.route('/post/new', methods=('GET', 'POST'))
+@login_required
 def new_post():
     if request.method == 'POST':
         content = request.form.get('content')
@@ -50,6 +41,7 @@ def new_post():
 
 
 @post.route('/post/edit/<int:post_id>', methods=('GET', 'POST'))
+@login_required
 def edit_post_media_null(post_id):
     if request.method == 'POST':
         content = request.form.get('content')
@@ -62,6 +54,7 @@ def edit_post_media_null(post_id):
 
 
 @post.route('/post/edit/media/<int:post_id>', methods=('GET', 'POST'))
+@login_required
 def edit_post_media_true(post_id):
     if request.method == 'POST':
         content = request.form.get('content')
@@ -83,6 +76,7 @@ def edit_post_media_true(post_id):
 
 
 @post.route('/post/delete/<int:post_id>', methods=('GET', 'POST'))
+@login_required
 def delete_post_media_null(post_id):
     if request.method == 'POST':
         Post.delete().where(Post.id == post_id).execute()
@@ -91,6 +85,7 @@ def delete_post_media_null(post_id):
 
 
 @post.route('/post/delete/media/<int:post_id>', methods=('GET', 'POST'))
+@login_required
 def delete_post_media_true(post_id):
     if request.method == 'POST':
         delete_file(Post.get(Post.id == post_id).media)
@@ -100,6 +95,7 @@ def delete_post_media_true(post_id):
 
 
 @post.route('/post/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def view_post(post_id):
     year = datetime.date.today().year
     posts = Post.select().where(Post.id == post_id)
@@ -129,10 +125,11 @@ def view_post(post_id):
 
     if posts.count() == 0:
         abort(0)
-    return render_template('post/post.html', posts=posts, format=format, comments=comments, year=year)
+    return render_template('post/post.html', posts=posts, comments=comments, year=year)
 
 
 @post.route('/like/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def like_post(post_id):
     posts = Post.select().where(Post.id == post_id)
     post = posts[0]
@@ -152,6 +149,7 @@ def like_post(post_id):
 
 
 @post.route('/unlike/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def unlike_post(post_id):
     posts = Post.select().where(Post.id == post_id)
     post = posts[0]

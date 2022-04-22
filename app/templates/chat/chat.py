@@ -1,18 +1,15 @@
-import os
-import time
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash
-from flask_login import current_user, login_user, logout_user, login_required
-from app import socketio, pusher_client, moment
-from app.models import Chat, Msg, database
-from flask_socketio import emit, join_room, leave_room, send
+from flask import Blueprint, render_template
+from flask_login import current_user, login_required
+from app import socketio
+from app.models import Msg
+from flask_socketio import emit
 import datetime
 
-chatroom = Blueprint('chatroom', __name__)
+chat = Blueprint('chat', __name__)
 
-
-@chatroom.route("/chat", methods=['GET', 'POST'])
+@chat.route("/chat", methods=['GET', 'POST'])
 @login_required
-def chat():
+def chatroom():
     year = datetime.date.today().year
     messages = Msg
     return render_template("chat/chat.html", username=current_user.username, messages=messages, year=year)

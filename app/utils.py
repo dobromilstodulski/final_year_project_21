@@ -1,7 +1,6 @@
 import boto3
 from uuid import uuid4
 import os
-from werkzeug.utils import secure_filename
 from flask import current_app as app
 
 def allowed_file(filename):

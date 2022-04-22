@@ -1,15 +1,12 @@
 import datetime
-from flask import Blueprint, g, jsonify, render_template, redirect, url_for, request, flash, abort
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import Blueprint, render_template, request
+from flask_login import login_required
 from app.models import User, Post, Song
-import app.models
-from app import login_manager
-from timeago import format
-from flask_paginate import Pagination, get_page_parameter
 
 search = Blueprint('search', __name__)
 
 @search.route('/search', methods=['GET', 'POST'])
+@login_required
 def search_query():
     year = datetime.date.today().year
     user = User

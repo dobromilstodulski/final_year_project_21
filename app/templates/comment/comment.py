@@ -1,10 +1,11 @@
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort, jsonify, make_response
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import Blueprint, redirect, request, flash
+from flask_login import login_required
 from app.models import User, Post, database, Comment, Like
 
 comment = Blueprint('comment', __name__)
 
 @comment.route('/comment/edit/<int:comment_id>', methods=('GET', 'POST'))
+@login_required
 def edit_comment(comment_id):
     if request.method == 'POST':
         content = request.form.get('content')
@@ -19,6 +20,7 @@ def edit_comment(comment_id):
 
 
 @comment.route('/comment/delete/<int:comment_id>', methods=('GET', 'POST'))
+@login_required
 def delete_comment(comment_id):
     if request.method == 'POST':
         Post.delete().where(Comment.id == comment_id).execute()

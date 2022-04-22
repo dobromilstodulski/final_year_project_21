@@ -1,5 +1,5 @@
 import datetime
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
+from flask import Blueprint, render_template
 
 legal = Blueprint('legal', __name__)
 

@@ -1,11 +1,11 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask_login import login_user, logout_user, login_required
 from app.models import User, database
 import app.models
-from app import login_manager, db
-from werkzeug.security import generate_password_hash, check_password_hash
+from app import login_manager
+from werkzeug.security import check_password_hash
 
 auth = Blueprint('auth', __name__)
 

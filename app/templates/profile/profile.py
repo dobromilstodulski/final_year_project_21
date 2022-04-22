@@ -1,11 +1,8 @@
 import datetime
-from flask import Blueprint, g, jsonify, render_template, redirect, url_for, request, flash, abort
-from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Relationship, Post, database, Comment, Like
+from flask import Blueprint, render_template, redirect, url_for, request, flash, abort
+from flask_login import current_user, login_required
+from app.models import User, Relationship
 import app.models
-from app import login_manager
-from timeago import format
-from flask_paginate import Pagination, get_page_parameter
 from app.utils import allowed_file, make_unique, upload_file
 from werkzeug.utils import secure_filename
 
@@ -13,10 +10,9 @@ profile = Blueprint('profile', __name__)
 
 
 @profile.route('/profile/<username>')
+@login_required
 def userProfile(username):
     year = datetime.date.today().year
-    #users = User.select().where(User.username == username)
-    #user = users[0]
     user = User.get(User.username ** username)
     posts = User.get_posts(user)
     following_count = User.select().join(Relationship, on=Relationship.to_user).where(
@@ -26,19 +22,17 @@ def userProfile(username):
     songs = User.get_songs(user)
     song_count = User.get_songs(user).count()
     comments = User.get_comments(user)
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    pagination = Pagination(page=page, total=song_count, record_name='songs', per_page=1)
-    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments, pagination=pagination, year=year)
+    return render_template('profile/profile.html', user=user, following_count=following_count, followers_count=followers_count, posts=posts, songs=songs, song_count=song_count, comments=comments, year=year)
 
 
 @profile.route('/edit-user-details', methods=['GET', 'POST'])
+@login_required
 def editUserDetails():
     user = current_user
     file = request.files["profilePicture"]
     username = request.form.get('username')
     fullname = request.form.get('fullname')
     email = request.form.get('email')
-    #password = request.form.get('password')
     gender = request.form.get('gender')
     birthday = request.form.get('birthday')
     description = request.form.get('description')
@@ -64,6 +58,7 @@ def editUserDetails():
 
 
 @profile.route('/following')
+@login_required
 def following():
     year = datetime.date.today().year
     user = current_user
@@ -76,6 +71,7 @@ def following():
 
 
 @profile.route('/followers')
+@login_required
 def followers():
     year = datetime.date.today().year
     user = current_user

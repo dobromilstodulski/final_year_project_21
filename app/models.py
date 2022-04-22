@@ -1,7 +1,6 @@
 from peewee import *
 import datetime
-from flask_login import UserMixin, AnonymousUserMixin, login_user
-#from flask_bcrypt import generate_password_hash
+from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash
 
 database = SqliteDatabase('database.db')
@@ -183,7 +182,7 @@ class Chat(BaseModel):
         
 
 class Msg(BaseModel):
-    username = ForeignKeyField(User, backref='chats')
+    user_id = ForeignKeyField(User, backref='chats')
     message = TextField()
     timestamp = DateTimeField(default=datetime.datetime.now)
 

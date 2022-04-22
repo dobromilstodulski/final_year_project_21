@@ -26,6 +26,7 @@ def tempo(song_id):
         tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
         return jsonify(tempo = '{:.2f}'.format(tempo))
 
+
 @api.route('/song/key/<int:song_id>', methods=['GET'])
 def key(song_id):
     song = Song.get(Song.id == song_id)

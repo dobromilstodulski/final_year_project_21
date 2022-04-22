@@ -1,4 +1,3 @@
-import pusher
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template
@@ -15,14 +14,6 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 socketio = SocketIO()
 moment = Moment()
-
-pusher_client = pusher.Pusher(
-    app_id='1363194',
-    key='6eb53b420f4f837b63e2',
-    secret='1a50a60455b3c70fea61',
-    cluster='eu',
-    ssl=True
-)
 
 config = {
     'host': os.getenv("HOST"),
@@ -67,7 +58,7 @@ def create_app():
         from app.templates.profile.profile import profile
         from app.templates.song.song import song
         from app.templates.post.post import post
-        from app.templates.chat.chat import chatroom
+        from app.templates.chat.chat import chat
         from app.templates.audio.audio import audio
         from app.templates.legal.legal import legal
         from app.templates.search.search import search
@@ -79,7 +70,7 @@ def create_app():
         app.register_blueprint(profile)
         app.register_blueprint(song)
         app.register_blueprint(post)
-        app.register_blueprint(chatroom)
+        app.register_blueprint(chat)
         app.register_blueprint(audio)
         app.register_blueprint(legal)
         app.register_blueprint(search)
