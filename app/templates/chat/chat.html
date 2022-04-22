@@ -4,10 +4,6 @@
 
 <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 
-{% if current_user.is_authenticated %}
-<input type="text" class="form-control" hidden="true" id="username" name="username" value="{{current_user.username}}">
-{% endif %}
-
 <div class="d-flex justify-content-center">
 
     <div class="card" style="width: 30rem;">
@@ -15,7 +11,7 @@
             <h5 class="card-title">Chat Room</h5>
             <div id="messages">
                 {% for message in messages %}
-                <p> {{message.user}} : {{message.message}} </p>
+                <p> {{message.user_id.username}} : {{message.message}} </p>
                 {% endfor %}
             </div>
         </div>

@@ -28,7 +28,7 @@ def text(message):
     The message is sent to all people in the room."""
     
     Msg.create(
-        username=current_user.username,
+        user_id=current_user,
         message=message['msg']
     )
     
