@@ -1,9 +1,7 @@
 import datetime
-from flask import Blueprint, g, render_template, redirect, url_for, request, flash, abort
-from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Song, Comment, Favorite
-import app.models
-from timeago import format
+from flask import Blueprint, render_template, redirect, url_for, request, flash, abort
+from flask_login import current_user, login_required
+from app.models import Song, Comment, Favorite
 from app import re
 from app.utils import allowed_file, make_unique, upload_file, delete_file
 from werkzeug.utils import secure_filename
