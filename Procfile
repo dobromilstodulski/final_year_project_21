@@ -1,1 +1,1 @@
-web: gunicorn -k eventlet wsgi:gunicorn
+web: gunicorn -k gevent -w 1 wsgi:gunicorn
