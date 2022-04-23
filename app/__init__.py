@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 from peewee import *
 from flask_login import LoginManager
 from flask_socketio import SocketIO
@@ -10,7 +9,6 @@ from acrcloud.recognizer import ACRCloudRecognizer, ACRCloudRecognizeType
 
 load_dotenv()
 
-db = SQLAlchemy()
 login_manager = LoginManager()
 socketio = SocketIO()
 moment = Moment()
@@ -44,7 +42,7 @@ def internal_server_error(e):
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object('config.TestConfig')
+    app.config.from_object('config.ProdConfig')
 
     db.init_app(app)
     socketio.init_app(app)
@@ -86,7 +84,5 @@ def create_app():
         app.register_error_handler(403, forbidden)
         app.register_error_handler(404, page_not_found)
         app.register_error_handler(404, internal_server_error)
-
-        db.create_all()
 
         return app
