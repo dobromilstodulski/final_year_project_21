@@ -14,5 +14,5 @@ librosa
 matplotlib
 wheel
 ipython
-eventlet
+eventlet==0.30.2
 gevent-websocket
