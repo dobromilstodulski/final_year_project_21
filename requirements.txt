@@ -8,7 +8,7 @@ werkzeug
 boto3
 flask_socketio
 flask-moment
-git+https://github.com/acrcloud/acrcloud_sdk_python
+pyacrcloud
 simple-websocket
 librosa
 matplotlib

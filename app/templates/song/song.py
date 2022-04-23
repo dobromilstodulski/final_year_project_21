@@ -27,7 +27,6 @@ def new_song():
                 flash('Please fill out all the values!', 'warning')
             else: 
                 result = eval(re.recognize_by_file(audio_file.filename, 0))
-                print(result)
                 if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
                     if result['status']['msg'] == 'No result':
                         unique_artwork_filename = make_unique(artwork_file.filename)
