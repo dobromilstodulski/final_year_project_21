@@ -15,7 +15,7 @@ class Config(object):
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav', 'ogg'}
-    UPLOAD_FOLDER = 'app/static/uploads'
+    UPLOAD_FOLDER = 'app/static/uploads
     
 
 class ProdConfig(Config):
