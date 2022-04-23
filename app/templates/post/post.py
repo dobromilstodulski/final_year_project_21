@@ -21,7 +21,7 @@ def new_post():
                 Post.create(user_id=current_user.id,
                             content=content)
                 flash("Post Created!", "success")
-                return redirect(url_for('post.post_feed'))
+                return redirect(url_for('main.home'))
         if file:
             if file.filename == "" and content == '':
                 flash('Please fill out all the values!', 'warning')
