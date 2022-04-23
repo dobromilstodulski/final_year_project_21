@@ -44,7 +44,6 @@ def create_app():
 
     app.config.from_object('config.ProdConfig')
 
-    db.init_app(app)
     socketio.init_app(app)
     moment.init_app(app)
 
