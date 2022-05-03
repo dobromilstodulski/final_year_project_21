@@ -21,7 +21,7 @@ def new_post():
                 Post.create(user_id=current_user.id,
                             content=content)
                 flash("Post Created!", "success")
-                return redirect(url_for('post.post_feed'))
+                return redirect(url_for('main.home'))
         if file:
             if file.filename == "" and content == '':
                 flash('Please fill out all the values!', 'warning')
@@ -48,7 +48,8 @@ def edit_post_media_null(post_id):
         if content == '':
             flash('Please fill out all the values!', 'warning')
         else:
-            Post.update(content=content).where(Post.id == post_id).execute()
+            Post.update(content=content,
+                        isEdited=1).where(Post.id == post_id).execute()
             flash("Post Updated!", "success")
             return redirect(request.referrer)
 
@@ -68,7 +69,8 @@ def edit_post_media_true(post_id):
                 upload_file(file)
                 Post.update(content=content,
                             media=file.filename,
-                            isMedia=1).where(Post.id == post_id).execute()
+                            isMedia=1,
+                            isEdited=1).where(Post.id == post_id).execute()
                 flash('Upload Succeeded!', 'success')
                 return redirect(request.referrer)
             else:

@@ -19,7 +19,8 @@
 
         <p class="pb-3 mb-0 small lh-sm border-bottom myP">
             <strong class="d-block ">
-                <a href="/profile/{{post.user_id.username}}"> {{post.user_id.fullname}} <i> @{{post.user_id.username}} </i></a>
+                <a href="/profile/{{post.user_id.username}}"> {{post.user_id.fullname}} <i> @{{post.user_id.username}}
+                    </i></a>
 
                 {% if post.user_id == current_user %}
                 <button data-bs-toggle="modal" data-bs-target="#editPostModal{{post.id}}" type="button"
@@ -33,11 +34,10 @@
                 {% endif %}
 
             </strong>
-            <i class="d-block"><i class="bi bi-clock"></i>
-                {% if post.isEdited == 0 %}
-                {{moment(post.timestamp).fromNow()}}</i>
+            {% if post.isEdited == 0 %}
+            <i class="d-block"><i class="bi bi-clock"></i> {{moment(post.timestamp).fromNow()}}</i>
             {% else %}
-            edited {{moment(post.editedTimestamp).fromNow()}}</i>
+            <i class="d-block"><i class="bi bi-clock"></i> Edited : {{moment(post.editedTimestamp).fromNow()}}</i>
             {% endif %}
             {{post.content}}
 
@@ -54,8 +54,7 @@
             <strong class="d-block text-gray-dark" id="postReactions{{post.id}}">
 
                 {% if current_user.hasUserLiked(post.id) %}
-                <a href="/unlike/{{post.id}}" id="{{post.id}}"
-                    class="btn btn-sm btn-secondary-outline unlike">
+                <a href="/unlike/{{post.id}}" id="{{post.id}}" class="btn btn-sm btn-secondary-outline unlike">
                     <i class="bi bi-hand-thumbs-up-fill"></i> You & {{post.numLikes}}
                     Others Liked
                 </a>
@@ -64,15 +63,13 @@
 
                 {% if post.numLikes == 0 %}
 
-                <a href="/like/{{post.id}}" id="{{post.id}}"
-                    class="btn btn-sm btn-secondary-outline like">
+                <a href="/like/{{post.id}}" id="{{post.id}}" class="btn btn-sm btn-secondary-outline like">
                     <i class="bi bi-hand-thumbs-up"></i> Like
                 </a>
 
                 {% else %}
 
-                <a href="/like/{{post.id}}" id="{{post.id}}"
-                    class="btn btn-sm btn-secondary-outline like">
+                <a href="/like/{{post.id}}" id="{{post.id}}" class="btn btn-sm btn-secondary-outline like">
                     <i class="bi bi-hand-thumbs-up"></i> {{post.numLikes}} Likes
                 </a>
 
