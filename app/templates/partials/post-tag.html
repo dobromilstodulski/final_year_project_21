@@ -43,9 +43,9 @@
 
             {% if post.isMedia == 1 %}
 
-            <a href="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" target="_blank">
+            <a href="{{post.media}}" target="_blank">
                 <img class="img-fluid" style="display:block"
-                    src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{post.media}}" alt="{{post.media}}" height="240"
+                    src="{{post.media}}" alt="{{post.media}}" height="240"
                     width="320">
             </a>
 

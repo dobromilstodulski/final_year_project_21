@@ -4,6 +4,9 @@ from flask_login import current_user, login_required
 from app.models import Post, Comment, Like
 from app.utils import allowed_file, make_unique, upload_file, delete_file
 from werkzeug.utils import secure_filename
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 post = Blueprint('post', __name__)
 
@@ -29,10 +32,11 @@ def new_post():
                 if file and allowed_file(file.filename):
                     unique_filename = make_unique(file.filename)
                     file.filename = secure_filename(unique_filename)
-                    upload_file(file)
+                    upload_result = cloudinary.uploader.upload(file, public_id=unique_filename)
                     Post.create(user_id=current_user.id,
                                 content=content,
-                                media=file.filename,
+                                media=upload_result['url'],
+                                public_id=upload_result['public_id'],
                                 isMedia=1)
                     flash('Upload Succeeded!', 'success')
                     return redirect(url_for('main.home'))
@@ -66,9 +70,10 @@ def edit_post_media_true(post_id):
             if file and allowed_file(file.filename):
                 unique_filename = make_unique(file.filename)
                 file.filename = secure_filename(unique_filename)
-                upload_file(file)
+                upload_result = cloudinary.uploader.upload(file, public_id=unique_filename)
                 Post.update(content=content,
-                            media=file.filename,
+                            media=upload_result['url'],
+                            public_id=upload_result['public_id'],
                             isMedia=1,
                             isEdited=1).where(Post.id == post_id).execute()
                 flash('Upload Succeeded!', 'success')
@@ -90,7 +95,7 @@ def delete_post_media_null(post_id):
 @login_required
 def delete_post_media_true(post_id):
     if request.method == 'POST':
-        delete_file(Post.get(Post.id == post_id).media)
+        cloudinary.uploader.destroy(Post.get(Post.id == post_id).public_id)
         Post.delete().where(Post.id == post_id).execute()
         flash("Post Deleted!", "success")
         return redirect(request.referrer)

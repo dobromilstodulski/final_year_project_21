@@ -2,7 +2,6 @@ import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash, abort
 from flask_login import current_user, login_required
 from app.models import Song, Comment, Favorite
-from app import re
 from app.utils import allowed_file, make_unique, upload_file, delete_file
 from werkzeug.utils import secure_filename
 
@@ -26,29 +25,24 @@ def new_song():
             if artwork_file.filename == '' or audio_file.filename == '' or artist == '' or title == '' or genre == '':
                 flash('Please fill out all the values!', 'warning')
             else: 
-                result = eval(re.recognize_by_file(audio_file.filename, 0))
                 if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
-                    if result['status']['msg'] == 'No result':
-                        unique_artwork_filename = make_unique(artwork_file.filename)
-                        unique_audio_filename = make_unique(audio_file.filename)
-                        artwork_file.filename = secure_filename(unique_artwork_filename)
-                        audio_file.filename = secure_filename(unique_audio_filename)
-                        upload_file(artwork_file)
-                        upload_file(audio_file)
-                        Song.create(user_id=current_user.id,
-                                    artist=artist,
-                                    title=title,
-                                    feature=featuring,
-                                    genre=genre,
-                                    tags=tags,
-                                    description=description,
-                                    artwork=artwork_file.filename,
-                                    source=audio_file.filename)
-                        flash('Upload Succeeded!', 'success')
-                        return redirect(url_for('main.home'))
-                    else:
-                        flash('This song is copyrighted!', 'error')
-                        return redirect(url_for('main.home'))
+                    unique_artwork_filename = make_unique(artwork_file.filename)
+                    unique_audio_filename = make_unique(audio_file.filename)
+                    artwork_file.filename = secure_filename(unique_artwork_filename)
+                    audio_file.filename = secure_filename(unique_audio_filename)
+                    upload_file(artwork_file)
+                    upload_file(audio_file)
+                    Song.create(user_id=current_user.id,
+                                artist=artist,
+                                title=title,
+                                feature=featuring,
+                                genre=genre,
+                                tags=tags,
+                                description=description,
+                                artwork=artwork_file.filename,
+                                source=audio_file.filename)
+                    flash('Upload Succeeded!', 'success')
+                    return redirect(url_for('main.home'))
                 else:
                     flash('Upload Failed!', 'error')
                     return redirect(url_for('main.home'))
@@ -71,28 +65,23 @@ def edit_song(song_id):
             if artwork_file.filename == '' or audio_file.filename == '' or artist == '' or title == '' or genre == '':
                 flash('Please fill out all the values!', 'warning')
             else: 
-                result = eval(re.recognize_by_file(audio_file.filename, 0))
                 if artwork_file and audio_file and allowed_file(artwork_file.filename) and allowed_file(audio_file.filename):
-                    if result['status']['msg'] == 'No result':
-                        unique_artwork_filename = make_unique(artwork_file.filename)
-                        unique_audio_filename = make_unique(audio_file.filename)
-                        artwork_file.filename = secure_filename(unique_artwork_filename)
-                        audio_file.filename = secure_filename(unique_audio_filename)
-                        upload_file(artwork_file)
-                        upload_file(audio_file)
-                        Song.update(artist=artist,
-                                    title=title,
-                                    feature=featuring,
-                                    genre=genre,
-                                    tags=tags,
-                                    description=description,
-                                    artwork=artwork_file.filename,
-                                    source=audio_file.filename).where(Song.id == song_id).execute()
-                        flash('Upload Succeeded!', 'success')
-                        return redirect(url_for('main.home'))
-                    else:
-                        flash('This song is copyrighted!', 'error')
-                        return redirect(url_for('main.home'))
+                    unique_artwork_filename = make_unique(artwork_file.filename)
+                    unique_audio_filename = make_unique(audio_file.filename)
+                    artwork_file.filename = secure_filename(unique_artwork_filename)
+                    audio_file.filename = secure_filename(unique_audio_filename)
+                    upload_file(artwork_file)
+                    upload_file(audio_file)
+                    Song.update(artist=artist,
+                                title=title,
+                                feature=featuring,
+                                genre=genre,
+                                tags=tags,
+                                description=description,
+                                artwork=artwork_file.filename,
+                                source=audio_file.filename).where(Song.id == song_id).execute()
+                    flash('Upload Succeeded!', 'success')
+                    return redirect(url_for('main.home'))
                 else:
                     flash('Upload Failed!', 'error')
                     return redirect(url_for('main.home'))
