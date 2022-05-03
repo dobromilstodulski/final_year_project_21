@@ -56,6 +56,7 @@ def create_app():
         from app.templates.search.search import search
         from app.templates.comment.comment import comment
         from app.templates.main.main import main
+        from app.templates.pwa.pwa import pwa
         from app.api.api import api
 
         app.register_blueprint(auth)
@@ -68,6 +69,7 @@ def create_app():
         app.register_blueprint(search)
         app.register_blueprint(comment)
         app.register_blueprint(main)
+        app.register_blueprint(pwa)
         app.register_blueprint(api)
 
         from app.views import views
