@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from app.models import Song, Comment, Favorite
 from app.utils import allowed_file, make_unique, upload_file, delete_file
 from werkzeug.utils import secure_filename
+import cloudinary.uploader
 
 song = Blueprint('song', __name__)
 
@@ -30,8 +31,8 @@ def new_song():
                     unique_audio_filename = make_unique(audio_file.filename)
                     artwork_file.filename = secure_filename(unique_artwork_filename)
                     audio_file.filename = secure_filename(unique_audio_filename)
-                    upload_file(artwork_file)
-                    upload_file(audio_file)
+                    artwork_upload_result = cloudinary.uploader.upload(artwork_file, public_id=unique_artwork_filename)
+                    audio_upload_result = cloudinary.uploader.upload(audio_file, public_id=unique_artwork_filename, resource_type="video")
                     Song.create(user_id=current_user.id,
                                 artist=artist,
                                 title=title,
@@ -39,8 +40,10 @@ def new_song():
                                 genre=genre,
                                 tags=tags,
                                 description=description,
-                                artwork=artwork_file.filename,
-                                source=audio_file.filename)
+                                artwork=artwork_upload_result['url'],
+                                source=audio_upload_result['url'],
+                                artwork_public_id=artwork_upload_result['public_id'],
+                                audio_public_id=audio_upload_result['public_id'])
                     flash('Upload Succeeded!', 'success')
                     return redirect(url_for('main.home'))
                 else:
@@ -70,16 +73,18 @@ def edit_song(song_id):
                     unique_audio_filename = make_unique(audio_file.filename)
                     artwork_file.filename = secure_filename(unique_artwork_filename)
                     audio_file.filename = secure_filename(unique_audio_filename)
-                    upload_file(artwork_file)
-                    upload_file(audio_file)
+                    artwork_upload_result = cloudinary.uploader.upload(artwork_file, public_id=unique_artwork_filename)
+                    audio_upload_result = cloudinary.uploader.upload_large(audio_file, public_id=unique_audio_filename, resource_type="video")
                     Song.update(artist=artist,
                                 title=title,
                                 feature=featuring,
                                 genre=genre,
                                 tags=tags,
                                 description=description,
-                                artwork=artwork_file.filename,
-                                source=audio_file.filename).where(Song.id == song_id).execute()
+                                artwork=artwork_upload_result['url'],
+                                source=audio_upload_result['url'],
+                                artwork_public_id=artwork_upload_result['public_id'],
+                                audio_public_id=audio_upload_result['public_id']).where(Song.id == song_id).execute()
                     flash('Upload Succeeded!', 'success')
                     return redirect(url_for('main.home'))
                 else:
@@ -89,11 +94,11 @@ def edit_song(song_id):
 
 @song.route('/song/delete/<int:song_id>', methods=('GET', 'POST'))
 def delete_song(song_id):
-    delete_file(Song.get(Song.id == song_id).artwork)
-    delete_file(Song.get(Song.id == song_id).source)
+    cloudinary.uploader.destroy(Song.get(Song.id == song_id).artwork_public_id)
+    cloudinary.uploader.destroy(Song.get(Song.id == song_id).source_public_id, resource_type="video")
     Song.delete().where(Song.id == song_id).execute()
     flash('Song deleted!', 'success')
-    return redirect(url_for('song.song_feed'))
+    return redirect(url_for('main.home'))
 
 
 @song.route('/song/<int:song_id>', methods=['GET', 'POST'])
