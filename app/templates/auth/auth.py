@@ -53,7 +53,8 @@ def register():
                 gender=gender,
                 birthday=birthday,
                 description='',
-                profile_picture=''
+                profile_picture='',
+                public_id=''
             )
             flash('Successfully Registered!', 'success')
             return redirect(url_for('auth.login'))

@@ -4,11 +4,15 @@ import datetime
 from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash
 
+<<<<<<< HEAD
 database = PostgresqlDatabase('d4420brvh9mrbg', user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"),
                            host=os.getenv("DB_HOST"), port=os.getenv("DB_PORT"))
 
 
 
+=======
+database = SqliteDatabase('database.db')
+>>>>>>> d4badf052d4d9bc5c164846040fc999f39f7c894
 class BaseModel(Model):
     class Meta:
         database = database
@@ -28,6 +32,7 @@ class User(UserMixin, BaseModel):
     birthday = CharField()
     description = TextField(null=True, default=None)
     profilePicture = CharField(null=True, default=None)
+    public_id = CharField(null=True, default=None)
     timestamp = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
@@ -96,7 +101,7 @@ class User(UserMixin, BaseModel):
             return 0
 
     @classmethod
-    def create_user(cls, username, fullname, email, password, gender, birthday, description, profile_picture):
+    def create_user(cls, username, fullname, email, password, gender, birthday, description, profile_picture, public_id):
         try:
             with database.transaction():
                 cls.create(
@@ -107,7 +112,8 @@ class User(UserMixin, BaseModel):
                     gender=gender,
                     birthday=birthday,
                     description=description,
-                    profile_picture=profile_picture)
+                    profile_picture=profile_picture,
+                    public_id=public_id)
         except IntegrityError:
             raise ValueError("User already exists")
 
@@ -130,6 +136,7 @@ class Post(BaseModel):
     user_id = ForeignKeyField(model=User, related_name='posts')
     content = TextField()
     media = CharField(null=True)
+    public_id = CharField(null=True, default=None)
     isMedia = BooleanField(default=0)
     numLikes = IntegerField(default=0)
     numComments = IntegerField(default=0)
@@ -152,6 +159,8 @@ class Song(BaseModel):
     description = TextField(null=True)
     tags = CharField(null=True)
     source = CharField()
+    artwork_public_id = CharField(null=True, default=None)
+    source_public_id = CharField(null=True, default=None)
     numFavorites = IntegerField(default=0)
     numComments = IntegerField(default=0)
     numStreams = IntegerField(default=0)

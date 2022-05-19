@@ -17,7 +17,7 @@
 
                         {% else %}
 
-                        <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.user_id.profilePicture}}"
+                        <img src="{{song.user_id.profilePicture}}"
                             class="bd-placeholder-img flex-shrink-0 me-2 rounded" height="32" width="32"
                             alt="{{song.user_id.username}}" role="img" aria-label="Placeholder: 32x32"
                             preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -62,7 +62,7 @@
                     {% endif %}
 
                 <div class="container">
-                    <img src="https://fypkmpsr.s3.eu-west-1.amazonaws.com/{{song.artwork}}" class="img-fluid audioImage"
+                    <img src="{{song.artwork}}" class="img-fluid audioImage"
                         alt="{{song.artwork}}">
                     <div class="middle">
                         <div id="playPauseAudio{{song.id}}" class="text"><i class="bi bi-play-fill"></i> / <i
@@ -70,7 +70,7 @@
                     </div>
                 </div>
 
-                <audio id="audio{{song.id}}" src="/play/{{song.id}}" type="audio/wav"></audio>
+                <audio id="audio{{song.id}}" src="{{song.source}}" type="audio/wav"></audio>
 
                 <script>
                     $(document).ready(function () {

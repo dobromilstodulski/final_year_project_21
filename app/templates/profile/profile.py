@@ -5,6 +5,7 @@ from app.models import User, Relationship
 import app.models
 from app.utils import allowed_file, make_unique, upload_file
 from werkzeug.utils import secure_filename
+import cloudinary.uploader
 
 profile = Blueprint('profile', __name__)
 
@@ -42,19 +43,20 @@ def editUserDetails():
         if file and allowed_file(file.filename):
             unique_filename = make_unique(file.filename)
             file.filename = secure_filename(unique_filename)
-            upload_file(file)
+            file_result = cloudinary.uploader.upload(file, public_id=unique_filename)
     User.update(
             username = username,
             fullname = fullname,
             email = email,
             gender = gender,
             birthday = birthday,
-            profilePicture = file.filename,
+            profilePicture = file_result['url'],
+            public_id = file_result['public_id'],
             description = description
         ).where(
             User.username == user.username
         ).execute()
-    return redirect(url_for('profile.userProfile', username=user.username))
+    return redirect(url_for('profile.userProfile', username=current_user.username))
 
 
 @profile.route('/following')

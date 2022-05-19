@@ -5,7 +5,7 @@ from peewee import *
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 from flask_moment import Moment
-from acrcloud.recognizer import ACRCloudRecognizer, ACRCloudRecognizeType
+import cloudinary
 
 load_dotenv()
 
@@ -13,16 +13,11 @@ login_manager = LoginManager()
 socketio = SocketIO()
 moment = Moment()
 
-config = {
-    'host': os.getenv("HOST"),
-    'access_key': os.getenv("ACCESS_KEY"),
-    'access_secret': os.getenv("ACCESS_SECRET"),
-    'recognize_type': ACRCloudRecognizeType.ACR_OPT_REC_AUDIO, # you can replace it with [ACR_OPT_REC_AUDIO,ACR_OPT_REC_HUMMING,ACR_OPT_REC_BOTH], The     SDK decide which type fingerprint to create accordings to "recognize_type".
-    'debug':False,
-    'timeout': 10
-}
-
-re = ACRCloudRecognizer(config)
+cloudinary.config ( 
+    cloud_name = os.getenv('CLOUD_NAME'),
+    api_key = os.getenv('API_KEY'), 
+    api_secret = os.getenv('API_SECRET')
+)
 
 def bad_request(e):
     return render_template('/error/400.html'), 400
@@ -61,6 +56,7 @@ def create_app():
         from app.templates.search.search import search
         from app.templates.comment.comment import comment
         from app.templates.main.main import main
+        from app.templates.pwa.pwa import pwa
         from app.api.api import api
 
         app.register_blueprint(auth)
@@ -73,6 +69,7 @@ def create_app():
         app.register_blueprint(search)
         app.register_blueprint(comment)
         app.register_blueprint(main)
+        app.register_blueprint(pwa)
         app.register_blueprint(api)
 
         from app.views import views
