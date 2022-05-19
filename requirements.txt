@@ -14,10 +14,5 @@ librosa
 matplotlib
 wheel
 ipython
-<<<<<<< HEAD
-eventlet==0.30.2
-gevent-websocket
-=======
 cloudinary
 pydub
->>>>>>> d4badf052d4d9bc5c164846040fc999f39f7c894

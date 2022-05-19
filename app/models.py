@@ -4,15 +4,7 @@ import datetime
 from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash
 
-<<<<<<< HEAD
-database = PostgresqlDatabase('d4420brvh9mrbg', user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"),
-                           host=os.getenv("DB_HOST"), port=os.getenv("DB_PORT"))
-
-
-
-=======
 database = SqliteDatabase('database.db')
->>>>>>> d4badf052d4d9bc5c164846040fc999f39f7c894
 class BaseModel(Model):
     class Meta:
         database = database
