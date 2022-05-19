@@ -84,7 +84,7 @@ def edit_song(song_id):
                                 artwork=artwork_upload_result['url'],
                                 source=audio_upload_result['url'],
                                 artwork_public_id=artwork_upload_result['public_id'],
-                                audio_public_id=audio_upload_result['public_id']).where(Song.id == song_id).execute()
+                                source_public_id=audio_upload_result['public_id']).where(Song.id == song_id).execute()
                     flash('Upload Succeeded!', 'success')
                     return redirect(url_for('main.home'))
                 else:
